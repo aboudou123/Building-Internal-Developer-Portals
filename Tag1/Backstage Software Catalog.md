@@ -161,3 +161,24 @@ npx @backstage/cli validate-entity entities/*.yaml
 
 ---
 
+### Additional Resources
+
+Backstage Entity Model Documentation
+[documentation](https://backstage.io/docs/features/software-catalog/descriptor-format/)
+Backstage Catalog Configuration
+[documentation](https://backstage.io/docs/features/software-catalog/configuration/)
+Backstage CLI Reference
+[documentation](https://backstage.io/docs/tooling/cli/templates/#installing-custom-templates)
+GitHub Integration for Backstage
+[documentation](https://backstage.io/docs/integrations/github/locations/)
+
+
+
+
+
+
+
+
+
+
+
