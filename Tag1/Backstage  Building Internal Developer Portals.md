@@ -1461,8 +1461,11 @@ Backstage validiert Entitäten automatisch:
 Das Verständnis von Katalogorganisation und Discovery bildet die Grundlage dafür, dass du:
 
 ✅ Services und Teams logisch strukturierst
+
 ✅ Ownership und Beziehungen klar dokumentierst
+
 ✅ Deine Softwarearchitektur effektiv navigierst
+
 ✅ Services und APIs schnell findest
 
 Im kommenden Lab erstellen wir eine Beispielorganisation mit allen Entitätstypen und sehen, wie sie in der Praxis zusammenspielen.
@@ -1492,6 +1495,80 @@ Der Katalog ist das Herz von Backstage – wenn du das richtig aufsetzt, wird al
 [documentation](https://backstage.io/docs/integrations/github/discovery/)
 
 ---
+
+Alles klar — hier ist eine **professionelle, strukturierte und lab-taugliche Beschreibung** auf Deutsch, passend für Kursmaterial, README oder interne Dokumentation.
+
+---
+
+## Lab: Software Catalog mit Backstage aufbauen
+
+### Überblick über das Lab
+
+In diesem praktischen Lab lernst du, wie du den **Backstage Software Catalog** mit Services, Teams und APIs befüllst. Du verstehst, wie Entitäten modelliert werden, wie Ownership abgebildet wird und wie Beziehungen zwischen Software, Menschen und Teams entstehen.
+
+Das Lab zeigt praxisnahe Muster und Best Practices zur Organisation von Software in einem **Internal Developer Portal** und orientiert sich an realen Organisations- und Architekturstrukturen.
+
+---
+
+### Lernziele
+
+Nach Abschluss dieses Labs bist du in der Lage:
+
+* Group-Entitäten zu erstellen, um Teams und Organisationsstrukturen abzubilden
+* User-Entitäten zu definieren und Teammitgliedschaften korrekt zu modellieren
+* Personen mit vollständigen Metadaten im Software Catalog zu registrieren
+* Component-Entitäten für Services und Anwendungen anzulegen
+* API-Entitäten zu definieren und mit Components zu verknüpfen
+* Ownership- und Abhängigkeitsbeziehungen zu testen und zu validieren
+* Den Software Catalog effektiv zu navigieren und Abhängigkeiten zu analysieren
+
+Dieses Lab vermittelt ein solides Verständnis dafür, wie der Backstage Catalog als **Single Source of Truth** für Software, Teams und Schnittstellen genutzt wird.
+
+---
+
+### Inhalte und Aufgaben (7 Tasks)
+
+**1. Understanding Backstage Entities**
+Einführung in das Entitätsmodell von Backstage und die Rolle der verschiedenen Entity-Typen innerhalb einer Organisation.
+
+**2. Create Group Entities**
+Erstellen von Group-Entitäten zur Abbildung von Teams und organisatorischen Einheiten.
+
+**3. Create User Entities**
+Anlegen von User-Entitäten zur Repräsentation einzelner Personen.
+
+**4. Register People in the Catalog**
+Registrierung von User- und Group-Entitäten im Software Catalog und Überprüfung ihrer Sichtbarkeit.
+
+**5. Create Component Entities**
+Definition von Component-Entitäten für Services, Anwendungen und Libraries.
+
+**6. Create API Entities**
+Erstellen von API-Entitäten und Verknüpfung mit den entsprechenden Components.
+
+**7. Test and Explore Entity Relationships**
+Registrierung aller Entitäten, Analyse der Beziehungen, Ownership-Strukturen und Abhängigkeiten im Catalog.
+
+---
+
+### Zentrale Ressourcen
+
+* **Backstage Catalog Overview** – Überblick über Architektur und Funktionsweise
+* **Entity Descriptor Format** – Referenz für YAML-Definitionen
+* **System Model** – Strukturierung von Software nach fachlichen Domänen
+
+---
+
+### Ergebnis des Labs
+
+Nach diesem Lab hast du einen vollständig funktionierenden Beispiel-Software-Katalog mit:
+
+* klar definierten Teams und Personen
+* eindeutigem Ownership-Modell
+* dokumentierten Services und APIs
+* nachvollziehbaren Abhängigkeiten
+
+Damit hast du eine realistische Grundlage geschaffen, um Backstage als zentrales Entwicklerportal in einer Organisation einzusetzen.
 
 
 
