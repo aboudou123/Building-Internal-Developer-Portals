@@ -1,5 +1,3 @@
----
-
 ## Backstage Software Templates: Fundamentals
 
 ### Problem ohne Templates
@@ -163,3 +161,4 @@ steps:
 ✅ Erleichtern Onboarding und produktive Entwicklung
 
 ---
+
