@@ -617,12 +617,11 @@ Catalog Configuration
 [documentation](https://backstage.io/docs/features/software-catalog/configuration/)
 
 
- make a **visual diagram showing the full template workflow**—from **template creation → GitHub integration → automated discovery → catalog registration → developer usage**—that fits neatly into your lab materials.
 ======================================================================================
 
 
 
- # **“Build Your First Template”** 
+ # 4- **“Build Your First Template”** 
 
 ---
 
@@ -768,6 +767,500 @@ Catalog Configuration
 * Document steps in README.md in skeleton to guide developers.
 
 ---
+
+
+
+
+# 5 **Erweiterte Scaffolder-Muster**
+
+Du hast die grundlegenden Aktionen gelernt – jetzt erkunden wir erweiterte Muster, die Templates leistungsfähig und flexibel machen. Diese Lektion behandelt die bedingte Ausführung, die Verkettung von Schritt-Ausgaben und den Aufbau vollständiger mehrstufiger Workflows.
+
+---
+
+## Bedingte Aktionen
+
+Führe Aktionen nur aus, wenn bestimmte Bedingungen erfüllt sind, indem du die Eigenschaft `if` verwendest:
+
+**Grundlegende bedingte Ausführung**
+
+```yaml
+- id: create-cicd
+  if: '${{ parameters.enable_cicd }}'
+  name: Setup CI/CD Pipeline
+  action: fetch:template
+  input:
+    url: ./cicd-templates
+    targetPath: .github/workflows
+    values:
+      name: '${{ parameters.name }}'
+      owner: '${{ parameters.owner }}'
+```
+
+**So funktioniert die bedingte Ausführung:**
+
+* `if`: Die Aktion wird nur ausgeführt, wenn die Bedingung zu `true` ausgewertet wird
+* Boolesche Parameter: Direkt prüfen: `${{ parameters.enable_cicd }}`
+* Zeichenkettenvergleiche: Gleichheit verwenden: `${{ parameters.database_type === "postgresql" }}`
+* Übersprungene Aktionen: Ist die Bedingung `false`, wird die Aktion vollständig übersprungen
+
+**Mehrere bedingte Muster**
+
+```yaml
+# Database-specific setup
+- id: setup-postgresql
+  if: '${{ parameters.database_type === "postgresql" }}'
+  name: Setup PostgreSQL Configuration
+  action: fetch:template
+  input:
+    url: ./database-templates/postgresql
+    targetPath: ./database
+    values:
+      name: '${{ parameters.name }}'
+
+- id: setup-mongodb
+  if: '${{ parameters.database_type === "mongodb" }}'
+  name: Setup MongoDB Configuration
+  action: fetch:template
+  input:
+    url: ./database-templates/mongodb
+    targetPath: ./database
+    values:
+      name: '${{ parameters.name }}'
+
+# Only add Swagger if both API docs enabled AND REST API type
+- id: add-swagger
+  if: '${{ parameters.include_swagger && parameters.api_type === "rest" }}'
+  name: Add Swagger Documentation
+  action: fetch:template
+  input:
+    url: ./swagger-templates
+    targetPath: ./docs
+```
+
+**Vorteile bedingter Muster:**
+
+* **Benutzerwahl:** Entwickler wählen nur die Funktionen, die sie benötigen
+* **Technologievarianten:** Unterstützung mehrerer Datenbanken, Frameworks und Sprachen
+* **Optionale Komponenten:** Monitoring, Sicherheit oder Dokumentation bei Bedarf hinzufügen
+* **Saubere Ausgabe:** Generierte Projekte enthalten nur das, was Benutzer ausgewählt haben
+
+---
+
+## Verkettung von Schritt-Ausgaben
+
+Aktionen erzeugen Ausgaben, die nachfolgende Aktionen verwenden können. Dadurch entstehen leistungsstarke Workflows, bei denen jeder Schritt auf den vorherigen Ergebnissen aufbaut.
+
+**Schritt-Ausgaben verstehen**
+
+```yaml
+- id: publish
+  name: Create GitHub Repository
+  action: publish:github
+  input:
+    description: '${{ parameters.description }}'
+    repoUrl: 'github.com?owner=${{ parameters.github_owner }}&repo=${{ parameters.repository_name }}'
+    defaultBranch: main
+
+# This action uses outputs from the publish step
+- id: register
+  name: Register Component
+  action: catalog:register
+  input:
+    repoContentsUrl: '${{ steps.publish.output.repoContentsUrl }}'
+    catalogInfoPath: '/catalog-info.yaml'
+```
+
+**Wichtige Ausgabe-Eigenschaften:**
+
+* `steps.stepId.output.propertyName`: Referenziert die Ausgabe eines beliebigen vorherigen Schritts
+* Häufige `publish:github`-Ausgaben:
+
+  * `remoteUrl`: Vollständige Repository-URL (z. B. [https://github.com/org/repo](https://github.com/org/repo))
+  * `repoContentsUrl`: URL der Repository-Inhalte für die Katalogregistrierung
+  * `cloneUrl`: Git-Clone-URL
+* Häufige `catalog:register`-Ausgaben:
+
+  * `catalogInfoUrl`: URL zur Anzeige der Entität im Backstage-Katalog
+  * `entityRef`: Referenzzeichenfolge der Entität
+
+**Erweiterte Ausgabe-Verkettung**
+
+```yaml
+steps:
+  # Step 1: Generate project from skeleton
+  - id: fetch
+    name: Fetch Skeleton Files
+    action: fetch:template
+    input:
+      url: ./skeleton
+      values:
+        name: '${{ parameters.name }}'
+        description: '${{ parameters.description }}'
+        owner: '${{ parameters.owner }}'
+        port_number: '${{ parameters.port_number }}'
+
+  # Step 2: Conditionally add CI/CD
+  - id: create-cicd
+    if: '${{ parameters.enable_cicd }}'
+    name: Setup GitHub Actions Workflow
+    action: fetch:template
+    input:
+      url: ./cicd-templates
+      targetPath: .github/workflows
+      values:
+        name: '${{ parameters.name }}'
+        github_owner: '${{ parameters.github_owner }}'
+        repository_name: '${{ parameters.repository_name }}'
+
+  # Step 3: Create GitHub repository
+  - id: publish
+    name: Publish to GitHub
+    action: publish:github
+    input:
+      description: '${{ parameters.description }}'
+      repoUrl: 'github.com?owner=${{ parameters.github_owner }}&repo=${{ parameters.repository_name }}'
+      defaultBranch: main
+      gitCommitMessage: 'Initial commit from ${{ parameters.name }} template'
+      gitAuthorName: '${{ parameters.owner }}'
+      gitAuthorEmail: 'backstage@company.com'
+
+  # Step 4: Register in catalog (uses publish output)
+  - id: register
+    name: Register in Backstage Catalog
+    action: catalog:register
+    optional: true
+    input:
+      repoContentsUrl: '${{ steps.publish.output.repoContentsUrl }}'
+      catalogInfoPath: '/catalog-info.yaml'
+
+  # Step 5: Log completion details (uses multiple outputs)
+  - id: log-completion
+    name: Log Template Completion
+    action: debug:log
+    input:
+      message: |
+        Successfully generated ${{ parameters.name }}
+        Repository: ${{ steps.publish.output.remoteUrl }}
+        Catalog: ${{ steps.register.output.catalogInfoUrl }}
+        Owner: ${{ parameters.owner }}
+```
+
+**Vorteile der Pipeline:**
+
+* **Datenfluss:** Jeder Schritt übergibt Informationen an den nächsten
+* **Fehlerbehandlung:** `optional: true` verhindert, dass Fehler bei der Katalogregistrierung das Template abbrechen
+* **Debugging:** Die Aktion `debug:log` hilft bei der Fehlersuche während der Template-Ausführung
+* **Benutzerfeedback:** Detaillierte Abschlussmeldungen zeigen, was erstellt wurde
+
+---
+
+## Vollständiges praxisnahes Template
+
+Hier ist ein produktionsreifes Template, das alle erweiterten Muster kombiniert:
+
+```yaml
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: nodejs-microservice-advanced
+  title: Node.js Microservice (Production)
+  description: Production-ready Node.js microservice with optional features
+spec:
+  owner: platform-team
+  type: service
+
+  parameters:
+    - title: Service Information
+      required: [name, description, owner]
+      properties:
+        name:
+          title: Service Name
+          type: string
+          pattern: '^[a-z0-9-]+$'
+        description:
+          title: Description
+          type: string
+        owner:
+          title: Team Owner
+          type: string
+
+    - title: Technology Choices
+      properties:
+        database_type:
+          title: Database
+          type: string
+          enum: ['none', 'postgresql', 'mongodb']
+          default: 'none'
+        include_swagger:
+          title: Add API Documentation
+          type: boolean
+          default: true
+        enable_cicd:
+          title: Setup CI/CD Pipeline
+          type: boolean
+          default: true
+
+    - title: Repository Configuration
+      required: [github_owner, repository_name]
+      properties:
+        github_owner:
+          title: GitHub Organization
+          type: string
+        repository_name:
+          title: Repository Name
+          type: string
+
+  steps:
+    # Base project structure
+    - id: fetch-base
+      name: Generate Base Project
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          name: '${{ parameters.name }}'
+          description: '${{ parameters.description }}'
+          owner: '${{ parameters.owner }}'
+          include_swagger: '${{ parameters.include_swagger }}'
+
+    # Conditional: PostgreSQL setup
+    - id: add-postgresql
+      if: '${{ parameters.database_type === "postgresql" }}'
+      name: Add PostgreSQL Configuration
+      action: fetch:template
+      input:
+        url: ./database-templates/postgresql
+        targetPath: ./database
+
+    # Conditional: MongoDB setup
+    - id: add-mongodb
+      if: '${{ parameters.database_type === "mongodb" }}'
+      name: Add MongoDB Configuration
+      action: fetch:template
+      input:
+        url: ./database-templates/mongodb
+        targetPath: ./database
+
+    # Conditional: CI/CD pipeline
+    - id: add-cicd
+      if: '${{ parameters.enable_cicd }}'
+      name: Setup GitHub Actions
+      action: fetch:template
+      input:
+        url: ./cicd-templates
+        targetPath: .github/workflows
+        values:
+          name: '${{ parameters.name }}'
+          has_database: '${{ parameters.database_type !== "none" }}'
+
+    # Publish to GitHub
+    - id: publish
+      name: Publish to GitHub
+      action: publish:github
+      input:
+        description: '${{ parameters.description }}'
+        repoUrl: 'github.com?owner=${{ parameters.github_owner }}&repo=${{ parameters.repository_name }}'
+        defaultBranch: main
+
+    # Register in catalog
+    - id: register
+      name: Register in Catalog
+      action: catalog:register
+      optional: true
+      input:
+        repoContentsUrl: '${{ steps.publish.output.repoContentsUrl }}'
+        catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      - title: Repository
+        url: '${{ steps.publish.output.remoteUrl }}'
+      - title: Catalog
+        url: '${{ steps.register.output.catalogInfoUrl }}'
+      - title: CI/CD Pipeline
+        url: '${{ steps.publish.output.remoteUrl }}/actions'
+        if: '${{ parameters.enable_cicd }}'
+```
+
+**Template-Funktionen:**
+
+* **Flexibel:** Benutzer wählen Datenbank, Dokumentation und CI/CD
+* **Bedingte Logik:** Fügt nur ausgewählte Funktionen hinzu
+* **Ausgabe-Verkettung:** Schritte nutzen vorherige Ergebnisse
+* **Fehlerresistent:** Optionale Katalogregistrierung
+* **Benutzerfreundlich:** Klare Ausgabe mit relevanten Links
+
+---
+
+## Benutzerdefinierte Aktionen
+
+Während integrierte Aktionen die meisten Anforderungen abdecken, können Organisationen benutzerdefinierte Aktionen für spezielle Integrationen erstellen:
+
+**Häufige Anwendungsfälle für benutzerdefinierte Aktionen**
+
+**Bereitstellung von Infrastruktur:**
+
+* Erstellen von AWS-Ressourcen (S3-Buckets, RDS-Datenbanken, Lambda-Funktionen)
+* Bereitstellen von GCP-Projekten und -Services
+* Einrichten von Azure-Ressourcengruppen
+
+**Integrations-Setup:**
+
+* Konfigurieren von Datadog-Dashboards
+* Erstellen von PagerDuty-Services
+* Einrichten von Monitoring-Warnmeldungen
+
+**Workflow-Automatisierung:**
+
+* Erstellen von Jira-Epics und -Tickets
+* Posten in Slack-Kanälen
+* Versenden von Willkommens-E-Mails
+
+**Sicherheit:**
+
+* Ausführen von Sicherheits-Scans
+* Erstellen von Tickets zur Schwachstellenverfolgung
+* Konfigurieren des Geheimnismanagements
+
+**Beispiel für eine benutzerdefinierte Aktion**
+
+```ts
+// packages/backend/src/plugins/scaffolder/actions/createDatadogDashboard.ts
+import { createTemplateAction } from '@backstage/plugin-scaffolder-node';
+
+export const createDatadogDashboard = () => {
+  return createTemplateAction({
+    id: 'custom:datadog:dashboard',
+    description: 'Creates a Datadog monitoring dashboard for a new service',
+    schema: {
+      input: {
+        serviceName: z =>
+          z.string({ description: 'The name of the service to monitor' }),
+        apiKey: z =>
+          z.string({ description: 'Datadog API key for authentication' }),
+      },
+    },
+    async handler(ctx) {
+      // Custom logic to create Datadog dashboard
+      const dashboard = await createDashboard(ctx.input.serviceName, ctx.input.apiKey);
+
+      // Set output that can be used by subsequent actions
+      ctx.output('dashboardUrl', dashboard.url);
+      ctx.output('dashboardId', dashboard.id);
+
+      // Log success for debugging
+      ctx.logger.info(`Created Datadog dashboard: ${dashboard.url}`);
+    },
+  });
+};
+```
+
+**Struktur der benutzerdefinierten Aktion erklärt:**
+
+* `id`: Eindeutiger Bezeichner mit dem Namensschema „namespace:entity:action“ (z. B. `custom:datadog:dashboard`)
+* `description`: Für Menschen lesbarer Zweck, der in der Aktionsdokumentation angezeigt wird
+* `schema.input`: Zod-Schema zur Definition der Eingabeparameter mit Beschreibungen
+* `handler`: Asynchrone Funktion, die ein Kontextobjekt mit Eingaben, Logger und Workspace-Pfad erhält
+* `ctx.output()`: Setzt Ausgabewerte, auf die nachfolgende Aktionen zugreifen können
+* `ctx.logger`: Stellt Logging für Debugging und Monitoring bereit
+
+**Vorteile benutzerdefinierter Aktionen:**
+
+* **Organisationsspezifisch:** Integration in die eigene Toolchain
+* **Automatisierung:** Reduziert manuelle Einrichtungsschritte
+* **Konsistenz:** Stellt jedes Mal eine korrekte Konfiguration sicher
+* **Produktivität:** Entwickler konzentrieren sich auf Code statt Infrastruktur
+* **Wiederverwendbarkeit:** Einmal schreiben, in mehreren Templates nutzen
+
+---
+
+## Best Practices
+
+**Aktionsdesign**
+
+* Aktionen atomar halten: Jede Aktion erledigt eine Sache gut
+* Bedingungen sinnvoll einsetzen: Nicht mit zu vielen Verzweigungen überkomplizieren
+* Ausgaben effektiv verketten: Daten sauber zwischen Schritten übergeben
+* Fehler robust behandeln: `optional: true` für nicht kritische Schritte verwenden
+
+**Template-Organisation**
+
+* Verantwortlichkeiten trennen: Skeleton, `cicd-templates` und `database-templates` getrennt halten
+* Parameter dokumentieren: Klare Beschreibungen und Validierung
+* Gründlich testen: Alle bedingten Pfade ausprobieren
+* Feedback geben: `debug:log` zur Fehleranalyse nutzen
+
+**Benutzererlebnis**
+
+* Sinnvolle Standardwerte: Häufige Werte vorausfüllen
+* Progressive Offenlegung: Einfach starten, Optionen schrittweise hinzufügen
+* Klare Ausgabe: Zeigen, was erstellt wurde und wie es weitergeht
+* Fehlermeldungen: Umsetzbare Fehlerinformationen bereitstellen
+
+---
+
+## Nächste Schritte
+
+Das Verständnis erweiterter Muster bereitet dich darauf vor:
+
+✅ Flexible Templates mit bedingten Funktionen zu erstellen
+
+✅ Aktionen mithilfe von Schritt-Ausgaben zu verketten
+
+✅ Produktionsreife mehrstufige Workflows zu bauen
+
+✅ Benutzerdefinierte Aktionen für Organisationsanforderungen zu entwerfen
+
+✅ Best Practices für wartbare Templates anzuwenden
+
+Im praktischen Lab wirst du ein vollständiges Template mit diesen erweiterten Mustern erstellen, um einen produktionsreifen Projektgenerator zu bauen.
+
+Erweiterte Scaffolder-Muster verwandeln Templates von einfachen Generatoren in ausgefeilte Automatisierungen, die sich an Entwicklerbedürfnisse anpassen und sich nahtlos in deine Entwicklungs-Toolchain integrieren.
+
+---
+
+## Kernaussagen
+
+* Bedingte Aktionen mit der Eigenschaft `if` ermöglichen flexible Templates, die sich an Benutzerentscheidungen anpassen
+* Schritt-Ausgaben erlauben Verkettungen, bei denen jede Aktion Ergebnisse vorheriger Schritte nutzt
+* Vollständige Pipelines kombinieren Fetch-, bedingte Logik-, Publish- und Register-Aktionen
+* Benutzerdefinierte Aktionen erweitern Templates zur Integration organisationsspezifischer Tools und Workflows
+* Best Practices umfassen atomare Aktionen, klare Fehlerbehandlung und gründliche Tests
+* Produktions-Templates balancieren Flexibilität und Einfachheit für ein optimales Entwicklererlebnis
+
+---
+
+## Zusätzliche Ressourcen
+
+**Built-in Actions Reference**
+documentation
+
+**Writing Custom Actions**
+documentation
+
+**Template Writing Guide**
+documentation
+
+---
+
+## Kursnotizen (Privat)
+
+Mache dir private Notizen, während du lernst…
+
+## Lerngruppe
+
+Zu diesem Kurs ist noch keine Lerngruppe verknüpft.
+
+Bitte deinen Kursleiter, eine Lerngruppe zu verknüpfen, um Diskussionen zu ermöglichen.
+
+
+
+
+
+
+
+
+
 
 
 
