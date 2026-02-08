@@ -147,7 +147,6 @@ Templates bestehen aus mehreren zentralen Bestandteilen:
 
 ---
 
-````md
 ## Was sind Software-Templates in Backstage?
 
 Software-Templates (auch **Scaffolder** genannt) helfen Entwicklerinnen und Entwicklern, neue Projekte schnell zu erstellen und dabei organisatorische Standards einzuhalten. Sie lösen mehrere Herausforderungen:
@@ -159,16 +158,16 @@ Software-Templates (auch **Scaffolder** genannt) helfen Entwicklerinnen und Entw
 
 Man kann sich Templates als „Baupläne“ oder „Cookiecutter“-Werkzeuge vorstellen, die mit nur wenigen Formulareingaben vollständige, sofort einsatzbereite Projekte generieren.
 
----
+
 
 ## Schritt 1: Verzeichnisstruktur für das Template erstellen
+
 
 Erstellen Sie zunächst die grundlegende Struktur für Ihr Template. Im Terminal-Tab:
 
 ```bash
 cd /root/labs/developer-portal
-````
-
+```
 Erstellen Sie ein Templates-Verzeichnis:
 
 ```bash
@@ -181,11 +180,20 @@ Navigieren Sie in Ihr Template-Verzeichnis:
 cd templates/nodejs-service-template
 ```
 
+<img width="912" height="753" alt="image" src="https://github.com/user-attachments/assets/47107061-fa25-4feb-8077-f6e2b6f80a29" />
+
+
+
+
+
+
+
 Erstellen Sie Verzeichnisse für die Template-Komponenten:
 
 ```bash
 mkdir -p skeleton docs
 ```
+
 
 ### Erklärung der Verzeichnisstruktur:
 
@@ -355,6 +363,7 @@ Im nächsten Schritt erstellen Sie das Benutzereingabeformular (Parameter-Sektio
 Sie haben erfolgreich Template-Metadaten definiert, die Ihr Template auffindbar machen und seinen Zweck klar kommunizieren. Diese Grundlage stellt sicher, dass Entwickler Ihr Template finden und verstehen, bevor sie es verwenden.
 
 ```
+
 
 
 
