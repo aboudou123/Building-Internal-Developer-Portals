@@ -600,9 +600,67 @@ Catalog Configuration
  # 4- **“Build Your First Template”** 
  
 ====================================
+
+**Über dieses Lab**
+
+Lerne, Software Templates mit dem Backstage Scaffolder zu erstellen. Entwickle ein Template, das Node.js-Projekte generiert, sich in Git-Provider integriert und neue Services automatisch im Katalog registriert.
+
+Du lernst:
+
+* Die Template-Architektur und Scaffolding-Konzepte zu verstehen
+* Template-Metadaten mit korrekten Parametern und Validierung zu definieren
+* Benutzer-Eingabeformulare mit dynamischen Feldtypen zu erstellen
+* Template-Skeletons mit parametrisierter Dateigenerierung zu bauen
+* Scaffolding-Schritte für Projekterstellung und Git-Integration zu definieren
+* Die automatische Katalogregistrierung für neue Services zu konfigurieren
+* Template-Workflows zu testen und häufige Probleme zu beheben
+
+Dieses praxisorientierte Lab demonstriert die Erstellung von Golden Paths und Self-Service-Entwicklungsworkflows.
+
+**Wichtige Ressourcen:**
+
+* Software Templates
+* Writing Templates
+* Scaffolder Actions
+
+---
+
+**Was du lernen wirst (7 Aufgaben)**
+
+**1**
+**Backstage Software Templates verstehen**
+Erkunde bestehende Templates, um zu verstehen, wie der Backstage Scaffolder funktioniert und aus welchen Komponenten ein Software Template besteht.
+
+**2**
+**Template-Metadaten definieren**
+Definiere den Metadaten-Bereich eines Software Templates, damit es für Entwicklungsteams auffindbar und nutzbar ist.
+
+**3**
+**Das Benutzer-Eingabeformular erstellen**
+Erstelle den Parameter-Bereich, der das Formular definiert, das Entwickler beim Verwenden deines Templates ausfüllen.
+
+**4**
+**Das Template-Skeleton erstellen**
+Erstelle die Skeleton-Dateien, die als Vorlagen für die Generierung neuer Projekte mit Platzhalter-Variablen dienen.
+
+**5**
+**Die Scaffolding-Schritte definieren**
+Definiere die Scaffolding-Schritte, die steuern, wie dein Template Projekte generiert.
+
+**6**
+**Die Template-Ausgabe konfigurieren**
+Konfiguriere den Output-Bereich, der Benutzern anzeigt, was erstellt wurde und wie sie nach der Generierung darauf zugreifen können.
+
+**7**
+**Templates testen und veröffentlichen**
+Richte die GitHub-Authentifizierung ein und teste dein vollständiges Template, indem du es Ende-zu-Ende ausführst und ein echtes Repository erstellst.
+
+
+
 ====================================
 
-# 4- „Build Your First Template“
+# - Template Eklärung
+================================
 
 1. Verständnis von Backstage Software Templates
    Ziel: Lernen, wie Templates die Projekterstellung automatisieren.
@@ -2215,6 +2273,7 @@ Dieses praxisnahe Lab automatisiert die Katalogverwaltung und demonstriert skali
    Erstelle Test-Repositories mit Catalog-Entities und beobachte, wie Backstage diese automatisch über das Scannen der GitHub-Organisation entdeckt.
 
 ---
+
 
 
 
