@@ -231,7 +231,9 @@ Speichern Sie diese Datei als
 
 Wie mache ich das?
 
+
 yamllint template.yaml
+
 
 Dann
 
@@ -375,6 +377,7 @@ Im nächsten Schritt erstellen Sie das Benutzereingabeformular (Parameter-Sektio
 Sie haben erfolgreich Template-Metadaten definiert, die Ihr Template auffindbar machen und seinen Zweck klar kommunizieren. Diese Grundlage stellt sicher, dass Entwickler Ihr Template finden und verstehen, bevor sie es verwenden.
 
 ```
+
 
 
 
