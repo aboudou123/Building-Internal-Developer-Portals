@@ -11,7 +11,10 @@ Das Verständnis, wie man diese Fehler diagnostiziert und behebt, ist essenziell
 ### Häufige Katalog-Fehler
 
 Backstage verarbeitet Entitäten in mehreren Schritten:
-**Discovery → Validation → Processing → Indexing**. Fehler können in jedem Schritt auftreten.
+
+**Discovery → Validation → Processing → Indexing**.
+
+Fehler können in jedem Schritt auftreten.
 
 #### 1. EntityRef Not Found
 
@@ -177,6 +180,7 @@ Backstage CLI Reference
 
 GitHub Integration for Backstage
 [documentation](https://backstage.io/docs/integrations/github/locations/)
+
 
 
 
