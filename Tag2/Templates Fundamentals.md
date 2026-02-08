@@ -2176,9 +2176,9 @@ Richte TechDocs für **Documentation-as-Code-Workflows** ein – inklusive **MkD
 
 ### Wichtige Ressourcen
 
-* **TechDocs Übersicht**
-* **TechDocs Einstieg**
-* **MkDocs Dokumentation**
+* **[TechDocs Übersicht](https://backstage.io/docs/features/techdocs/)**
+* **[TechDocs Einstieg](https://backstage.io/docs/features/techdocs/getting-started/)**
+* **[MkDocs Dokumentation](https://www.mkdocs.org/)**
 
 ---
 
@@ -2238,9 +2238,9 @@ Dieses praxisnahe Lab automatisiert die Katalogverwaltung und demonstriert skali
 
 **Wichtige Ressourcen:**
 
-* Discovery Overview
-* GitHub Discovery
-* GitHub Provider
+* [Discovery Overview](https://backstage.io/docs/auth/microsoft/provider/#configuration)
+* [GitHub Discovery](https://backstage.io/docs/integrations/github/discovery/)
+* [GitHub Provider](https://backstage.io/docs/integrations/github/org/#installation)
 
 **Was du lernen wirst (3 Aufgaben):**
 
@@ -2252,6 +2252,7 @@ Dieses praxisnahe Lab automatisiert die Katalogverwaltung und demonstriert skali
    Erstelle Test-Repositories mit Catalog-Entities und beobachte, wie Backstage diese automatisch über das Scannen der GitHub-Organisation entdeckt.
 
 ---
+
 
 
 
