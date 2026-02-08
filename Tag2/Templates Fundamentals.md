@@ -1,4 +1,7 @@
-## Backstage Software Templates: Fundamentals
+
+===============================================
+# 1- Backstage Software Templates: Fundamentals
+===============================================
 
 ### Problem ohne Templates
 
@@ -161,18 +164,17 @@ steps:
 ✅ Erleichtern Onboarding und produktive Entwicklung
 
 ---
-## Additional Resources
+## Zusätzliche Ressourcen
+
 Backstage Software Templates
 [documentation](https://backstage.io/docs/features/software-templates/)
 Template Writing Guide
 [documentation](https://backstage.io/docs/features/software-templates/writing-templates/)
 
 
-===========================================================
- # 2- Template Actions & Skeleton Content
-========================================================
-
-
+==========================================
+ # 2- Template-Aktionen und Skeleton-Inhalte
+==========================================
 ---
 
 ## Template Actions & Skeleton Content
@@ -2255,6 +2257,7 @@ Dieses praxisnahe Lab automatisiert die Katalogverwaltung und demonstriert skali
    Erstelle Test-Repositories mit Catalog-Entities und beobachte, wie Backstage diese automatisch über das Scannen der GitHub-Organisation entdeckt.
 
 ---
+
 
 
 
