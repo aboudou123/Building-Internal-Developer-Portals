@@ -156,9 +156,9 @@ packages/app/
 
 Was du beim Erkunden findest:
 
-App.tsx: Zentrale React-Komponente, die das gesamte Portal mit Navigation, Routing und Theme rendert
-components/: Verzeichnis für benutzerdefinierte UI-Komponenten, die auf die Anforderungen deines Portals zugeschnitten sind
-App.test.tsx: Automatisierte Tests zur Qualitätssicherung und zur Vermeidung von Regressionen
+*App.tsx*: Zentrale React-Komponente, die das gesamte Portal mit Navigation, Routing und Theme rendert
+*components/*: Verzeichnis für benutzerdefinierte UI-Komponenten, die auf die Anforderungen deines Portals zugeschnitten sind
+*App.test.tsx*: Automatisierte Tests zur Qualitätssicherung und zur Vermeidung von Regressionen
 
 ---
 
@@ -177,9 +177,9 @@ packages/backend/
 
 Was du beim Erkunden findest:
 
-index.ts: Einstiegspunkt, der den Backend-Server startet und Plugins lädt
-plugins/: Konfiguration der verschiedenen Backstage-Backend-Plugins
-types.ts: TypeScript-Definitionen für benutzerdefinierte Datenstrukturen
+*index.ts*: Einstiegspunkt, der den Backend-Server startet und Plugins lädt
+*plugins/*: Konfiguration der verschiedenen Backstage-Backend-Plugins
+*types.ts*: TypeScript-Definitionen für benutzerdefinierte Datenstrukturen
 
 Diese klare Trennung zwischen Frontend und Backend ermöglicht es Teams, beide unabhängig voneinander zu entwickeln und dennoch über die Monorepo-Struktur synchron zu halten.
 
@@ -352,17 +352,19 @@ Der Backend-Service (`packages/backend`) ist ein Node.js-API-Server, der Datenve
 Die Katalogkonfiguration definiert, wo Backstage Entitätsdefinitionen über dateibasierte Locations entdeckt
 Yarn Workspaces verwalten Abhängigkeiten über alle Pakete hinweg mit gemeinsamem Tooling und konsistenter Versionierung
 
-# Weiteren link
+### Additional Resources
 
-https://backstage.io/docs/overview/architecture-overview/
+[documentation](https://backstage.io/docs/overview/architecture-overview/)
 
-https://backstage.io/docs/conf/
+[documentation](https://backstage.io/docs/conf/)
 
 
-======================================================
+
+
+========================================
 # 2- Plugins, Build und Entwicklung
 
-==================================================
+=========================================
 **Plugins, Build und Entwicklung**
 Aufbauend auf deinem Verständnis der Struktur und Konfiguration von Backstage schauen wir uns nun an, wie das Plugin-System funktioniert, wie Builds verwaltet werden und welche Best Practices für Entwicklung und Anpassung gelten.
 
@@ -649,10 +651,10 @@ Das Verständnis dieser Entwicklungskonzepte macht dich deutlich effektiver dari
 ## Zusätzliche Ressourcen
 
 **Plugin-Entwicklung**
-documentation:https://backstage.io/docs/plugins/
+[documentation](https://backstage.io/docs/plugins/)
 
 **Backstage Architecture Overview**
-documentation:https://backstage.io/docs/overview/architecture-overview/
+[documentation](https://backstage.io/docs/overview/architecture-overview/)
 
 ---
 ====================================================
@@ -1169,12 +1171,12 @@ Saubere Entitätsbeziehungen ermöglichen Abhängigkeitsverfolgung, Kostenmanage
 
 ---
 
-====================================================
+====================================
 
 # Katalogorganisation und Discovery
 Jetzt, da du alle sechs Entitätstypen kennst, schauen wir uns an, wie du deinen Katalog effektiv organisierst, Entitäten über verschiedene Discovery-Methoden registrierst und Best Practices für langfristigen Erfolg anwendest.
 
-=====================================================
+=======================================
 
 **Katalogorganisation und Discovery**
 Jetzt, da du alle sechs Entitätstypen kennst, schauen wir uns an, wie du deinen Katalog effektiv organisierst, Entitäten über verschiedene Discovery-Methoden registrierst und Best Practices für langfristigen Erfolg anwendest.
@@ -1569,6 +1571,7 @@ Nach diesem Lab hast du einen vollständig funktionierenden Beispiel-Software-Ka
 * nachvollziehbaren Abhängigkeiten
 
 Damit hast du eine realistische Grundlage geschaffen, um Backstage als zentrales Entwicklerportal in einer Organisation einzusetzen.
+
 
 
 
