@@ -528,27 +528,8 @@ cat docs/README.md
 ```
 
 ---
+
 <img width="909" height="966" alt="image" src="https://github.com/user-attachments/assets/5dfd30ee-b023-4ae7-9d27-825732b34ebc" />
-
-
-
-
-
-Wenn du mir den nächsten Step vom Lehrer schickst (Step 5 usw.), sage ich dir wieder **genau** was du machen musst – ohne Extra-Gerede.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ### Tag-Strategie:
@@ -613,6 +594,11 @@ Speichern Sie diese Datei als
 `/root/labs/developer-portal/templates/nodejs-service-template/docs/README.md`.
 
 ---
+## Ergebnis
+
+<img width="909" height="966" alt="image" src="https://github.com/user-attachments/assets/5dfd30ee-b023-4ae7-9d27-825732b34ebc" />
+
+
 
 ## Template-Eigentümerschaft und Lebenszyklus verstehen
 
@@ -637,6 +623,7 @@ Im nächsten Schritt erstellen Sie das Benutzereingabeformular (Parameter-Sektio
 Sie haben erfolgreich Template-Metadaten definiert, die Ihr Template auffindbar machen und seinen Zweck klar kommunizieren. Diese Grundlage stellt sicher, dass Entwickler Ihr Template finden und verstehen, bevor sie es verwenden.
 
 ```
+
 
 
 
