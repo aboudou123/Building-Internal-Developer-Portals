@@ -68,9 +68,6 @@ Untersuchen Sie die Template-Struktur:
 cat sample-template.yaml
 ```
 root@patrickaboudou-backstage-dev-wrf:~
-
-# Sample Template YAML
-
 ```yaml
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
@@ -155,6 +152,7 @@ Templates bestehen aus mehreren zentralen Bestandteilen:
 * **Spec.output**: Links und Informationen, die nach der Erstellung angezeigt werden
 
 ---
+
 
 
 
