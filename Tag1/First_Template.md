@@ -305,6 +305,10 @@ metadata:
 Wie das  **Update** in meiner `template.yaml` (ersetzen/erweitern) gemacht wird.
 
 
+<img width="877" height="1071" alt="image" src="https://github.com/user-attachments/assets/1837bb47-4a31-48f6-83ec-006db2cf2f56" />
+
+
+
 ### 1) Datei öffnen
 
 ```bash
@@ -350,6 +354,187 @@ cat template.yaml
 Fertig.
 
 
+So machst du **Step 4: Template Documentation** sauber und ohne Fehler – genau in deinem Ordner-Setup (`docs/` existiert schon).
+
+## Ziel
+
+Du sollst eine Datei erstellen:
+
+`/root/labs/developer-portal/templates/nodejs-service-template/docs/README.md`
+
+mit dem Inhalt, den dein Lehrer gegeben hat.
+
+---
+
+## 1) Prüfen, dass du im richtigen Ordner bist
+
+```bash
+pwd
+ls
+```
+
+Du solltest sowas sehen:
+
+* `docs`
+* `skeleton`
+* `template.yaml`
+
+Wenn du im falschen Ordner bist, geh in deinen Template-Ordner:
+
+```bash
+cd /root/labs/developer-portal/templates/nodejs-service-template
+```
+
+---
+
+## 2) README im docs-Verzeichnis erstellen/bearbeiten
+
+Öffne die Datei mit nano (sie wird erstellt, falls sie noch nicht existiert):
+
+```bash
+nano docs/README.md
+```
+
+---
+
+## 3) Inhalt einfügen (genau so)
+
+Kopiere **alles** hier rein:
+
+```md
+# Node.js Microservice Template
+
+This template creates a production-ready Node.js microservice with industry best practices built-in.
+
+## What's Included
+
+- **Express.js** web framework with TypeScript
+- **Jest** testing framework with coverage reports
+- **Docker** containerization with multi-stage builds
+- **ESLint** and **Prettier** for code quality
+- **GitHub Actions** CI/CD pipeline
+- **Swagger/OpenAPI** documentation
+- **Health check** endpoints for monitoring
+
+## When to Use This Template
+
+Use this template when you need to create:
+- REST APIs and microservices
+- Backend services that integrate with other systems
+- Services that need to be containerized and deployed to Kubernetes
+- APIs that require formal documentation and testing
+
+## Don't Use This Template For
+
+- Frontend applications (use the React template instead)
+- Serverless functions (use the Lambda template)
+- Data processing jobs (use the Data Pipeline template)
+- Static websites or documentation sites
+
+## After Generation
+
+1. Review the generated `README.md` for service-specific setup
+2. Update the OpenAPI specification in `docs/api.yaml`
+3. Add your business logic to `src/routes/`
+4. Run tests with `npm test` 
+5. Start development with `npm run dev`
+
+## Support
+
+- **Template owner:** Platform Team
+- **Documentation:** https://docs.company.com/templates/nodejs
+- **Issues:** Contact platform-team@company.com
+```
+
+---
+
+## 4) Speichern und schließen (Nano)
+
+* Speichern: **CTRL + O**
+* Enter drücken
+* Schließen: **CTRL + X**
+
+---
+
+## 5) Kontrollieren, dass es wirklich gespeichert wurde
+
+```bash
+ls -la docs
+cat docs/README.md
+```
+
+Wenn `cat` den Text ausgibt, ist alles korrekt.
+
+---
+
+## Alternative (schneller, ohne Editor)
+
+Wenn du lieber **ohne nano** direkt erstellen willst, nutze das hier:
+
+```bash
+cat > docs/README.md <<'EOF'
+# Node.js Microservice Template
+
+This template creates a production-ready Node.js microservice with industry best practices built-in.
+
+## What's Included
+
+- **Express.js** web framework with TypeScript
+- **Jest** testing framework with coverage reports
+- **Docker** containerization with multi-stage builds
+- **ESLint** and **Prettier** for code quality
+- **GitHub Actions** CI/CD pipeline
+- **Swagger/OpenAPI** documentation
+- **Health check** endpoints for monitoring
+
+## When to Use This Template
+
+Use this template when you need to create:
+- REST APIs and microservices
+- Backend services that integrate with other systems
+- Services that need to be containerized and deployed to Kubernetes
+- APIs that require formal documentation and testing
+
+## Don't Use This Template For
+
+- Frontend applications (use the React template instead)
+- Serverless functions (use the Lambda template)
+- Data processing jobs (use the Lambda template)
+- Static websites or documentation sites
+
+## After Generation
+
+1. Review the generated `README.md` for service-specific setup
+2. Update the OpenAPI specification in `docs/api.yaml`
+3. Add your business logic to `src/routes/`
+4. Run tests with `npm test` 
+5. Start development with `npm run dev`
+
+## Support
+
+- **Template owner:** Platform Team
+- **Documentation:** https://docs.company.com/templates/nodejs
+- **Issues:** Contact platform-team@company.com
+EOF
+```
+
+<img width="887" height="1075" alt="image" src="https://github.com/user-attachments/assets/698b95ca-70b5-42a8-91ef-e6a0ef4f3119" />
+
+
+Danach prüfen:
+
+```bash
+cat docs/README.md
+```
+
+---
+<img width="909" height="966" alt="image" src="https://github.com/user-attachments/assets/5dfd30ee-b023-4ae7-9d27-825732b34ebc" />
+
+
+
+
+
+Wenn du mir den nächsten Step vom Lehrer schickst (Step 5 usw.), sage ich dir wieder **genau** was du machen musst – ohne Extra-Gerede.
 
 
 
@@ -452,6 +637,7 @@ Im nächsten Schritt erstellen Sie das Benutzereingabeformular (Parameter-Sektio
 Sie haben erfolgreich Template-Metadaten definiert, die Ihr Template auffindbar machen und seinen Zweck klar kommunizieren. Diese Grundlage stellt sicher, dass Entwickler Ihr Template finden und verstehen, bevor sie es verwenden.
 
 ```
+
 
 
 
