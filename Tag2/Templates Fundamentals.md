@@ -384,44 +384,53 @@ Writing Custom Actions
 ==============================================
 # 3- Template Integration and Best Practices
 ==============================================
+```md
+===================================
+3- Template-Integration und Best Practices
+===================================
 
+Hier ist eine strukturierte Zusammenfassung der Template-Integration und Best Practices für Backstage, die die wichtigsten Konzepte und Workflows abdeckt.
 
-# 3- Template-Integration und Best Practices
+---
 
-Hier ist eine strukturierte Zusammenfassung der Template-Integration und Best Practices für Backstage, die die wichtigsten Konzepte und Workflows abdeckt:
+## Golden-Path-Templates
 
-1. Golden-Path-Templates
-   Golden-Path-Templates sind der von Ihrer Organisation „empfohlene“ Weg zur Erstellung von Projekten.
+Golden-Path-Templates sind der von Ihrer Organisation „empfohlene“ Weg zur Erstellung von Projekten.
 
-Eigenschaften:
+### Eigenschaften
 
-Vollständige Einrichtung für den Produktivbetrieb
-Sicherheit standardmäßig (Scanning, Secrets-Management)
-Observability (Metriken, Logging, Tracing)
-CI/CD-Integration
-Dokumentation (README, API-Dokumentation, Runbooks)
+- Vollständige Einrichtung für den Produktivbetrieb  
+- Sicherheit standardmäßig (Scanning, Secrets-Management)  
+- Observability (Metriken, Logging, Tracing)  
+- CI/CD-Integration  
+- Dokumentation (README, API-Dokumentation, Runbooks)  
 
-Beispiel (Node.js Golden Path):
+### Beispiel (Node.js Golden Path)
 
-TypeScript, ESLint, Prettier
-Jest-Tests
-Docker & Containerisierung
-GitHub Actions CI/CD
-Prometheus-Metriken
-OpenAPI-Dokumentation
-Security-Scanning
+- TypeScript, ESLint, Prettier  
+- Jest-Tests  
+- Docker & Containerisierung  
+- GitHub Actions CI/CD  
+- Prometheus-Metriken  
+- OpenAPI-Dokumentation  
+- Security-Scanning  
 
-Vorteile:
+### Vorteile
 
-Reduziert Entscheidungsüberlastung bei Entwicklern
-Stellt Standards und Compliance sicher
-Integriert Sicherheit und Observability
-Beschleunigt das Onboarding
+- Reduziert Entscheidungsüberlastung bei Entwicklern  
+- Stellt Standards und Compliance sicher  
+- Integriert Sicherheit und Observability  
+- Beschleunigt das Onboarding  
 
-2. Template-Organisation
-   Organisieren Sie Templates logisch, um Wartbarkeit sicherzustellen:
+---
 
-Nach Technologie-Stack
+## Template-Organisation
+
+Organisieren Sie Templates logisch, um Wartbarkeit sicherzustellen.
+
+### Nach Technologie-Stack
+
+```
 
 templates/
 ├── nodejs-service/
@@ -429,7 +438,11 @@ templates/
 ├── react-frontend/
 └── golang-service/
 
-Nach Zweck
+```
+
+### Nach Zweck
+
+```
 
 templates/
 ├── microservice/
@@ -437,43 +450,65 @@ templates/
 ├── library/
 └── infrastructure/
 
-Nach Team
+```
+
+### Nach Team
+
+```
 
 templates/
 ├── backend-team/
 ├── frontend-team/
 └── platform-team/
 
-3. GitHub-Integration
-   Templates benötigen GitHub-Zugriff, um Repositories zu erstellen.
+```
 
-Konfiguration (app-config.yaml):
+---
+
+## GitHub-Integration
+
+Templates benötigen GitHub-Zugriff, um Repositories zu erstellen.
+
+### Konfiguration (app-config.yaml)
+
+```
 
 integrations:
 github:
-- host: github.com
+host: github.com
 token: ${GITHUB_TOKEN}
 
-Token-Anforderungen:
+```
 
-Scopes: repo, workflow, delete_repo
-Als Umgebungsvariable setzen: GITHUB_TOKEN
+### Token-Anforderungen
 
-Template-Registrierung
+- Scopes: `repo`, `workflow`, `delete_repo`  
+- Als Umgebungsvariable setzen: `GITHUB_TOKEN`  
+
+### Template-Registrierung
+
+```
 
 catalog:
 locations:
 - type: file
 target: ../../templates/nodejs-service-template/template.yaml
 
-4. Template-Discovery
-   Create-Component-UI:
+```
 
-Templates nach Kategorie, Technologie oder Team durchsuchen
-Suche nach Name/Beschreibung
-Details anzeigen (Beschreibung, Parameter, Owner)
+---
 
-Metadaten-Beispiel:
+## Template-Discovery
+
+### Create-Component-UI
+
+- Templates nach Kategorie, Technologie oder Team durchsuchen  
+- Suche nach Name/Beschreibung  
+- Details anzeigen (Beschreibung, Parameter, Owner)  
+
+### Metadaten-Beispiel
+
+```
 
 metadata:
 tags:
@@ -485,7 +520,11 @@ links:
 title: Template Documentation
 icon: docs
 
-Automatisierte Discovery (GitHub Provider):
+```
+
+### Automatisierte Discovery (GitHub Provider)
+
+```
 
 catalog:
 providers:
@@ -500,84 +539,95 @@ schedule:
 frequency:
 minutes: 30
 
-Vorteile:
+```
 
-Kein manueller Aufwand
-Immer aktuell
-Skalierbar auf Tausende von Repositories
+### Vorteile
 
-5. Backend-Modul-Registrierung
+- Kein manueller Aufwand  
+- Immer aktuell  
+- Skalierbar auf Tausende von Repositories  
+
+---
+
+## Backend-Modul-Registrierung
+
+```
 
 backend.add(import('@backstage/plugin-catalog-backend'));
 backend.add(import('@backstage/plugin-catalog-backend-module-github'));
 
-Erforderlich, damit der GitHub-Provider funktioniert
-Modernes Backstage verwendet ein modulares Backend-System
+```
 
-6. Template Best Practices
-   Design-Prinzipien:
-
-Einfach starten, dann Funktionen hinzufügen
-Alles für den Produktivbetrieb enthalten
-Templates aktuell halten
-Alles dokumentieren
-
-Parameter-Design:
-
-Sinnvolle Standardwerte
-Klare Validierung
-Hilfreiche Beschreibungen
-Intelligente UI-Komponenten
-
-Content-Organisation:
-
-Modulare Struktur
-Template-Kommentare
-Beispieldaten
-Cleanup-Anweisungen
-
-Templates testen:
-
-Nach jeder Änderung ausführen
-Ausgabe validieren
-Edge-Cases testen
-User-Tests durchführen
-
-Versionskontrolle:
-
-Änderungen mit Git nachverfolgen
-Updates dokumentieren
-Breaking Changes kommunizieren
-Template-Versionierung in Betracht ziehen
-
-7. Häufige Template-Muster
-   Microservice: REST-API, Datenbankintegration, Authentifizierung, Health-Checks, CI/CD, Monitoring
-   Frontend-App: React/Vue/Angular, State-Management, Routing, Testing, Deployment
-   Library: Sprachspezifische Struktur, Tests, Dokumentation, Package-Publishing
-
-8. Enterprise-Template-Strategien
-   Schrittweise Einführung: klein starten, Feedback sammeln, iterieren
-   Template-Governance: Owner festlegen, Review-Prozess, Deprecation-Policy
-   Erfolg messen: Adoptionsrate, Zeitersparnis, Entwicklerzufriedenheit, Compliance-Rate
-
-Wichtige Erkenntnisse
-Golden-Path-Templates stellen konsistente, sichere und beobachtbare Projekt-Setups sicher.
-GitHub-Integration + automatisierte Discovery eliminieren manuelle Katalog-Updates.
-Templates profitieren Entwicklern (Geschwindigkeit, Konsistenz), Organisationen (Standards) und Plattform-Teams (Automatisierung).
-Organisieren Sie Templates sorgfältig, testen Sie häufig und folgen Sie Governance-Regeln, um unternehmensweit zu skalieren.
-
-Zusätzliche Ressourcen
-GitHub Discovery Provider Dokumentation
-
-Backstage Integrations Dokumentation
-
-Template Best Practices Dokumentation
-
-Catalog Configuration Dokumentation
-
-
+- Erforderlich, damit der GitHub-Provider funktioniert  
+- Modernes Backstage verwendet ein modulares Backend-System  
 
 ---
+
+## Template Best Practices
+
+### Design-Prinzipien
+
+- Einfach starten, dann Funktionen hinzufügen  
+- Alles für den Produktivbetrieb enthalten  
+- Templates aktuell halten  
+- Alles dokumentieren  
+
+### Parameter-Design
+
+- Sinnvolle Standardwerte  
+- Klare Validierung  
+- Hilfreiche Beschreibungen  
+- Intelligente UI-Komponenten  
+
+### Content-Organisation
+
+- Modulare Struktur  
+- Template-Kommentare  
+- Beispieldaten  
+- Cleanup-Anweisungen  
+
+### Templates testen
+
+- Nach jeder Änderung ausführen  
+- Ausgabe validieren  
+- Edge-Cases testen  
+- User-Tests durchführen  
+
+### Versionskontrolle
+
+- Änderungen mit Git nachverfolgen  
+- Updates dokumentieren  
+- Breaking Changes kommunizieren  
+- Template-Versionierung in Betracht ziehen  
+
+---
+
+## Häufige Template-Muster
+
+- **Microservice:** REST-API, Datenbankintegration, Authentifizierung, Health-Checks, CI/CD, Monitoring  
+- **Frontend-App:** React/Vue/Angular, State-Management, Routing, Testing, Deployment  
+- **Library:** Sprachspezifische Struktur, Tests, Dokumentation, Package-Publishing  
+
+---
+
+## Enterprise-Template-Strategien
+
+- **Schrittweise Einführung:** klein starten, Feedback sammeln, iterieren  
+- **Template-Governance:** Owner festlegen, Review-Prozess, Deprecation-Policy  
+- **Erfolg messen:** Adoptionsrate, Zeitersparnis, Entwicklerzufriedenheit, Compliance-Rate  
+
+---
+
+## Wichtige Erkenntnisse
+
+- Golden-Path-Templates stellen konsistente, sichere und beobachtbare Projekt-Setups sicher.  
+- GitHub-Integration und automatisierte Discovery eliminieren manuelle Katalog-Updates.  
+- Templates profitieren Entwicklern (Geschwindigkeit, Konsistenz), Organisationen (Standards) und Plattform-Teams (Automatisierung).  
+- Sorgfältige Organisation, häufiges Testen und klare Governance ermöglichen Skalierung im gesamten Unternehmen.  
+
+---
+
+## Zusätzliche Ressourcen
 # Additional Resources
 
 GitHub Discovery Provider
@@ -592,9 +642,7 @@ Template Best Practices
 Catalog Configuration
 [documentation](https://backstage.io/docs/features/software-catalog/configuration/)
 
-
-
-
+--
 ====================================
 
  # 4- **“Build Your First Template”** 
@@ -2328,6 +2376,7 @@ Dieses praxisnahe Lab automatisiert die Katalogverwaltung und demonstriert skali
    Erstelle Test-Repositories mit Catalog-Entities und beobachte, wie Backstage diese automatisch über das Scannen der GitHub-Organisation entdeckt.
 
 ---
+
 
 
 
