@@ -229,6 +229,25 @@ spec:
 Speichern Sie diese Datei als
 `/root/labs/developer-portal/templates/nodejs-service-template/template.yaml`.
 
+Wie mache ich das?
+
+yamllint template.yaml
+
+Dann
+
+Ctrl + O
+Enter
+Ctrl + X
+
+## Prüfen, ob die Datei gespeichert wurde
+
+ls
+oder 
+cat template.yaml
+
+<img width="1011" height="196" alt="image" src="https://github.com/user-attachments/assets/fe4e2cf5-03ce-4178-9ff4-399fa36d8c8f" />
+
+
 ### Erklärung der wichtigsten Metadatenfelder:
 
 * **apiVersion**: Verwendet die Scaffolder-API-Version von Backstage (immer `scaffolder.backstage.io/v1beta3`)
@@ -356,6 +375,7 @@ Im nächsten Schritt erstellen Sie das Benutzereingabeformular (Parameter-Sektio
 Sie haben erfolgreich Template-Metadaten definiert, die Ihr Template auffindbar machen und seinen Zweck klar kommunizieren. Diese Grundlage stellt sicher, dass Entwickler Ihr Template finden und verstehen, bevor sie es verwenden.
 
 ```
+
 
 
 
