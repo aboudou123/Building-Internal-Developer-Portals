@@ -354,3 +354,306 @@ Yarn Workspaces verwalten Abhängigkeiten über alle Pakete hinweg mit gemeinsam
 https://backstage.io/docs/overview/architecture-overview/
 
 https://backstage.io/docs/conf/
+
+
+======================================================
+# Plugins, Build und Entwicklung
+
+==================================================
+**Plugins, Build und Entwicklung**
+Aufbauend auf deinem Verständnis der Struktur und Konfiguration von Backstage schauen wir uns nun an, wie das Plugin-System funktioniert, wie Builds verwaltet werden und welche Best Practices für Entwicklung und Anpassung gelten.
+
+---
+
+## Plugin-System – Deep Dive
+
+Alles in Backstage ist als Plugin umgesetzt, einschließlich der Kernfunktionen.
+
+### Plugin-Typen
+
+**Frontend-Plugins:**
+
+* Stellen React-Komponenten und Seiten bereit
+* Verarbeiten Benutzerinteraktionen
+* Kommunizieren mit Backend-APIs
+
+**Backend-Plugins:**
+
+* Stellen REST-APIs bereit
+* Übernehmen Datenverarbeitung
+* Integrieren externe Systeme
+
+---
+
+### Plugin-Erkennung
+
+Backstage erkennt Plugins automatisch in folgenden Verzeichnissen:
+
+* `packages/app/src/plugins/` (Frontend)
+* `packages/backend/src/plugins/` (Backend)
+* `plugins/` (benutzerdefinierte Plugins)
+
+---
+
+## Datenbank und Storage
+
+### Entwicklungsdatenbank
+
+Standardmäßig verwendet Backstage SQLite für die Entwicklung:
+
+```
+backend:
+  database:
+    client: better-sqlite3
+    connection: ':memory:'
+```
+
+Dies erzeugt eine In-Memory-Datenbank, die bei jedem Neustart zurückgesetzt wird.
+
+---
+
+### Datenbank-Migrationen
+
+Schemaänderungen werden über Migrationen in `packages/backend/migrations/` verwaltet:
+
+* Automatische Migration beim Start
+* Versionskontrollierte Schemaänderungen
+* Unterstützung für Rollbacks bei Downgrades
+
+---
+
+## Architektur des Katalogsystems
+
+Der Softwarekatalog ist das Herzstück des Datenmodells von Backstage.
+
+### Speicherung von Entitäten
+
+Entitäten werden als YAML-Dateien gespeichert und vom Katalog verarbeitet:
+
+* **Discovery**: Der Katalog findet Entitätsdateien
+* **Processing**: Entitäten werden validiert und angereichert
+* **Storage**: Speicherung in der Datenbank
+* **API**: Bereitstellung über eine REST-API
+* **UI**: Darstellung in Frontend-Komponenten
+
+---
+
+### Beziehungen zwischen Entitäten
+
+Entitäten referenzieren sich gegenseitig über Metadaten:
+
+```
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: my-service
+spec:
+  type: service
+  owner: team-alpha
+  system: payment-system
+  dependsOn:
+    - component:user-service
+```
+
+---
+
+## Build und Deployment
+
+### Development-Builds
+
+Der Befehl `yarn dev`:
+
+* Startet das Backend im Watch-Modus
+* Startet das Frontend mit Hot Reloading
+* Leitet API-Anfragen zwischen Frontend und Backend weiter
+
+---
+
+### Production-Builds
+
+Der Befehl `yarn build`:
+
+* Baut das Backend nach `packages/backend/dist/`
+* Baut das Frontend nach `packages/app/dist/`
+* Erstellt optimierte und minimierte Bundles
+
+---
+
+## Anpassungsmöglichkeiten
+
+Ein gutes Verständnis der Struktur erleichtert gezielte Anpassungen.
+
+### Frontend-Anpassung
+
+* **Theme**: Farben, Schriftarten und Abstände in `App.tsx` anpassen
+* **Layout**: Navigation und Seitenstruktur ändern
+* **Components**: Eigene UI-Komponenten hinzufügen
+* **Pages**: Neue Seiten und Routen erstellen
+
+---
+
+### Backend-Anpassung
+
+* **Plugins**: Neue Backend-Plugins hinzufügen
+* **APIs**: Eigene REST-Endpunkte erstellen
+* **Processors**: Katalog-Prozessoren erweitern
+* **Authentifizierung**: Auth-Provider konfigurieren
+
+---
+
+### Konfigurationsanpassung
+
+* **Catalog Locations**: Neue Entitätsquellen hinzufügen
+* **Plugin Settings**: Verhalten von Plugins konfigurieren
+* **Integrationen**: Externe Tools anbinden
+* **Berechtigungen**: Zugriffskontrolle einrichten
+
+---
+
+## Best Practices für die Entwicklung
+
+### Dateiorganisation
+
+* Zusammengehörige Komponenten beieinander halten
+* Klare, aussagekräftige Dateinamen verwenden
+* TypeScript-Namenskonventionen einhalten
+* Business-Logik von der UI trennen
+
+---
+
+### Konfigurationsmanagement
+
+* Umgebungsvariablen für Secrets verwenden
+* Entwicklungs-Konfigurationen versionieren
+* Separate Konfigurationen für verschiedene Umgebungen nutzen
+* Konfigurationsoptionen dokumentieren
+
+---
+
+### Plugin-Entwicklung
+
+* Bestehende Plugins als Vorlage nutzen
+* Dem Plugin-Development-Guide folgen
+* TypeScript für Typsicherheit einsetzen
+* Tests für eigenen Code schreiben
+
+---
+
+## Häufige Dateimuster
+
+### Frontend-Dateien
+
+* `.tsx`: React-Komponenten mit JSX
+* `.ts`: TypeScript-Hilfsfunktionen
+* `.test.tsx`: Komponententests
+* `index.ts`: Barrel-Exports
+
+### Backend-Dateien
+
+* `.ts`: TypeScript-Server-Code
+* `.test.ts`: Unit-Tests
+* `router.ts`: Express-Routen-Handler
+* `service.ts`: Business-Logik
+
+### Konfigurationsdateien
+
+* `.yaml`: Konfigurationsdateien
+* `.json`: Package-Manifeste
+* `.env`: Umgebungsvariablen
+* `.md`: Dokumentation
+
+---
+
+## Debugging und Troubleshooting
+
+### Log-Quellen
+
+* **Frontend**: Browser-Entwicklerkonsole
+* **Backend**: Terminal, in dem `yarn dev` läuft
+* **Datenbank**: Backend-Logs zeigen SQL-Abfragen
+* **Build**: Webpack-Ausgaben in den Frontend-Logs
+
+---
+
+### Source Maps
+
+Development-Builds enthalten Source Maps für das Debugging:
+
+* Breakpoints im ursprünglichen TypeScript setzen
+* Originale Dateinamen in Stacktraces sehen
+* Debugging über die Browser-Developer-Tools
+
+---
+
+## Abhängigkeiten verstehen
+
+### Kernabhängigkeiten
+
+**Frontend:**
+
+* `@backstage/core-components`: UI-Komponentenbibliothek
+* `@backstage/core-app-api`: Frontend-Framework
+* `react` und `react-router`: UI-Framework
+
+**Backend:**
+
+* `@backstage/backend-common`: Backend-Framework
+* `@backstage/catalog-model`: Entitätsdefinitionen
+* `express`: Webserver-Framework
+
+---
+
+### Plugin-Abhängigkeiten
+
+Jedes Plugin deklariert seine eigenen Abhängigkeiten:
+
+* Frontend-Plugins hängen von React-Komponenten ab
+* Backend-Plugins hängen von Datenbank-Clients ab
+* Manche Plugins besitzen sowohl Frontend- als auch Backend-Anteile
+
+---
+
+## Nächste Schritte
+
+Nachdem du nun das Plugin-System, den Build-Prozess und die Entwicklungs-Workflows von Backstage verstehst:
+
+✅ Verständnis dafür, wie Plugins die gesamte Backstage-Funktionalität ermöglichen
+✅ Wissen, wie Builds für Entwicklung und Produktion erstellt werden
+✅ Vertraut mit Anpassungsmöglichkeiten für Theme, Layout und Funktionalität
+✅ Bereit, mit dem Softwarekatalog zu arbeiten
+
+In der nächsten Lektion tauchen wir tief in den Softwarekatalog ein und lernen die sechs Entitätstypen kennen, mit denen Services, Teams und Dokumentation organisiert werden.
+
+Das Verständnis dieser Entwicklungskonzepte macht dich deutlich effektiver darin, Backstage an die Anforderungen deiner Organisation anzupassen und zu erweitern.
+
+---
+
+## Zentrale Punkte
+
+* Das Plugin-System treibt sämtliche Backstage-Funktionen an – mit Frontend-Plugins (React-Komponenten) und Backend-Plugins (REST-APIs)
+* SQLite-In-Memory-Datenbank für die Entwicklung mit automatischen Migrationen und versionskontrollierten Schemaänderungen
+* Der Katalog verarbeitet Entitäten über die Pipeline: Discovery → Validierung → Storage → API → UI
+* Development-Builds nutzen Hot Reloading und Watch-Modus, Production-Builds erzeugen optimierte Bundles
+* Anpassungsmöglichkeiten umfassen Frontend-Theme/Layout, Backend-Plugins/APIs und Konfigurationseinstellungen
+* Best Practices: saubere Dateistruktur, Umgebungsvariablen für Secrets, TypeScript für Sicherheit, Tests für Qualität
+* Debugging über Browser-Konsole (Frontend), Terminal-Logs (Backend) und Source Maps für Breakpoint-Debugging
+
+---
+
+## Zusätzliche Ressourcen
+
+**Plugin-Entwicklung**
+documentation:https://backstage.io/docs/plugins/
+
+**Backstage Architecture Overview**
+documentation:https://backstage.io/docs/overview/architecture-overview/
+
+---
+
+
+
+
+
+
+
+
