@@ -984,7 +984,7 @@ Template über die Create-Component-UI ausführen.
 - Verwenden Sie bedingte Nunjucks-Templates für optionale Funktionalität.  
 - Halten Sie Skeleton und Parameter übersichtlich und gut organisiert.  
 - Dokumentieren Sie Schritte in der `README.md` im Skeleton, um Entwickler anzuleiten.
-```
+
 
 
 ====================================
