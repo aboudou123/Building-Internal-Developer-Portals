@@ -386,225 +386,196 @@ Writing Custom Actions
 ==============================================
 
 
-Here’s a structured summary of **Template Integration and Best Practices** for Backstage, capturing the key concepts and workflow:
+# 3- Template-Integration und Best Practices
 
----
+Hier ist eine strukturierte Zusammenfassung der Template-Integration und Best Practices für Backstage, die die wichtigsten Konzepte und Workflows abdeckt:
 
-## **1. Golden Path Templates**
+1. Golden-Path-Templates
+   Golden-Path-Templates sind der von Ihrer Organisation „empfohlene“ Weg zur Erstellung von Projekten.
 
-Golden Path templates are your organization’s "blessed" way to create projects.
+Eigenschaften:
 
-**Characteristics:**
+Vollständige Einrichtung für den Produktivbetrieb
+Sicherheit standardmäßig (Scanning, Secrets-Management)
+Observability (Metriken, Logging, Tracing)
+CI/CD-Integration
+Dokumentation (README, API-Dokumentation, Runbooks)
 
-* Complete setup for production
-* Security by default (scanning, secrets management)
-* Observability (metrics, logging, tracing)
-* CI/CD integration
-* Documentation (README, API docs, runbooks)
+Beispiel (Node.js Golden Path):
 
-**Example (Node.js Golden Path):**
+TypeScript, ESLint, Prettier
+Jest-Tests
+Docker & Containerisierung
+GitHub Actions CI/CD
+Prometheus-Metriken
+OpenAPI-Dokumentation
+Security-Scanning
 
-* TypeScript, ESLint, Prettier
-* Jest testing
-* Docker & containerization
-* GitHub Actions CI/CD
-* Prometheus metrics
-* OpenAPI docs
-* Security scanning
+Vorteile:
 
-**Benefits:**
+Reduziert Entscheidungsüberlastung bei Entwicklern
+Stellt Standards und Compliance sicher
+Integriert Sicherheit und Observability
+Beschleunigt das Onboarding
 
-* Reduce developer decision fatigue
-* Ensure standards and compliance
-* Embed security and observability
-* Accelerate onboarding
+2. Template-Organisation
+   Organisieren Sie Templates logisch, um Wartbarkeit sicherzustellen:
 
----
+Nach Technologie-Stack
 
-## **2. Template Organization**
-
-Organize templates logically for maintainability:
-
-**By Technology Stack**
-
-```
 templates/
 ├── nodejs-service/
 ├── python-service/
 ├── react-frontend/
 └── golang-service/
-```
 
-**By Purpose**
+Nach Zweck
 
-```
 templates/
 ├── microservice/
 ├── frontend-app/
 ├── library/
 └── infrastructure/
-```
 
-**By Team**
+Nach Team
 
-```
 templates/
 ├── backend-team/
 ├── frontend-team/
 └── platform-team/
-```
 
----
+3. GitHub-Integration
+   Templates benötigen GitHub-Zugriff, um Repositories zu erstellen.
 
-## **3. GitHub Integration**
+Konfiguration (app-config.yaml):
 
-Templates require GitHub access to create repositories.
-
-**Configuration (`app-config.yaml`):**
-
-```yaml
 integrations:
-  github:
-    - host: github.com
-      token: ${GITHUB_TOKEN}
-```
+github:
+- host: github.com
+token: ${GITHUB_TOKEN}
 
-**Token Requirements:**
+Token-Anforderungen:
 
-* Scopes: `repo`, `workflow`, `delete_repo`
-* Set as environment variable: `GITHUB_TOKEN`
+Scopes: repo, workflow, delete_repo
+Als Umgebungsvariable setzen: GITHUB_TOKEN
 
-**Template Registration**
+Template-Registrierung
 
-```yaml
 catalog:
-  locations:
-    - type: file
-      target: ../../templates/nodejs-service-template/template.yaml
-```
+locations:
+- type: file
+target: ../../templates/nodejs-service-template/template.yaml
 
----
+4. Template-Discovery
+   Create-Component-UI:
 
-## **4. Template Discovery**
+Templates nach Kategorie, Technologie oder Team durchsuchen
+Suche nach Name/Beschreibung
+Details anzeigen (Beschreibung, Parameter, Owner)
 
-**Create Component UI**:
+Metadaten-Beispiel:
 
-* Browse templates by category, tech, or team
-* Search by name/description
-* View details (description, parameters, owner)
-
-**Metadata Example:**
-
-```yaml
 metadata:
-  tags:
-    - recommended
-    - nodejs
-    - microservice
-  links:
-    - url: https://docs.company.com/templates/nodejs
-      title: Template Documentation
-      icon: docs
-```
+tags:
+- recommended
+- nodejs
+- microservice
+links:
+- url: [https://docs.company.com/templates/nodejs](https://docs.company.com/templates/nodejs)
+title: Template Documentation
+icon: docs
 
-**Automated Discovery (GitHub Provider):**
+Automatisierte Discovery (GitHub Provider):
 
-```yaml
 catalog:
-  providers:
-    github:
-      backstageProvider:
-        organization: 'your-github-org'
-        catalogPath: '/catalog-info.yaml'
-        filters:
-          branch: 'main'
-          repository: '.*'
-        schedule:
-          frequency:
-            minutes: 30
-```
+providers:
+github:
+backstageProvider:
+organization: 'your-github-org'
+catalogPath: '/catalog-info.yaml'
+filters:
+branch: 'main'
+repository: '.*'
+schedule:
+frequency:
+minutes: 30
 
-**Benefits:**
+Vorteile:
 
-* Zero manual work
-* Always up-to-date
-* Scalable to thousands of repos
+Kein manueller Aufwand
+Immer aktuell
+Skalierbar auf Tausende von Repositories
 
----
+5. Backend-Modul-Registrierung
 
-## **5. Backend Module Registration**
-
-```ts
 backend.add(import('@backstage/plugin-catalog-backend'));
 backend.add(import('@backstage/plugin-catalog-backend-module-github'));
-```
 
-* Needed for GitHub provider to work
-* Modern Backstage uses modular backend system
+Erforderlich, damit der GitHub-Provider funktioniert
+Modernes Backstage verwendet ein modulares Backend-System
 
----
+6. Template Best Practices
+   Design-Prinzipien:
 
-## **6. Template Best Practices**
+Einfach starten, dann Funktionen hinzufügen
+Alles für den Produktivbetrieb enthalten
+Templates aktuell halten
+Alles dokumentieren
 
-**Design Principles:**
+Parameter-Design:
 
-* Start simple, then add features
-* Include everything for production
-* Keep templates up to date
-* Document everything
+Sinnvolle Standardwerte
+Klare Validierung
+Hilfreiche Beschreibungen
+Intelligente UI-Komponenten
 
-**Parameter Design:**
+Content-Organisation:
 
-* Sensible defaults
-* Clear validation
-* Helpful descriptions
-* Smart UI components
+Modulare Struktur
+Template-Kommentare
+Beispieldaten
+Cleanup-Anweisungen
 
-**Content Organization:**
+Templates testen:
 
-* Modular structure
-* Template comments
-* Example data
-* Cleanup instructions
+Nach jeder Änderung ausführen
+Ausgabe validieren
+Edge-Cases testen
+User-Tests durchführen
 
-**Testing Templates:**
+Versionskontrolle:
 
-* Run after every change
-* Validate output
-* Test edge cases
-* User testing
+Änderungen mit Git nachverfolgen
+Updates dokumentieren
+Breaking Changes kommunizieren
+Template-Versionierung in Betracht ziehen
 
-**Version Control:**
+7. Häufige Template-Muster
+   Microservice: REST-API, Datenbankintegration, Authentifizierung, Health-Checks, CI/CD, Monitoring
+   Frontend-App: React/Vue/Angular, State-Management, Routing, Testing, Deployment
+   Library: Sprachspezifische Struktur, Tests, Dokumentation, Package-Publishing
 
-* Track changes with Git
-* Document updates
-* Communicate breaking changes
-* Consider template versioning
+8. Enterprise-Template-Strategien
+   Schrittweise Einführung: klein starten, Feedback sammeln, iterieren
+   Template-Governance: Owner festlegen, Review-Prozess, Deprecation-Policy
+   Erfolg messen: Adoptionsrate, Zeitersparnis, Entwicklerzufriedenheit, Compliance-Rate
 
----
+Wichtige Erkenntnisse
+Golden-Path-Templates stellen konsistente, sichere und beobachtbare Projekt-Setups sicher.
+GitHub-Integration + automatisierte Discovery eliminieren manuelle Katalog-Updates.
+Templates profitieren Entwicklern (Geschwindigkeit, Konsistenz), Organisationen (Standards) und Plattform-Teams (Automatisierung).
+Organisieren Sie Templates sorgfältig, testen Sie häufig und folgen Sie Governance-Regeln, um unternehmensweit zu skalieren.
 
-## **7. Common Template Patterns**
+Zusätzliche Ressourcen
+GitHub Discovery Provider Dokumentation
 
-* **Microservice:** REST API, database integration, auth, health checks, CI/CD, monitoring
-* **Frontend App:** React/Vue/Angular, state management, routing, testing, deployment
-* **Library:** Language-specific structure, tests, docs, package publishing
+Backstage Integrations Dokumentation
 
----
+Template Best Practices Dokumentation
 
-## **8. Enterprise Template Strategies**
+Catalog Configuration Dokumentation
 
-* Gradual adoption: start small, gather feedback, iterate
-* Template governance: assign owners, review process, deprecation policy
-* Measure success: adoption rate, time savings, developer satisfaction, compliance rate
 
----
-
-### **Key Takeaways**
-
-* Golden Path templates ensure consistent, secure, and observable project setups.
-* GitHub integration + automated discovery eliminates manual catalog updates.
-* Templates benefit developers (speed, consistency), organizations (standards), and platform teams (automation).
-* Organize templates thoughtfully, test frequently, and follow governance to scale across an enterprise.
 
 ---
 # Additional Resources
@@ -629,153 +600,136 @@ Catalog Configuration
  # 4- **“Build Your First Template”** 
  
 ====================================
+====================================
 
----
+# 4- „Build Your First Template“
 
-## **1. Understanding Backstage Software Templates**
+1. Verständnis von Backstage Software Templates
+   Ziel: Lernen, wie Templates die Projekterstellung automatisieren.
 
-* **Goal:** Learn how templates automate project creation.
-* Explore:
+Erkunden:
 
-  * YAML template definitions (`template.yaml`)
-  * Skeleton directories (`skeleton/`)
-  * Parameters and forms
-  * Built-in actions (`fetch:template`, `publish:github`, `catalog:register`)
-* **Tip:** Compare with a pre-existing template in your catalog to see all pieces in context.
+YAML-Template-Definitionen (template.yaml)
+Skeleton-Verzeichnisse (skeleton/)
+Parameter und Formulare
+Integrierte Actions (fetch:template, publish:github, catalog:register)
 
----
+Tipp: Vergleichen Sie mit einem bestehenden Template in Ihrem Katalog, um alle Bestandteile im Kontext zu sehen.
 
-## **2. Defining Template Metadata**
+2. Definition von Template-Metadaten
+   Ziel: Das Template auffindbar und verständlich machen.
 
-* **Goal:** Make the template discoverable and understandable.
-* Key fields:
+Wichtige Felder:
 
-  * `metadata.name` – Unique identifier
-  * `metadata.title` – Human-readable title
-  * `metadata.description` – What the template does
-  * `metadata.tags` – Categories (e.g., `nodejs`, `microservice`)
-* **Spec:**
+metadata.name – Eindeutige Kennung
+metadata.title – Lesbarer Titel
+metadata.description – Zweck des Templates
+metadata.tags – Kategorien (z. B. nodejs, microservice)
 
-  * `spec.owner` – Team responsible for template
-  * `spec.type` – e.g., `service` or `library`
-* **Tip:** Proper metadata ensures the template appears in the Create Component UI.
+Spec:
 
----
+spec.owner – Verantwortliches Team für das Template
+spec.type – z. B. service oder library
 
-## **3. Creating the User Input Form**
+Tipp: Korrekte Metadaten stellen sicher, dass das Template in der Create-Component-UI erscheint.
 
-* **Goal:** Define what information developers provide when generating a project.
-* Create `parameters` section:
+3. Erstellung des User-Input-Formulars
+   Ziel: Definieren, welche Informationen Entwickler beim Generieren eines Projekts angeben.
 
-  * Required fields (e.g., `name`, `description`, `owner`)
-  * Validation: min/max length, regex patterns, enums
-  * UI hints: autofocus, textarea, pickers
-* **Tip:** Think about defaults and validation to reduce errors.
+Parameter-Sektion erstellen:
 
----
+Pflichtfelder (z. B. Name, Beschreibung, Owner)
+Validierung: Min-/Max-Länge, Regex-Patterns, Enums
+UI-Hinweise: Autofocus, Textarea, Picker
 
-## **4. Creating the Template Skeleton**
+Tipp: Denken Sie an Standardwerte und Validierung, um Fehler zu reduzieren.
 
-* **Goal:** Provide project files that will be copied and customized.
-* Skeleton folder structure example:
+4. Erstellung des Template-Skeletons
+   Ziel: Projektdateien bereitstellen, die kopiert und angepasst werden.
 
-  ```
-  skeleton/
-    ├── package.json
-    ├── tsconfig.json
-    ├── Dockerfile
-    ├── src/
-    │   └── index.ts
-    ├── catalog-info.yaml
-    └── README.md
-  ```
-* Use **Nunjucks** templating for variables and conditionals:
+Beispiel für eine Skeleton-Ordnerstruktur:
 
-  * `{{ values.name }}` → project name
-  * `{% if parameters.include_swagger %}` → conditional content
+skeleton/
+├── package.json
+├── tsconfig.json
+├── Dockerfile
+├── src/
+│   └── index.ts
+├── catalog-info.yaml
+└── README.md
 
----
+Verwenden Sie Nunjucks-Templating für Variablen und Bedingungen:
 
-## **5. Defining the Scaffolding Steps**
+{{ values.name }} → Projektname
+{% if parameters.include_swagger %} → Bedingter Inhalt
 
-* **Goal:** Orchestrate actions that generate projects.
-* Typical steps:
+5. Definition der Scaffolding-Schritte
+   Ziel: Actions orchestrieren, die Projekte generieren.
 
-  1. `fetch:template` → copy skeleton files
-  2. `fs:rename` → rename files if needed
-  3. `publish:github` → create repository
-  4. `catalog:register` → register entity in catalog
-* Steps can use outputs from previous steps:
-  `${{ steps.publish.output.repoContentsUrl }}`
+Typische Schritte:
 
----
+fetch:template → Skeleton-Dateien kopieren
+fs:rename → Dateien bei Bedarf umbenennen
+publish:github → Repository erstellen
+catalog:register → Entity im Katalog registrieren
 
-## **6. Configuring the Template Output**
+Schritte können Outputs vorheriger Schritte verwenden: ${{ steps.publish.output.repoContentsUrl }}
 
-* **Goal:** Provide developers with feedback and links after generation.
-* Example output section:
+6. Konfiguration der Template-Ausgabe
+   Ziel: Entwicklern Feedback und Links nach der Generierung bereitstellen.
 
-  ```yaml
-  output:
-    links:
-      - title: View Repository
-        url: '${{ steps.publish.output.remoteUrl }}'
-        icon: github
-      - title: View in Catalog
-        url: '${{ steps.register.output.catalogInfoUrl }}'
-        icon: catalog
-    text:
-      - title: Successfully Created ${{ parameters.name | title }}
-        content: |
-          Your new Node.js service is ready!
-          - Name: ${{ parameters.name }}
-          - Owner: ${{ parameters.owner }}
-          Next Steps:
-          1. Clone repo
-          2. Install dependencies
-          3. Start development
-  ```
+Beispiel für eine Output-Sektion:
 
----
+output:
+links:
+- title: View Repository
+url: '${{ steps.publish.output.remoteUrl }}'
+icon: github
+- title: View in Catalog
+url: '${{ steps.register.output.catalogInfoUrl }}'
+icon: catalog
+text:
+- title: Successfully Created ${{ parameters.name | title }}
+content: |
+Your new Node.js service is ready!
+- Name: ${{ parameters.name }}
+- Owner: ${{ parameters.owner }}
+Next Steps:
+1. Clone repo
+2. Install dependencies
+3. Start development
 
-## **7. Testing and Publishing Templates**
+7. Testen und Veröffentlichen von Templates
+   Ziel: Sicherstellen, dass Ihr Template Ende-zu-Ende funktioniert.
 
-* **Goal:** Ensure your template works end-to-end.
-* Steps:
+Schritte:
 
-  1. Configure GitHub integration in `app-config.yaml`:
+GitHub-Integration in app-config.yaml konfigurieren:
 
-     ```yaml
-     integrations:
-       github:
-         - host: github.com
-           token: ${GITHUB_TOKEN}
-     ```
-  2. Validate your template locally:
+integrations:
+github:
+- host: github.com
+token: ${GITHUB_TOKEN}
 
-     ```bash
-     npx @backstage/cli validate-entity template.yaml
-     ```
-  3. Execute the template via the **Create Component** UI.
-  4. Confirm:
+Template lokal validieren:
 
-     * Repo is created on GitHub
-     * Catalog entry appears in Backstage
-     * Skeleton files generated with correct variables
-* **Tip:** Test edge cases like optional parameters and invalid input.
+npx @backstage/cli validate-entity template.yaml
 
----
+Template über die Create-Component-UI ausführen.
 
-## **Lab Tips**
+Überprüfen:
 
-* Start simple: Basic Node.js project first, then add features.
-* Use conditional Nunjucks templates for optional functionality.
-* Keep skeleton and parameters organized for readability.
-* Document steps in README.md in skeleton to guide developers.
+Repository wird auf GitHub erstellt
+Katalogeintrag erscheint in Backstage
+Skeleton-Dateien werden mit korrekten Variablen generiert
 
----
+Tipp: Testen Sie Edge-Cases wie optionale Parameter und ungültige Eingaben.
 
-
+Lab-Tipps
+Einfach starten: Zuerst ein grundlegendes Node.js-Projekt, dann Funktionen hinzufügen.
+Verwenden Sie bedingte Nunjucks-Templates für optionale Funktionalität.
+Halten Sie Skeleton und Parameter übersichtlich und gut organisiert.
+Dokumentieren Sie Schritte in der README.md im Skeleton, um Entwickler anzuleiten.
 
 ====================================
 
@@ -2261,6 +2215,7 @@ Dieses praxisnahe Lab automatisiert die Katalogverwaltung und demonstriert skali
    Erstelle Test-Repositories mit Catalog-Entities und beobachte, wie Backstage diese automatisch über das Scannen der GitHub-Organisation entdeckt.
 
 ---
+
 
 
 
