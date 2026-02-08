@@ -15,7 +15,16 @@ Bevor Sie Ihr eigenes Template erstellen, sollten Sie vorhandene Templates unter
 systemctl status backstage
 ```
 
+<img width="838" height="680" alt="image" src="https://github.com/user-attachments/assets/420bdbc8-ea5f-4e0f-b6df-4bd0c89c5f17" />
+
+# Ergebnis
+<img width="1095" height="970" alt="image" src="https://github.com/user-attachments/assets/9004d71a-bdee-4fb0-b9fe-c1c8e2dc74d4" />
+
+
 Drücken Sie **q**, um die Statusansicht zu verlassen. Klicken Sie im Backstage-App-Tab in der Seitenleiste auf **Create**, um den Bereich **Software Templates** anzuzeigen.
+
+
+<img width="1072" height="731" alt="image" src="https://github.com/user-attachments/assets/4a29d274-db4f-4b2b-ae95-ad40b856731f" />
 
 ---
 
@@ -26,6 +35,7 @@ Untersuchen Sie die Standard-Templates, um deren Struktur zu verstehen. Suchen S
 ```bash
 find /root/labs/developer-portal -name "template.yaml" -o -name "*.yaml" | grep -i template
 ```
+<img width="1308" height="328" alt="image" src="https://github.com/user-attachments/assets/6bdebbc8-12fa-42e7-bab9-7154dcd9aa3d" />
 
 ---
 
@@ -67,3 +77,4 @@ Templates bestehen aus mehreren zentralen Bestandteilen:
 * **Spec.output**: Links und Informationen, die nach der Erstellung angezeigt werden
 
 ---
+
