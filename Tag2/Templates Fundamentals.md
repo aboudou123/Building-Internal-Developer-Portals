@@ -161,4 +161,218 @@ steps:
 ✅ Erleichtern Onboarding und produktive Entwicklung
 
 ---
+## Additional Resources
+Backstage Software Templates
+[documentation](https://backstage.io/docs/features/software-templates/)
+Template Writing Guide
+[documentation](https://backstage.io/docs/features/software-templates/writing-templates/)
+
+
+===========================================================
+ # 2- Template Actions & Skeleton Content
+========================================================
+
+
+---
+
+## Template Actions & Skeleton Content
+
+### 1. Template Actions – die Bausteine
+
+Backstage Actions führen die Logik eines Templates aus.
+
+**Häufig genutzte eingebaute Actions:**
+
+| Kategorie           | Action             | Zweck                                                                               |
+| ------------------- | ------------------ | ----------------------------------------------------------------------------------- |
+| File Operations     | `fetch:template`   | Kopiert und verarbeitet Template-Dateien aus Skeleton                               |
+|                     | `fs:rename`        | Dateien nach Generation umbenennen                                                  |
+| Git Integration     | `publish:github`   | GitHub Repository erstellen                                                         |
+|                     | `publish:gitlab`   | GitLab Repository erstellen                                                         |
+| Catalog Integration | `catalog:register` | Entity im Backstage Catalog registrieren                                            |
+| Custom Actions      | z.B.               | Kubernetes-Manifest erstellen, CI/CD konfigurieren, Cloud Ressourcen provisionieren |
+
+**Merke:** Actions können **optional** sein, d.h. Fehler brechen den Template-Lauf nicht ab (`optional: true`).
+
+---
+
+### 2. Skeleton Content – die Projektvorlage
+
+* Templates leben in einem `skeleton/`-Verzeichnis **neben** der `template.yaml`.
+* Beinhaltet **alle Dateien**, die im generierten Projekt entstehen sollen.
+* Dateien werden verarbeitet: **Variablen ersetzt, Struktur erhalten, Bedingungskontrolle**.
+
+**Beispielstruktur:**
+
+```
+nodejs-service-template/
+├── template.yaml
+├── skeleton/
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── Dockerfile
+│   ├── .gitignore
+│   ├── .env.example
+│   ├── README.md
+│   ├── catalog-info.yaml
+│   └── src/
+│       ├── index.ts
+│       └── routes/
+│           ├── health.ts
+│           └── api.ts
+├── cicd-templates/
+│   └── ci-pipeline.yml
+└── docs/
+    └── README.md
+```
+
+---
+
+### 3. Nunjucks Templating – dynamische Inhalte
+
+Backstage verwendet **Nunjucks** für Variable Substitution, Conditionals, Loops und Filter.
+
+**Variable Substitution:**
+
+```json
+{
+  "name": "${{ values.name }}",
+  "description": "${{ values.description }}",
+  "author": "${{ values.owner }}"
+}
+```
+
+**Conditional Content:**
+
+```ts
+{% if parameters.include_healthcheck %}
+app.use('/health', healthRoutes);
+{% endif %}
+```
+
+**Loops:**
+
+```ts
+{% for route in parameters.routes %}
+app.use('{{ route.path }}', {{ route.handler }});
+{% endfor %}
+```
+
+**Filters:**
+
+```yaml
+metadata:
+  name: ${{ values.name | replace("-", "_") }}
+  displayName: ${{ values.name | capitalize }}
+```
+
+* Nützliche Filter: `replace`, `upper`, `lower`, `capitalize`
+* Kombinierbar und für beliebige Dateitypen nutzbar (JSON, YAML, TS, etc.)
+
+---
+
+### 4. Template Output Section
+
+Definiert, was nach erfolgreicher Generierung angezeigt wird:
+
+```yaml
+output:
+  links:
+    - title: View Repository
+      url: '${{ steps.publish.output.remoteUrl }}'
+      icon: github
+    - title: View in Backstage Catalog
+      url: '${{ steps.register.output.catalogInfoUrl }}'
+      icon: catalog
+  text:
+    - title: Successfully Created ${{ parameters.name | title }}
+      content: |
+        Your new Node.js microservice has been generated!
+        **Next Steps:**
+        1. Clone repository
+        2. Install dependencies: npm install
+        3. Start development: npm run dev
+```
+
+* **Links:** Repository, Catalog, CI/CD, Docs
+* **Text:** Markdown-fähige Anweisungen
+* **Dynamische Inhalte:** Parameter und Step-Outputs
+
+---
+
+### 5. Best Practices
+
+* Ketten von Actions: Ausgabe eines Steps kann Input für den nächsten Step sein (`${{ steps.stepId.output.prop }}`)
+* Verwende Conditionals für optionale Features (Swagger, Healthchecks, DB)
+* Halte Skeleton sauber und dokumentiert
+* Teste Template lokal mit `npx @backstage/cli create-template`
+
+---
+
+### Zusammenfassung – Key Points
+
+* **Actions:** `fetch:template`, `publish:github/gitlab`, `catalog:register`
+* **Skeleton:** Vorlage für alle Projektdateien, wird 1:1 kopiert und verarbeitet
+* **Nunjucks:** Variablen, Conditionals, Loops, Filters
+* **Output Section:** Benutzerfeedback nach Template-Generierung
+* **Chaining:** Steps können Outputs an nachfolgende Steps weitergeben
+
+---
+
+ **Ein anschauliches Diagramm vom gesamten Template-Workflow** – von **Parameters → Skeleton → Actions → Output**, inklusive Nunjucks-Processing. 
+
+```
++---------------------+
+|  Parameters (Form)  |
+|  - name             |
+|  - description      |
+|  - owner            |
+|  - repo info        |
++---------------------+
+          |
+          v
++---------------------+
+|  Skeleton Directory |
+|  - template files   |
+|  - catalog-info.yaml|
+|  - source code      |
++---------------------+
+          |
+          v
++---------------------+
+|  Nunjucks Templating|
+|  - Variable substitution: ${{ values.name }} |
+|  - Conditionals: {% if ... %} |
+|  - Loops & filters |
++---------------------+
+          |
+          v
++---------------------+
+|      Actions        |
+|  - fetch:template   |
+|  - fs:rename        |
+|  - publish:github   |
+|  - catalog:register |
+|  - Custom actions   |
++---------------------+
+          |
+          v
++---------------------+
+|   Output Section    |
+|  - Links (Repo, CI) |
+|  - Instructions     |
+|  - Dynamic info     |
++---------------------+
+```
+
+
+
+
+
+
+
+
+
+
+
 
