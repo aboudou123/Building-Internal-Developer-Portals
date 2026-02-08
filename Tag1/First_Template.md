@@ -302,6 +302,70 @@ metadata:
     - backend
 ```
 
+Wie das  **Update** in meiner `template.yaml` (ersetzen/erweitern) gemacht wird.
+
+
+### 1) Datei öffnen
+
+```bash
+nano template.yaml
+```
+
+### 2) In `metadata:` den `tags:` Block so ändern
+
+Ersetze das hier:
+
+```yaml
+tags:
+  - nodejs
+  - microservice
+  - express
+  - recommended
+```
+
+durch das hier:
+
+```yaml
+tags:
+  - nodejs
+  - microservice
+  - express
+  - rest-api
+  - docker
+  - typescript
+  - recommended
+  - backend
+```
+
+### 3) Speichern und prüfen
+
+Nano: **CTRL+O**, Enter, **CTRL+X**
+
+Dann prüfen:
+
+```bash
+cat template.yaml
+```
+
+Fertig.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Tag-Strategie:
 
 * **nodejs, express, typescript**: Technologie-Stack
@@ -388,6 +452,7 @@ Im nächsten Schritt erstellen Sie das Benutzereingabeformular (Parameter-Sektio
 Sie haben erfolgreich Template-Metadaten definiert, die Ihr Template auffindbar machen und seinen Zweck klar kommunizieren. Diese Grundlage stellt sicher, dass Entwickler Ihr Template finden und verstehen, bevor sie es verwenden.
 
 ```
+
 
 
 
