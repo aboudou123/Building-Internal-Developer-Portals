@@ -652,6 +652,21 @@ Im nächsten Schritt erstellen Sie das Benutzereingabeformular (Parameter-Sektio
 
 Sie haben erfolgreich Template-Metadaten definiert, die Ihr Template auffindbar machen und seinen Zweck klar kommunizieren. Diese Grundlage stellt sicher, dass Entwickler Ihr Template finden und verstehen, bevor sie es verwenden.
 
-
+---
 
 # **Erstellen des Benutzer-Eingabeformulars**
+
+**Erstellen des Benutzer-Eingabeformulars**
+In dieser Aufgabe wird der Abschnitt „Parameter“ des Software-Templates erstellt, der das Formular definiert, das Entwickler ausfüllen, wenn sie das Template verwenden. Dieses Formular sammelt die Informationen, die benötigt werden, um das generierte Projekt an die spezifischen Bedürfnisse der Entwickler anzupassen.
+
+### Warum benötigen Templates Benutzer-Eingabeformulare?
+
+---
+
+### Verständnis der Parameterstruktur
+
+#### Schritt 1: Erstellen von Feldern für grundlegende Projektinformationen
+
+#### Schritt 2: Hinzufügen von Repository- und Integrations-Einstellungen
+
+#### Schritt 3: Hinzufügen von technischen Konfigurationsoptionen
