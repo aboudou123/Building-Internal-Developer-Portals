@@ -2168,6 +2168,12 @@ Dieses praktische Lab etabliert **Dokumentations-Workflows**, die sich nahtlos i
 
 ---
 
+
+
+# **TechDocs-Setup**
+
+Richte TechDocs für **Documentation-as-Code-Workflows** ein – inklusive **MkDocs-Integration** und **automatischer Veröffentlichung**.
+
 ### Wichtige Ressourcen
 
 * **TechDocs Übersicht**
@@ -2179,31 +2185,73 @@ Dieses praktische Lab etabliert **Dokumentations-Workflows**, die sich nahtlos i
 ### Lernziele (8 Aufgaben)
 
 1. **TechDocs Frontend Plugin installieren**
+
    Installiere das TechDocs-Frontend-Plugin, um die Anzeige von Dokumentation in Backstage zu ermöglichen.
 
-2. **TechDocs Backend Plugin installieren**
+3. **TechDocs Backend Plugin installieren**
+
    Installiere das TechDocs-Backend-Plugin, um die Generierung und Bereitstellung von Dokumentation zu ermöglichen.
 
-3. **TechDocs für lokale Generierung konfigurieren**
+4. **TechDocs für lokale Generierung konfigurieren**
+   
    Konfiguriere TechDocs so, dass Dokumentation lokal generiert wird – ohne Docker-Container.
 
-4. **MkDocs lokal für TechDocs installieren**
+5. **MkDocs lokal für TechDocs installieren**
+
    Installiere MkDocs und die benötigten Plugins lokal, um die Dokumentation zu erstellen.
 
-5. **TechDocs-Routen im Frontend hinzufügen**
+7. **TechDocs-Routen im Frontend hinzufügen**
+
    Füge die TechDocs-Routen und Komponenten in die Backstage-Frontend-Anwendung ein.
 
-6. **Dokumentation für Katalog-Entitäten erstellen**
+9. **Dokumentation für Katalog-Entitäten erstellen**
+
    Erstelle die MkDocs-Dokumentationsstruktur und Inhalte für die Katalog-Entitäten.
 
-7. **Dokumentation testen und vorschauen**
-   Teste die vollständige TechDocs-Konfiguration und schau die Dokumentation in Backstage an.
+11. **Dokumentation testen und vorschauen**
+
+    Teste die vollständige TechDocs-Konfiguration und schau die Dokumentation in Backstage an.
 
 ---
 
 
+---
 
+# 9 **Automatisierte Discovery**
 
+Richte eine **automatisierte Discovery** ein, um Services aus GitHub-Repositories zu importieren – inklusive realer Repository-Erstellung und Tests.
+
+**Über dieses Lab**
+Setze die automatisierte Service-Discovery um, um manuelle Pflege des Katalogs zu reduzieren. Konfiguriere die GitHub-Integration, richte Discovery-Provider ein, erstelle echte Test-Repositories und beobachte, wie Backstage diese automatisch entdeckt und registriert.
+
+**Du wirst lernen, wie man:**
+
+* Die GitHub-Integration für automatisiertes Repository-Scanning konfiguriert
+* Das GitHub-Discovery-Provider-Modul im Backend registriert
+* Echte GitHub-Repositories mit Catalog-Entity-Definitionen erstellt
+* Die GitHub CLI nutzt, um Repository-Erstellung und -Verwaltung zu automatisieren
+* Die automatisierte Discovery beobachtet, wie sie deine Entities findet und registriert
+* Die Discovery mit realen Repositories in deinem GitHub-Account testet
+* Testressourcen bereinigt und Zugriffs-Tokens sicher widerruft
+
+Dieses praxisnahe Lab automatisiert die Katalogverwaltung und demonstriert skalierbare Service-Discovery mit echten GitHub-Repositories.
+
+**Wichtige Ressourcen:**
+
+* Discovery Overview
+* GitHub Discovery
+* GitHub Provider
+
+**Was du lernen wirst (3 Aufgaben):**
+
+1. **GitHub-Integration und Discovery-Provider konfigurieren**
+   Richten Sie die GitHub-Integration ein und konfigurieren Sie den Discovery-Provider, damit GitHub-Organisationen automatisch nach Catalog-Entities gescannt werden.
+2. **Automatisierte Discovery verstehen**
+   Erfahre, wie der GitHub-Discovery-Provider von Backstage Organisationen automatisch durchsucht, um Catalog-Entities zu finden und zu registrieren.
+3. **Automatisierte Discovery mit echten Repositories testen**
+   Erstelle Test-Repositories mit Catalog-Entities und beobachte, wie Backstage diese automatisch über das Scannen der GitHub-Organisation entdeckt.
+
+---
 
 
 
