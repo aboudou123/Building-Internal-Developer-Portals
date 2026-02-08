@@ -227,19 +227,25 @@ spec:
 ```
 
 Speichern Sie diese Datei als
+
 `/root/labs/developer-portal/templates/nodejs-service-template/template.yaml`.
 
 Wie mache ich das?
 
-
+```bash
 yamllint template.yaml
-
+```
 
 Dann
 
+```bash
 Ctrl + O
+```
+
 Enter
+```bash
 Ctrl + X
+```
 
 ## Prüfen, ob die Datei gespeichert wurde
 
@@ -377,6 +383,7 @@ Im nächsten Schritt erstellen Sie das Benutzereingabeformular (Parameter-Sektio
 Sie haben erfolgreich Template-Metadaten definiert, die Ihr Template auffindbar machen und seinen Zweck klar kommunizieren. Diese Grundlage stellt sicher, dass Entwickler Ihr Template finden und verstehen, bevor sie es verwenden.
 
 ```
+
 
 
 
