@@ -2245,13 +2245,17 @@ Dieses praxisnahe Lab automatisiert die Katalogverwaltung und demonstriert skali
 **Was du lernen wirst (3 Aufgaben):**
 
 1. **GitHub-Integration und Discovery-Provider konfigurieren**
-   Richten Sie die GitHub-Integration ein und konfigurieren Sie den Discovery-Provider, damit GitHub-Organisationen automatisch nach Catalog-Entities gescannt werden.
+
+   Richten Sie die GitHub-Integration ein und konfigurieren Sie den Discovery-Provider, damit GitHub-Organisationen automatisch nach Catalog-Entities gescannt   werden.
+
 2. **Automatisierte Discovery verstehen**
    Erfahre, wie der GitHub-Discovery-Provider von Backstage Organisationen automatisch durchsucht, um Catalog-Entities zu finden und zu registrieren.
+   
 3. **Automatisierte Discovery mit echten Repositories testen**
    Erstelle Test-Repositories mit Catalog-Entities und beobachte, wie Backstage diese automatisch über das Scannen der GitHub-Organisation entdeckt.
 
 ---
+
 
 
 
