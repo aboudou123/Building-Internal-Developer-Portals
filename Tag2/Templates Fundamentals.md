@@ -365,6 +365,13 @@ output:
 +---------------------+
 ```
 
+# Additional Resources
+Scaffolder Actions
+[documentation](https://backstage.io/docs/features/software-templates/builtin-actions/)
+Nunjucks Templating
+[documentation](https://mozilla.github.io/nunjucks/templating.html)
+Writing Custom Actions
+[documentation](https://backstage.io/docs/features/software-templates/writing-custom-actions/)
 
 
 
