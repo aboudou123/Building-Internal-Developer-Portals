@@ -720,9 +720,13 @@ backend.add(import('@backstage/plugin-catalog-backend-module-github'));
 ## Nächste Schritte
 
 ✅ Golden-Path-Templates implementieren
+
 ✅ GitHub-Integration und Discovery konfigurieren
+
 ✅ Templates sauber organisieren
+
 ✅ Best Practices anwenden
+
 ✅ Erfolg messen
 
 Templates sind ein Grundpfeiler des Platform Engineerings – sie verwandeln Wissen in skalierbare Automatisierung.
@@ -2471,6 +2475,7 @@ Dieses praxisnahe Lab automatisiert die Katalogverwaltung und demonstriert skali
    Erstelle Test-Repositories mit Catalog-Entities und beobachte, wie Backstage diese automatisch über das Scannen der GitHub-Organisation entdeckt.
 
 ---
+
 
 
 
