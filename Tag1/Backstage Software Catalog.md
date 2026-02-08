@@ -1,5 +1,4 @@
-Hier ist eine **strukturierte Zusammenfassung und praxisorientierte Anleitung** zum Thema *Catalog Troubleshooting* für Backstage, die sich als Lernmaterial oder Referenz eignet:
-
+# Backstage Software Catalog: Troubleshooting
 ---
 
 ## Backstage Software Catalog: Troubleshooting
@@ -161,3 +160,4 @@ npx @backstage/cli validate-entity entities/*.yaml
 * Häufige Szenarien: Entity fehlt, Orphan-Warnungen, Broken Relations, TechDocs-Probleme
 
 ---
+
