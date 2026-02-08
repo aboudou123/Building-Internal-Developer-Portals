@@ -163,6 +163,9 @@ Erstellen Sie zunächst die grundlegende Struktur für Ihr Template. Im Terminal
 ```bash
 cd /root/labs/developer-portal
 ```
+<img width="1591" height="503" alt="image" src="https://github.com/user-attachments/assets/af28e554-6025-4d65-ac56-9f5cbf72b8f4" />
+
+
 ## Erstellen Sie ein Templates-Verzeichnis:
 
 ```bash
@@ -353,6 +356,7 @@ Im nächsten Schritt erstellen Sie das Benutzereingabeformular (Parameter-Sektio
 Sie haben erfolgreich Template-Metadaten definiert, die Ihr Template auffindbar machen und seinen Zweck klar kommunizieren. Diese Grundlage stellt sicher, dass Entwickler Ihr Template finden und verstehen, bevor sie es verwenden.
 
 ```
+
 
 
 
