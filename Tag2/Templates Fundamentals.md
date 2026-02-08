@@ -641,13 +641,15 @@ Template Best Practices
 
 Catalog Configuration
 [documentation](https://backstage.io/docs/features/software-catalog/configuration/)
+======================================
 
---
+
 ====================================
 
- # 4- **“Build Your First Template”** 
+ # 4-Erstellung erste Template  
  
 ====================================
+
 
 **Über dieses Lab**
 
@@ -704,13 +706,6 @@ Konfiguriere den Output-Bereich, der Benutzern anzeigt, was erstellt wurde und w
 Richte die GitHub-Authentifizierung ein und teste dein vollständiges Template, indem du es Ende-zu-Ende ausführst und ein echtes Repository erstellst.
 
 
-
-====================================
-
-# - Template Eklärung
-================================
-
-```md
 ===================================
 - Template Erklärung
 ===================================
@@ -2376,6 +2371,7 @@ Dieses praxisnahe Lab automatisiert die Katalogverwaltung und demonstriert skali
    Erstelle Test-Repositories mit Catalog-Entities und beobachte, wie Backstage diese automatisch über das Scannen der GitHub-Organisation entdeckt.
 
 ---
+
 
 
 
