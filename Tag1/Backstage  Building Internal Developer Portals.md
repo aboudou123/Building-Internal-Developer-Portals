@@ -1,6 +1,6 @@
 
 
-# Backstage ist eine Plattform zur Entwicklung und zum Betrieb interner Entwicklerportale
+# 1 - Backstage ist eine Plattform zur Entwicklung und zum Betrieb interner Entwicklerportale
 
 ---
 
@@ -332,8 +332,11 @@ Schnelle Builds: Es wird nur neu gebaut, was sich geändert hat
 Nachdem du nun die Projektstruktur und Konfiguration von Backstage verstehst:
 
 ✅ Vertraut mit der Monorepo-Architektur und dem packages-Verzeichnis
+
 ✅ Verständnis der Trennung von Frontend und Backend sowie ihrer Kommunikation
+
 ✅ Wissen, wie app-config.yaml die gesamte Backstage-Instanz steuert
+
 ✅ Bereit, mehr über Plugins, Builds und Entwicklungs-Workflows zu lernen
 
 In der nächsten Lektion beschäftigen wir uns mit dem Plugin-System, dem Build-Prozess und damit, wie du Backstage an deine Anforderungen anpassen und erweitern kannst!
@@ -357,7 +360,7 @@ https://backstage.io/docs/conf/
 
 
 ======================================================
-# Plugins, Build und Entwicklung
+# 2- Plugins, Build und Entwicklung
 
 ==================================================
 **Plugins, Build und Entwicklung**
@@ -618,8 +621,11 @@ Jedes Plugin deklariert seine eigenen Abhängigkeiten:
 Nachdem du nun das Plugin-System, den Build-Prozess und die Entwicklungs-Workflows von Backstage verstehst:
 
 ✅ Verständnis dafür, wie Plugins die gesamte Backstage-Funktionalität ermöglichen
+
 ✅ Wissen, wie Builds für Entwicklung und Produktion erstellt werden
+
 ✅ Vertraut mit Anpassungsmöglichkeiten für Theme, Layout und Funktionalität
+
 ✅ Bereit, mit dem Softwarekatalog zu arbeiten
 
 In der nächsten Lektion tauchen wir tief in den Softwarekatalog ein und lernen die sechs Entitätstypen kennen, mit denen Services, Teams und Dokumentation organisiert werden.
@@ -649,6 +655,7 @@ documentation:https://backstage.io/docs/plugins/
 documentation:https://backstage.io/docs/overview/architecture-overview/
 
 ---
+
 
 
 
