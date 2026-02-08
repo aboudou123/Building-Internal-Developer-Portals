@@ -2103,10 +2103,15 @@ Häufige Ursachen:
 Das Verständnis der TechDocs-Integration ermöglicht dir:
 
 ✅ Installation von Frontend- und Backend-TechDocs-Plugins
+
 ✅ Konfiguration von Builder-, Generator- und Publisher-Einstellungen
+
 ✅ Hinzufügen von Routen zur Dokumentationsanzeige im Frontend
+
 ✅ Verknüpfung von Dokumentation mit Katalog-Entitäten über Annotationen
+
 ✅ Automatisierung der Dokumentationsveröffentlichung mit CI/CD
+
 ✅ Bereitstellung von Dokumentation auf produktiven Storage-Backends
 
 Im kommenden Lab installierst du TechDocs-Plugins, konfigurierst die lokale Dokumentationsgenerierung, fügst Frontend-Routen hinzu und veröffentlichst Dokumentation für einen Beispiel-Service.
@@ -2140,6 +2145,61 @@ Die Integration von TechDocs verwandelt Dokumentation von einer Wartungslast in 
 
 ---
 
+
+Hier ist eine **authentische, flüssige deutsche Übersetzung** deines Lab-Beschriebs:
+
+---
+
+### Über dieses Lab
+
+In diesem Lab konfigurierst du **TechDocs**, um **Documentation-as-Code-Workflows** in Backstage zu ermöglichen. Du lernst, wie du **MkDocs integrierst**, **Speicher-Backends einrichtest** und Dokumentation erstellst, die automatisch zusammen mit deinen Services veröffentlicht wird.
+
+**Du wirst lernen:**
+
+* TechDocs in Backstage für die Veröffentlichung von Dokumentation zu konfigurieren
+* Das TechDocs-Backend mit lokalem Speicher einzurichten
+* MkDocs zu installieren und mit dem **Material-Theme** zu konfigurieren
+* Dokumentationsseiten mit sinnvoller Struktur und Navigation zu erstellen
+* Dokumentation mit Katalog-Entitäten zu integrieren
+* Workflows für die Veröffentlichung und Validierung der Dokumentation zu testen
+* Docs-as-Code-Praktiken und Templates zu etablieren
+
+Dieses praktische Lab etabliert **Dokumentations-Workflows**, die sich nahtlos in dein Entwickler-Portal integrieren.
+
+---
+
+### Wichtige Ressourcen
+
+* **TechDocs Übersicht**
+* **TechDocs Einstieg**
+* **MkDocs Dokumentation**
+
+---
+
+### Lernziele (8 Aufgaben)
+
+1. **TechDocs Frontend Plugin installieren**
+   Installiere das TechDocs-Frontend-Plugin, um die Anzeige von Dokumentation in Backstage zu ermöglichen.
+
+2. **TechDocs Backend Plugin installieren**
+   Installiere das TechDocs-Backend-Plugin, um die Generierung und Bereitstellung von Dokumentation zu ermöglichen.
+
+3. **TechDocs für lokale Generierung konfigurieren**
+   Konfiguriere TechDocs so, dass Dokumentation lokal generiert wird – ohne Docker-Container.
+
+4. **MkDocs lokal für TechDocs installieren**
+   Installiere MkDocs und die benötigten Plugins lokal, um die Dokumentation zu erstellen.
+
+5. **TechDocs-Routen im Frontend hinzufügen**
+   Füge die TechDocs-Routen und Komponenten in die Backstage-Frontend-Anwendung ein.
+
+6. **Dokumentation für Katalog-Entitäten erstellen**
+   Erstelle die MkDocs-Dokumentationsstruktur und Inhalte für die Katalog-Entitäten.
+
+7. **Dokumentation testen und vorschauen**
+   Teste die vollständige TechDocs-Konfiguration und schau die Dokumentation in Backstage an.
+
+---
 
 
 
