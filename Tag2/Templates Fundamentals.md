@@ -770,11 +770,12 @@ Catalog Configuration
 
 
 
-
+================
 # 5 **Erweiterte Scaffolder-Muster**
 
 Du hast die grundlegenden Aktionen gelernt – jetzt erkunden wir erweiterte Muster, die Templates leistungsfähig und flexibel machen. Diese Lektion behandelt die bedingte Ausführung, die Verkettung von Schritt-Ausgaben und den Aufbau vollständiger mehrstufiger Workflows.
 
+=================
 ---
 
 ## Bedingte Aktionen
@@ -1233,28 +1234,420 @@ Erweiterte Scaffolder-Muster verwandeln Templates von einfachen Generatoren in a
 ## Zusätzliche Ressourcen
 
 **Built-in Actions Reference**
-documentation
+[documentation](https://backstage.io/docs/features/software-templates/builtin-actions/)
 
 **Writing Custom Actions**
-documentation
+[documentation](https://backstage.io/docs/features/software-templates/writing-custom-actions/)
 
 **Template Writing Guide**
-documentation
+[documentation](https://backstage.io/docs/features/software-templates/writing-templates/)
+
+---
+================
+# 6 **TechDocs- und MkDocs-Grundlagen**
+
+Du hast die grundlegenden Aktionen gelernt – jetzt erkunden wir erweiterte Muster, die Templates leistungsfähig und flexibel machen. Diese Lektion behandelt die bedingte Ausführung, die Verkettung von Schritt-Ausgaben und den Aufbau vollständiger mehrstufiger Workflows.
+
+=================
+
+
+**TechDocs- und MkDocs-Grundlagen**
+TechDocs macht Dokumentation zu Code und erleichtert so, Dokumente aktuell und auffindbar zu halten. Lass uns erkunden, wie Documentation-as-Code funktioniert und wie man mit MkDocs hochwertige Dokumentation schreibt.
 
 ---
 
-## Kursnotizen (Privat)
+## Was ist Documentation-as-Code?
 
-Mache dir private Notizen, während du lernst…
+Documentation-as-Code behandelt Dokumentation wie Quellcode:
 
-## Lerngruppe
+### Grundprinzipien
 
-Zu diesem Kurs ist noch keine Lerngruppe verknüpft.
+* **Versionskontrolliert:** Dokumentation liegt zusammen mit dem Code in Git
+* **Automatisierte Veröffentlichung:** Dokumente werden automatisch gebaut und bereitgestellt
+* **Single Source of Truth:** Ein zentraler Ort für maßgebliche Dokumentation
+* **Entwickler-Workflow:** Schreiben von Doku mit vertrauten Tools und Prozessen
 
-Bitte deinen Kursleiter, eine Lerngruppe zu verknüpfen, um Diskussionen zu ermöglichen.
+### Vorteile
 
+* **Immer aktuell:** Dokumente werden zusammen mit Codeänderungen aktualisiert
+* **Einfach zu schreiben:** Markdown ist simpel und vertraut
+* **Durchsuchbar:** Integriert in die Backstage-Suche
+* **Auffindbar:** Automatisch mit Katalog-Entitäten verknüpft
 
+---
 
+## TechDocs-Überblick
+
+TechDocs ist das Dokumentationssystem von Backstage, das auf MkDocs basiert:
+
+### Architektur
+
+Markdown-Dateien → MkDocs-Build → Statisches HTML → Backstage-UI
+
+### Zentrale Komponenten
+
+* **MkDocs:** Statischer Site-Generator, der Markdown in HTML umwandelt
+* **mkdocs.yml:** Konfigurationsdatei zur Definition von Seitenstruktur und Navigation
+* **Markdown-Dateien:** Dokumentationsinhalte im Verzeichnis `docs/`
+* **Material Theme:** Modernes, responsives Dokumentations-Theme
+* **TechDocs Core Plugin:** Backstage-spezifische MkDocs-Erweiterungen
+
+### Warum MkDocs?
+
+* **Einfache Konfiguration:** YAML-basierte Konfigurationsdatei
+* **Markdown-Unterstützung:** Schreiben in vertrauter Markdown-Syntax
+* **Integrierte Themes:** Material Theme ist in TechDocs enthalten
+* **Plugin-Ökosystem:** Funktionalität durch Plugins erweiterbar
+* **Schnelle Builds:** Zügige Generierung von statischem HTML
+
+---
+
+## MkDocs-Konfiguration
+
+### Grundlegende `mkdocs.yml`
+
+```yaml
+site_name: 'Sample Service Documentation'
+site_description: 'Documentation for the Sample Microservice'
+
+nav:
+  - Introduction: index.md
+  - Getting Started: getting-started.md
+  - API Reference: api-reference.md
+  - Deployment: deployment.md
+
+plugins:
+  - techdocs-core
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+```
+
+**Konfigurationsbereiche:**
+
+* `site_name`: Wird als Titel der Dokumentation angezeigt
+* `site_description`: Metadaten für Suche und SEO
+* `nav`: Navigationsmenü-Struktur und Seitenreihenfolge
+* `plugins`: TechDocs-Core-Plugin für die Backstage-Integration erforderlich
+* `theme`: Material Theme mit Navigationsfunktionen
+
+---
+
+## Navigationsstruktur
+
+Der Abschnitt `nav` definiert dein Dokumentationsmenü:
+
+```yaml
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Overview: getting-started/index.md
+    - Installation: getting-started/installation.md
+    - Configuration: getting-started/configuration.md
+  - API:
+    - Authentication: api/authentication.md
+    - Endpoints: api/endpoints.md
+  - Deployment: deployment.md
+```
+
+**Navigationsfunktionen:**
+
+* **Verschachtelte Bereiche:** Verwandte Seiten gruppieren
+* **Benutzerdefinierte Titel:** Anzeigename unterscheidet sich vom Dateinamen
+* **Reihenfolgensteuerung:** Seiten erscheinen in der angegebenen Reihenfolge
+* **Erforderliche `index.md`:** Jede Dokumentationssammlung benötigt eine Startseite
+
+---
+
+## Dokumentationsstruktur
+
+```
+my-service/
+├── docs/
+│   ├── index.md              # Homepage - required
+│   ├── getting-started.md    # Setup instructions
+│   ├── api-reference.md      # API documentation
+│   └── deployment.md         # Deployment guide
+├── mkdocs.yml                # MkDocs configuration
+├── catalog-info.yaml         # Backstage entity definition
+└── src/                      # Application source code
+```
+
+**Wichtige Dateien:**
+
+* `docs/index.md`: Erforderliche Startseite, die erste Seite, die Nutzer sehen
+* `mkdocs.yml`: Muss im Repository-Root (oder im `docs`-Verzeichnis) liegen
+* `catalog-info.yaml`: Verknüpft die Backstage-Entität mit der Dokumentation
+
+---
+
+## Dokumentation schreiben
+
+### Markdown-Grundlagen
+
+````markdown
+# Main Heading
+
+## Section Heading
+
+Regular paragraph text with **bold** and *italic* formatting.
+
+- Bulleted list item
+- Another item
+
+1. Numbered list item
+2. Another numbered item
+
+```code blocks```
+
+[Link text](https://example.com)
+````
+
+### Code-Dokumentation
+
+APIs und Code mit syntaxhervorgehobenen Blöcken dokumentieren:
+
+````markdown
+## API Endpoints
+
+### Get User
+
+Retrieve user information by ID.
+
+```http
+GET /api/users/{id}
+Request Parameters:
+
+id (path, required): User ID
+Response:
+
+{
+  "id": 123,
+  "name": "John Doe",
+  "email": "john@example.com"
+}
+Status Codes:
+
+200 OK: User found
+404 Not Found: User doesn't exist
+````
+
+### Diagramme mit Mermaid
+
+Visuelle Diagramme direkt in Markdown erstellen:
+
+````markdown
+## System Architecture
+
+```mermaid
+graph LR
+  A[Client] --> B[API Gateway]
+  B --> C[User Service]
+  B --> D[Order Service]
+  C --> E[Database]
+  D --> E
+````
+
+**Mermaid-Diagrammtypen:**
+
+* **Flussdiagramme:** Prozessabläufe und Entscheidungsbäume
+* **Sequenzdiagramme:** Service-Interaktionen
+* **Entitätsbeziehungen:** Datenbankschemata
+* **Gantt-Diagramme:** Projektzeitpläne
+
+### Tabellen und Listen
+
+```markdown
+## Configuration Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| port | number | 3000 | Server port |
+| host | string | localhost | Server host |
+| debug | boolean | false | Debug mode |
+
+## Prerequisites
+
+Before starting, ensure you have:
+
+- Node.js 18 or higher
+- Docker Desktop installed
+- Git configured locally
+- Access to GitHub repository
+```
+
+---
+
+## Admonitions (Hinweise/Callouts)
+
+Wichtige Informationen mit Admonitions hervorheben:
+
+```markdown
+!!! note "Installation Note"
+    Make sure to install dependencies before running the service.
+
+!!! warning "Breaking Change"
+    Version 2.0 introduces breaking API changes. Review migration guide.
+
+!!! tip "Performance Tip"
+    Enable caching for better performance in production.
+
+!!! danger "Security Warning"
+    Never commit API keys or secrets to version control.
+```
+
+---
+
+## Best Practices für Dokumentation
+
+### Struktur-Richtlinien
+
+* Mit einer Übersicht beginnen: Was macht dieser Service?
+* Getting-Started-Anleitung: Wie lokal starten
+* API-Dokumentation: Endpunkte und Beispiele
+* Deployment-Guide: Bereitstellung und Konfiguration
+* Troubleshooting: Häufige Probleme und Lösungen
+
+### Schreibtipps
+
+* **Einfach halten:** Klare, präzise Sprache verwenden
+* **Beispiele einfügen:** Zeigen statt nur erklären
+* **Regelmäßig aktualisieren:** Mit Codeänderungen überprüfen und anpassen
+* **Diagramme nutzen:** Visuelle Hilfen verbessern das Verständnis
+* **Doku testen:** Den eigenen Anleitungen folgen
+
+---
+
+## Häufige Dokumentationsmuster
+
+### Service-Dokumentation:
+
+```
+docs/
+├── index.md              # Service overview
+├── getting-started.md    # Local development setup
+├── api/
+│   ├── authentication.md
+│   ├── users.md
+│   └── orders.md
+├── deployment/
+│   ├── docker.md
+│   └── kubernetes.md
+└── troubleshooting.md
+```
+
+### Architektur-Dokumentation:
+
+```
+docs/
+├── index.md              # System overview
+├── architecture/
+│   ├── overview.md
+│   ├── components.md
+│   └── data-flow.md
+├── services/
+│   ├── user-service.md
+│   └── payment-service.md
+└── deployment/
+    └── production.md
+```
+
+---
+
+## Lokaler Entwicklungs-Workflow
+
+### MkDocs installieren
+
+```bash
+# Install MkDocs with TechDocs extensions
+pip install mkdocs-techdocs-core
+
+# This includes:
+# - mkdocs (core)
+# - mkdocs-material (theme)
+# - mkdocs-mermaid2-plugin (diagrams)
+# - Other TechDocs plugins
+```
+
+### Schreiben und Vorschau
+
+```bash
+# Navigate to your service directory
+cd my-service/
+
+# Serve documentation locally with live reload
+mkdocs serve
+
+# Documentation available at http://127.0.0.1:8000
+# Auto-refreshes when you save changes
+```
+
+### Dokumentation bauen
+
+```bash
+# Build static HTML files
+mkdocs build
+
+# Output appears in site/ directory
+ls -la site/
+# index.html, getting-started.html, api-reference.html, deployment.html
+```
+
+**Was `mkdocs build` macht:**
+
+* Liest die Konfiguration aus `mkdocs.yml`
+* Verarbeitet Markdown-Dateien im Verzeichnis `docs/`
+* Generiert statische HTML-Dateien im Verzeichnis `site/`
+* Wendet das Material-Theme-Styling an
+* Erstellt die Navigationsstruktur
+* Validiert interne Links
+
+---
+
+## Nächste Schritte
+
+Das Verständnis von MkDocs und Documentation-as-Code bereitet dich darauf vor:
+
+✅ Wartbare Dokumentation in Markdown zu schreiben
+✅ MkDocs für deine Services zu konfigurieren
+✅ Dokumentation für gute Auffindbarkeit zu strukturieren
+✅ Diagramme und Codebeispiele effektiv zu nutzen
+✅ Dokumentation lokal vor der Veröffentlichung zu prüfen
+
+In der nächsten Lektion werden wir erkunden, wie man TechDocs in Backstage integriert, Dokumentation veröffentlicht und den Workflow automatisiert.
+
+Großartige Dokumentation ist ein Multiplikator für Entwicklungsteams – sie reduziert Supportaufwand, beschleunigt das Onboarding und macht Wissen für alle zugänglich.
+
+---
+
+## Kernaussagen
+
+* Documentation-as-Code behandelt Doku als versionskontrollierten Quellcode mit automatisierter Veröffentlichung
+* TechDocs nutzt den statischen Site-Generator MkDocs, um Markdown in HTML-Dokumentation umzuwandeln
+* `mkdocs.yml` definiert Seitenstruktur, Navigation, Theme und Plugin-Konfiguration
+* Markdown unterstützt Überschriften, Listen, Codeblöcke, Tabellen und Mermaid-Diagramme
+* Best Practices umfassen klare Struktur, praxisnahe Beispiele, regelmäßige Updates und visuelle Hilfsmittel
+* Der lokale Entwicklungs-Workflow nutzt `mkdocs serve` für Live-Vorschau und `mkdocs build` für die statische Generierung
+
+---
+
+## Zusätzliche Ressourcen
+
+**MkDocs User Guide**
+[documentation](https://www.mkdocs.org/user-guide/)
+
+**Material for MkDocs**
+[documentation](https://squidfunk.github.io/mkdocs-material/)
+
+**Markdown Guide**
+[documentation](https://www.markdownguide.org/)
+
+---
 
 
 
