@@ -1653,6 +1653,492 @@ Großartige Dokumentation ist ein Multiplikator für Entwicklungsteams – sie r
 
 ---
 
+===================
+
+# 7-**TechDocs-Integration und Veröffentlichung**
+
+
+Du hast gelernt, wie man Dokumentation mit MkDocs schreibt. Jetzt integrieren wir TechDocs in Backstage, automatisieren Veröffentlichungs-Workflows und stellen Dokumentation für deine Services bereit.
+======================================================
+---
+
+## TechDocs-Plugin-Architektur
+
+TechDocs benötigt zwei separate Plugins, die zusammenarbeiten:
+
+### Frontend-Plugin
+
+**Zweck:** Stellt UI-Komponenten zum Anzeigen von Dokumentation in der Backstage-Oberfläche bereit.
+
+**Installation:**
+
+```
+yarn --cwd packages/app add @backstage/plugin-techdocs
+```
+
+**Funktionen:**
+
+* Rendert Dokumentationsseiten in der Backstage-UI
+* Stellt die TechDocs-Indexseite bereit (listet alle Dokumentationen auf)
+* Stellt die TechDocs-Reader-Seite bereit (zeigt einzelne Dokumentationen an)
+* Integriert Dokumentations-Tabs in Entitätsseiten
+
+### Backend-Plugin
+
+**Zweck:** Verarbeitet und stellt Dokumentation serverseitig bereit.
+
+**Installation:**
+
+```
+yarn --cwd packages/backend add @backstage/plugin-techdocs-backend
+```
+
+**Funktionen:**
+
+* Generiert Dokumentation aus MkDocs-Quellen
+* Liefert gebaute Dokumentation an das Frontend aus
+* Verwaltet die Speicherung der Dokumentation (lokal oder in der Cloud)
+* Verarbeitet Dokumentations-Builds bei Bedarf oder vorab
+
+**Backend-Registrierung:**
+Im neuen Backend-System wird das TechDocs-Backend-Plugin nach der Installation automatisch registriert:
+
+```ts
+// packages/backend/src/index.ts
+backend.add(import('@backstage/plugin-techdocs-backend'));
+```
+
+---
+
+## TechDocs-Konfiguration
+
+### App-Konfiguration (app-config.yaml)
+
+Nach der Installation beider Plugins wird das Verhalten von TechDocs konfiguriert:
+
+```yaml
+techdocs:
+  builder: 'local'
+  generator:
+    runIn: 'local'
+    mkdocsCommand: '/opt/mkdocs-venv/bin/mkdocs'  # or just 'mkdocs'
+  publisher:
+    type: 'local'
+    local:
+      storageDir: '/root/labs/developer-portal/techdocs-storage'
+```
+
+**Konfiguration erklärt:**
+
+* `builder: 'local'`: Dokumentation lokal bauen (statt externer Builder-Service)
+* `generator.runIn: 'local'`: MkDocs lokal ausführen (statt Docker-Container)
+* `generator.mkdocsCommand`: Pfad zur MkDocs-Executable
+* `publisher.type: 'local'`: Dokumentation lokal im Dateisystem speichern (statt S3/GCS)
+* `publisher.local.storageDir`: Speicherort für generierte HTML-Dateien
+
+---
+
+## Frontend-Routen-Konfiguration (App.tsx)
+
+Nach der Installation des Frontend-Plugins müssen Routen hinzugefügt werden, um die Anzeige der Dokumentation zu aktivieren:
+
+```ts
+import {
+  TechDocsIndexPage,
+  TechDocsReaderPage,
+} from '@backstage/plugin-techdocs';
+
+const routes = (
+  <FlatRoutes>
+    {/* ... other routes ... */}
+    <Route path="/docs" element={<TechDocsIndexPage />} />
+    <Route
+      path="/docs/:namespace/:kind/:name/*"
+      element={<TechDocsReaderPage />}
+    />
+  </FlatRoutes>
+);
+```
+
+**Routen erklärt:**
+
+* `/docs`: Dokumentations-Indexseite mit allen verfügbaren Dokumentationen
+* `/docs/:namespace/:kind/:name/*`: Viewer für die Dokumentation einer einzelnen Entität
+* Die Routen müssen zur `FlatRoutes`-Komponente in `App.tsx` hinzugefügt werden
+
+---
+
+## Backstage-Integration
+
+### Konfiguration der Katalog-Entität
+
+Verknüpfe Dokumentation mit Katalog-Entitäten über die Annotation `backstage.io/techdocs-ref`:
+
+```yaml
+# catalog-info.yaml
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: sample-service
+  title: Sample Microservice
+  description: A sample microservice for TechDocs testing
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: service
+  owner: platform-team
+  lifecycle: experimental
+```
+
+**TechDocs-Annotationen:**
+
+* `dir:.`: Sucht nach `mkdocs.yml` und `docs/` im Repository-Root
+* `dir:./docs`: Sucht nach Dokumentation im Unterverzeichnis `docs/`
+* `dir:./subdirectory`: Sucht in einem benutzerdefinierten Unterverzeichnis
+* `url:https://github.com/org/repo`: Referenziert ein externes Repository
+
+### Registrierung der Entität im Katalog
+
+Eintrag in `app-config.yaml` hinzufügen:
+
+```yaml
+catalog:
+  locations:
+    - type: file
+      target: /root/sample-repos/sample-service/catalog-info.yaml
+```
+
+**Nach der Registrierung:**
+
+* Der Service erscheint im Backstage-Katalog
+* Ein Dokumentations-Tab ist auf der Entitätsseite verfügbar
+* Dokumentation ist unter `/docs/default/component/sample-service` erreichbar
+* Dokumentation wird automatisch für die Suche indexiert
+
+---
+
+## Dokumentation bauen und veröffentlichen
+
+### Lokaler Entwicklungs-Workflow
+
+```bash
+# Navigate to service directory
+cd /root/sample-repos/sample-service
+
+# Build documentation
+mkdocs build
+
+# Output appears in site/ directory
+ls -la site/
+# index.html, getting-started.html, api-reference.html, deployment.html
+
+# Manually publish to Backstage storage (development only)
+cp -r site/* /root/labs/developer-portal/techdocs-storage/default/component/sample-service/
+```
+
+**Was beim Build passiert:**
+
+* MkDocs liest die Konfiguration aus `mkdocs.yml`
+* Verarbeitet Markdown-Dateien im Verzeichnis `docs/`
+* Generiert statische HTML-Dateien im Verzeichnis `site/`
+* Wendet das Material-Theme-Styling an
+* Erstellt die Navigationsstruktur
+* Validiert interne Links
+
+---
+
+## Veröffentlichungs-Workflows
+
+### Lokaler Speicher (Entwicklung)
+
+Für Entwicklung und Tests:
+
+```yaml
+techdocs:
+  publisher:
+    type: 'local'
+    local:
+      storageDir: '/path/to/techdocs-storage'
+```
+
+**Vorteile:**
+
+* Einfache Einrichtung ohne Cloud-Abhängigkeiten
+* Schnelle Iteration während der Entwicklung
+* Keine zusätzlichen Kosten
+
+**Nachteile:**
+
+* Nicht für den Produktivbetrieb geeignet
+* Keine Skalierbarkeit oder Redundanz
+* Manuelle Dateiverwaltung erforderlich
+
+### Cloud-Speicher (Produktion)
+
+**AWS S3:**
+
+```yaml
+techdocs:
+  publisher:
+    type: 'awsS3'
+    awsS3:
+      bucketName: 'techdocs-storage'
+      region: 'us-east-1'
+      credentials:
+        accessKeyId: ${AWS_ACCESS_KEY_ID}
+        secretAccessKey: ${AWS_SECRET_ACCESS_KEY}
+```
+
+**Google Cloud Storage:**
+
+```yaml
+techdocs:
+  publisher:
+    type: 'googleGcs'
+    googleGcs:
+      bucketName: 'techdocs-storage'
+      projectId: 'my-project'
+```
+
+**Azure Blob Storage:**
+
+```yaml
+techdocs:
+  publisher:
+    type: 'azureBlobStorage'
+    azureBlobStorage:
+      containerName: 'techdocs'
+      accountName: 'mystorageaccount'
+```
+
+**Vorteile von Cloud-Speicher:**
+
+* **Skalierbarkeit:** Bewältigt jede Menge an Dokumentation
+* **Zuverlässigkeit:** Redundanz und Backups des Cloud-Anbieters
+* **Performance:** CDN-Integration für schnellen globalen Zugriff
+* **Kosteneffizienz:** Bezahlung nur für genutzten Speicher
+
+---
+
+## Automatisierte Veröffentlichung
+
+### CI/CD-Integration
+
+Automatisiere Build und Veröffentlichung der Dokumentation mit GitHub Actions:
+
+```yaml
+# .github/workflows/techdocs.yml
+name: Publish TechDocs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+
+jobs:
+  publish-techdocs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install MkDocs
+        run: pip install mkdocs-techdocs-core
+
+      - name: Build Documentation
+        run: mkdocs build
+
+      - name: Publish to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.TECHDOCS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SOURCE_DIR: 'site'
+          DEST_DIR: 'default/component/sample-service'
+```
+
+**Vorteile der Automatisierung:**
+
+* **Immer aktuell:** Dokumentation wird bei Änderungen automatisch neu gebaut
+* **Keine manuellen Schritte:** Entwickler committen lediglich die Doku
+* **Versionskontrolle:** Dokumentationshistorie wird in Git verfolgt
+* **Qualitätssicherung:** Validierungs- und Linting-Schritte möglich
+
+---
+
+## Veröffentlichungsstrategien
+
+**Push-basiert (empfohlen):**
+
+* CI/CD baut und veröffentlicht bei jedem Git-Push
+* Schnelle Updates, sofortige Veröffentlichung
+* Funktioniert mit jedem Storage-Backend
+
+**Pull-basiert (On-Demand):**
+
+* Backstage baut Dokumentation beim ersten Zugriff
+* Geeignet für große Organisationen
+* Reduziert CI/CD-Overhead
+
+---
+
+## Erweiterte Funktionen
+
+### Benutzerdefinierte Plugins
+
+Erweitere TechDocs mit MkDocs-Plugins:
+
+```yaml
+# mkdocs.yml
+plugins:
+  - techdocs-core
+  - mermaid2  # Diagram support
+  - swagger-ui-tag  # Interactive API docs
+  - search  # Full-text search
+```
+
+**Beliebte Plugins:**
+
+* `mermaid2`: Flussdiagramme und Diagramme
+* `swagger-ui-tag`: Einbettung von OpenAPI-/Swagger-Spezifikationen
+* `drawio-exporter`: Diagramme aus draw.io-Dateien
+* `git-revision-date`: Anzeige des letzten Aktualisierungsdatums
+* `minify`: Komprimierung von HTML/CSS/JS für schnellere Ladezeiten
+
+### Mehrsprachige Unterstützung
+
+Unterstützung mehrerer Sprachen mit MkDocs i18n:
+
+```yaml
+plugins:
+  - techdocs-core
+  - i18n:
+      default_language: en
+      languages:
+        en: English
+        es: Español
+        fr: Français
+```
+
+### Suchintegration
+
+TechDocs-Dokumentation wird automatisch von der Backstage-Suche indexiert:
+
+* Volltextsuche über die gesamte Dokumentation
+* Facettierte Suche nach Entitätstyp, Owner und Tags
+* Relevanzbasierte Ergebnisreihung
+* Kontextuelle Treffer mit passenden Textausschnitten
+
+---
+
+## Vorteile der TechDocs-Integration
+
+### Für Entwickler
+
+* Vertrauter Workflow: Dokumentation wie Code schreiben
+* Versionskontrolliert: Änderungen über die Zeit nachverfolgen
+* Leicht auffindbar: In den Service-Katalog integriert
+* Immer aktuell: Automatisierte Veröffentlichung hält Doku frisch
+
+### Für Organisationen
+
+* Einheitliches Format: Gleiche Struktur für alle Services
+* Geringerer Wartungsaufwand: Automatisierung reduziert manuelle Arbeit
+* Bessere Auffindbarkeit: Zentrales Dokumentationsportal
+* Verbessertes Onboarding: Neue Entwickler finden Informationen schneller
+
+### Für Plattform-Teams
+
+* Standardisierung: Durchsetzung von Dokumentationsstandards
+* Automatisierung: Reduzierter manueller Veröffentlichungsaufwand
+* Transparenz: Überblick über Dokumentationsabdeckung
+* Skalierbarkeit: Dokumentation für Tausende von Services handhabbar
+
+---
+
+## Fehlerbehebung häufiger Probleme
+
+### Dokumentation wird nicht angezeigt
+
+Prüfen:
+
+* Annotation `backstage.io/techdocs-ref` in `catalog-info.yaml` vorhanden
+* `mkdocs.yml` existiert am richtigen Ort
+* `docs/index.md` existiert (erforderlich)
+* TechDocs-Speicherverzeichnis korrekt konfiguriert
+* Entität im Katalog registriert
+
+### Build-Fehler
+
+Häufige Ursachen:
+
+* Fehlende `index.md`
+* Ungültiges YAML in `mkdocs.yml`
+* Defekte interne Links
+* Fehlende MkDocs-Plugins
+* Falsche Dateipfade in der Navigation
+
+### Veröffentlichungsfehler
+
+Überprüfen:
+
+* Storage-Zugangsdaten korrekt konfiguriert
+* Bucket/Container existiert und ist erreichbar
+* Dateiberechtigungen erlauben Schreibzugriff
+* Netzwerkverbindung zum Storage-Backend
+
+---
+
+## Nächste Schritte
+
+Das Verständnis der TechDocs-Integration ermöglicht dir:
+
+✅ Installation von Frontend- und Backend-TechDocs-Plugins
+✅ Konfiguration von Builder-, Generator- und Publisher-Einstellungen
+✅ Hinzufügen von Routen zur Dokumentationsanzeige im Frontend
+✅ Verknüpfung von Dokumentation mit Katalog-Entitäten über Annotationen
+✅ Automatisierung der Dokumentationsveröffentlichung mit CI/CD
+✅ Bereitstellung von Dokumentation auf produktiven Storage-Backends
+
+Im kommenden Lab installierst du TechDocs-Plugins, konfigurierst die lokale Dokumentationsgenerierung, fügst Frontend-Routen hinzu und veröffentlichst Dokumentation für einen Beispiel-Service.
+
+Die Integration von TechDocs verwandelt Dokumentation von einer Wartungslast in ein automatisiertes, auffindbares Asset, das mit deiner Organisation skaliert.
+
+---
+
+## Kernaussagen
+
+* TechDocs benötigt zwei Plugins: ein Frontend-Plugin für UI-Komponenten und ein Backend-Plugin für Generierung und Auslieferung
+* Das Frontend stellt Index- und Reader-Seiten bereit, während das Backend MkDocs-Verarbeitung und Speicherung übernimmt
+* Das Backend-Plugin wird im neuen Backend-System automatisch registriert
+* Die Konfiguration in `app-config.yaml` steuert Builder-, Generator- und Publisher-Verhalten
+* Katalog-Entitäten werden über die Annotation `backstage.io/techdocs-ref` mit Dokumentation verknüpft
+* Lokaler Speicher eignet sich für Entwicklung, Cloud-Speicher (S3/GCS/Azure) ist für Produktion erforderlich
+* Automatisierte Veröffentlichung mit CI/CD stellt sicher, dass Dokumentation stets mit dem Code aktuell bleibt
+
+---
+
+## Zusätzliche Ressourcen
+
+**TechDocs Documentation**
+[documentation](https://backstage.io/docs/features/techdocs/)
+
+**TechDocs Configuration**
+[documentation](https://backstage.io/docs/features/techdocs/configuration/)
+
+**TechDocs CI/CD**
+[documentation](https://backstage.io/docs/features/techdocs/configuring-ci-cd/#steps)
+
+---
 
 
 
