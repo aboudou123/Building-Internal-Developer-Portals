@@ -168,8 +168,11 @@ steps:
 
 Backstage Software Templates
 [documentation](https://backstage.io/docs/features/software-templates/)
+
 Template Writing Guide
 [documentation](https://backstage.io/docs/features/software-templates/writing-templates/)
+
+
 
 
 ===========================================
@@ -384,182 +387,227 @@ Writing Custom Actions
 ==============================================
 # 3- Template Integration and Best Practices
 ==============================================
-```md
-===================================
-3- Template-Integration und Best Practices
-===================================
+````md
+# Template-Integration und Best Practices
 
-Hier ist eine strukturierte Zusammenfassung der Template-Integration und Best Practices für Backstage, die die wichtigsten Konzepte und Workflows abdeckt.
+Du hast die Template-Struktur und die Erstellung von Inhalten kennengelernt. Jetzt schauen wir uns an, wie Templates in deine Infrastruktur integriert werden, wie generierte Services automatisch entdeckt werden und welche Best Practices für produktionsreife Templates gelten.
 
 ---
 
 ## Golden-Path-Templates
 
-Golden-Path-Templates sind der von Ihrer Organisation „empfohlene“ Weg zur Erstellung von Projekten.
+Golden-Path-Templates repräsentieren den von deiner Organisation **„empfohlenen“** Weg zur Erstellung von Services.
 
-### Eigenschaften
+### Merkmale guter Golden Paths
 
-- Vollständige Einrichtung für den Produktivbetrieb  
-- Sicherheit standardmäßig (Scanning, Secrets-Management)  
-- Observability (Metriken, Logging, Tracing)  
-- CI/CD-Integration  
-- Dokumentation (README, API-Dokumentation, Runbooks)  
+- **Vollständiges Setup**: Alles, was für den Produktivbetrieb erforderlich ist  
+- **Sicherheit standardmäßig**: Security-Scanning und Secrets-Management integriert  
+- **Observability**: Logging, Metriken und Tracing konfiguriert  
+- **CI/CD-Integration**: Automatisiertes Testen und Deployen  
+- **Dokumentation**: README, API-Dokumentation und Runbooks enthalten  
 
-### Beispiel (Node.js Golden Path)
+### Beispielhafte Golden-Path-Komponenten
 
-- TypeScript, ESLint, Prettier  
-- Jest-Tests  
-- Docker & Containerisierung  
-- GitHub Actions CI/CD  
-- Prometheus-Metriken  
-- OpenAPI-Dokumentation  
-- Security-Scanning  
+```text
+# Node.js Golden Path includes:
+- TypeScript configuration
+- ESLint and Prettier
+- Jest testing framework
+- Docker containerization
+- GitHub Actions CI/CD
+- Prometheus metrics
+- OpenAPI documentation
+- Security scanning
+- Dependency updates
+````
 
-### Vorteile
+### Warum Golden Paths wichtig sind
 
-- Reduziert Entscheidungsüberlastung bei Entwicklern  
-- Stellt Standards und Compliance sicher  
-- Integriert Sicherheit und Observability  
-- Beschleunigt das Onboarding  
+* Reduzieren Entscheidungsüberlastung für Entwickler
+* Stellen sicher, dass alle Services Organisationsstandards erfüllen
+* Integrieren Sicherheit und Observability von Anfang an
+* Beschleunigen das Onboarding neuer Teammitglieder
+* Machen Wartung und Updates skalierbar
 
 ---
 
 ## Template-Organisation
 
-Organisieren Sie Templates logisch, um Wartbarkeit sicherzustellen.
-
 ### Nach Technologie-Stack
 
-```
-
+```text
 templates/
 ├── nodejs-service/
 ├── python-service/
 ├── react-frontend/
 └── golang-service/
-
 ```
 
 ### Nach Zweck
 
-```
-
+```text
 templates/
 ├── microservice/
 ├── frontend-app/
 ├── library/
 └── infrastructure/
-
 ```
 
 ### Nach Team
 
-```
-
+```text
 templates/
 ├── backend-team/
 ├── frontend-team/
 └── platform-team/
-
 ```
 
 ---
 
-## GitHub-Integration
+## GitHub-Integration für Templates
 
-Templates benötigen GitHub-Zugriff, um Repositories zu erstellen.
+Templates benötigen eine GitHub-Authentifizierung, um Repositories zu erstellen.
 
-### Konfiguration (app-config.yaml)
+### Integrationskonfiguration
 
-```
-
+```yaml
+# app-config.yaml
 integrations:
-github:
-host: github.com
-token: ${GITHUB_TOKEN}
-
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
 ```
 
-### Token-Anforderungen
+### GitHub Personal Access Token
 
-- Scopes: `repo`, `workflow`, `delete_repo`  
-- Als Umgebungsvariable setzen: `GITHUB_TOKEN`  
+* Erforderliche Scopes: `repo`, `workflow`, `delete_repo`
+* Als Umgebungsvariable setzen: `GITHUB_TOKEN`
+* Wird von der `publish:github`-Action verwendet
+* Token muss Berechtigungen für die Zielorganisation besitzen
 
-### Template-Registrierung
+---
 
-```
+## Template-Registrierung
 
+```yaml
+# app-config.yaml
 catalog:
-locations:
-- type: file
-target: ../../templates/nodejs-service-template/template.yaml
-
+  locations:
+    - type: file
+      target: ../../templates/nodejs-service-template/template.yaml
 ```
+
+**Ergebnis:**
+
+* Template erscheint in der *Create Component*-Oberfläche
+* Benutzer können Templates durchsuchen, finden und ausführen
+* Backstage lädt Templates automatisch beim Start
 
 ---
 
 ## Template-Discovery
 
-### Create-Component-UI
+Templates erscheinen in der *Create Component*-Oberfläche von Backstage.
 
-- Templates nach Kategorie, Technologie oder Team durchsuchen  
-- Suche nach Name/Beschreibung  
-- Details anzeigen (Beschreibung, Parameter, Owner)  
+### Funktionen
 
-### Metadaten-Beispiel
+* Nach Kategorie, Technologie oder Team browsen
+* Suche nach Name oder Beschreibung
+* Anzeige beliebter Templates
+* Detailansicht mit Beschreibung, Parametern und Owner
 
-```
+### Template-Metadaten
 
+```yaml
 metadata:
-tags:
-- recommended
-- nodejs
-- microservice
-links:
-- url: [https://docs.company.com/templates/nodejs](https://docs.company.com/templates/nodejs)
-title: Template Documentation
-icon: docs
-
+  tags:
+    - recommended
+    - nodejs
+    - microservice
+  links:
+    - url: https://docs.company.com/templates/nodejs
+      title: Template Documentation
+      icon: docs
 ```
 
-### Automatisierte Discovery (GitHub Provider)
+---
 
-```
+## Automatisierte Discovery mit GitHub Provider
 
+```yaml
+# app-config.yaml
 catalog:
-providers:
-github:
-backstageProvider:
-organization: 'your-github-org'
-catalogPath: '/catalog-info.yaml'
-filters:
-branch: 'main'
-repository: '.*'
-schedule:
-frequency:
-minutes: 30
-
+  providers:
+    github:
+      backstageProvider:
+        organization: 'your-github-org'
+        catalogPath: '/catalog-info.yaml'
+        filters:
+          branch: 'main'
+          repository: '.*'
+        schedule:
+          frequency:
+            minutes: 30
+          timeout:
+            minutes: 3
 ```
+
+### Funktionsweise
+
+1. Scan aller Repositories über die GitHub API
+2. Anwendung von Filtern (Branch, Name)
+3. Suche nach `catalog-info.yaml`
+4. Automatische Registrierung der Entities
+5. Wiederholung alle 30 Minuten
 
 ### Vorteile
 
-- Kein manueller Aufwand  
-- Immer aktuell  
-- Skalierbar auf Tausende von Repositories  
+* Kein manueller Aufwand
+* Immer aktuell
+* Organisationsweit
+* Skalierbar für tausende Services
 
 ---
 
 ## Backend-Modul-Registrierung
 
-```
-
+```ts
+// packages/backend/src/index.ts
 backend.add(import('@backstage/plugin-catalog-backend'));
 backend.add(import('@backstage/plugin-catalog-backend-module-github'));
-
 ```
 
-- Erforderlich, damit der GitHub-Provider funktioniert  
-- Modernes Backstage verwendet ein modulares Backend-System  
+* Erforderlich für GitHub Provider
+* Modernes Backstage nutzt ein modulares Backend
+* Ohne Registrierung wird die Konfiguration ignoriert
+
+---
+
+## Vorteile von Software Templates
+
+### Für Entwickler
+
+* Schnelle Projekterstellung
+* Konsistente Projektstruktur
+* Best Practices integriert
+* Geringere kognitive Last
+* Automatische Katalog-Discovery
+
+### Für Organisationen
+
+* Einheitliche Standards
+* Security-Compliance by default
+* Schnellere Markteinführung
+* Einfachere Wartung
+* Zentrale Transparenz
+
+### Für Plattform-Teams
+
+* Durchsetzung von Standards
+* Wissensverteilung
+* Weniger Support-Aufwand
+* Zentrale Weiterentwicklung
+* Automatisierter Katalog
 
 ---
 
@@ -567,68 +615,121 @@ backend.add(import('@backstage/plugin-catalog-backend-module-github'));
 
 ### Design-Prinzipien
 
-- Einfach starten, dann Funktionen hinzufügen  
-- Alles für den Produktivbetrieb enthalten  
-- Templates aktuell halten  
-- Alles dokumentieren  
+* Einfach starten
+* Vollständig für Produktion
+* Regelmäßig aktualisieren
+* Alles dokumentieren
 
 ### Parameter-Design
 
-- Sinnvolle Standardwerte  
-- Klare Validierung  
-- Hilfreiche Beschreibungen  
-- Intelligente UI-Komponenten  
+* Sinnvolle Defaults
+* Klare Validierung
+* Verständliche Beschreibungen
+* Smarte UI-Komponenten
 
 ### Content-Organisation
 
-- Modulare Struktur  
-- Template-Kommentare  
-- Beispieldaten  
-- Cleanup-Anweisungen  
+* Modulare Struktur
+* Kommentare im Template
+* Realistische Beispiele
+* Cleanup-Hinweise
 
-### Templates testen
+### Testing
 
-- Nach jeder Änderung ausführen  
-- Ausgabe validieren  
-- Edge-Cases testen  
-- User-Tests durchführen  
+* Nach jeder Änderung testen
+* Output validieren
+* Edge-Cases prüfen
+* Entwickler testen lassen
 
 ### Versionskontrolle
 
-- Änderungen mit Git nachverfolgen  
-- Updates dokumentieren  
-- Breaking Changes kommunizieren  
-- Template-Versionierung in Betracht ziehen  
+* Git für Versionierung
+* Changelog pflegen
+* Breaking Changes kommunizieren
+* Versionen einführen
 
 ---
 
 ## Häufige Template-Muster
 
-- **Microservice:** REST-API, Datenbankintegration, Authentifizierung, Health-Checks, CI/CD, Monitoring  
-- **Frontend-App:** React/Vue/Angular, State-Management, Routing, Testing, Deployment  
-- **Library:** Sprachspezifische Struktur, Tests, Dokumentation, Package-Publishing  
+### Microservice
+
+```text
+# Includes:
+- REST API framework
+- Database integration
+- Authentication middleware
+- Health check endpoints
+- Containerization
+- CI/CD pipeline
+- Monitoring setup
+```
+
+### Frontend Application
+
+```text
+# Includes:
+- React/Vue/Angular framework
+- State management
+- Routing configuration
+- Build optimization
+- Testing setup
+- Deployment pipeline
+- Analytics integration
+```
+
+### Library
+
+```text
+# Includes:
+- Language-specific structure
+- Testing framework
+- Documentation generation
+- Package publishing
+- Version management
+- Usage examples
+```
 
 ---
 
 ## Enterprise-Template-Strategien
 
-- **Schrittweise Einführung:** klein starten, Feedback sammeln, iterieren  
-- **Template-Governance:** Owner festlegen, Review-Prozess, Deprecation-Policy  
-- **Erfolg messen:** Adoptionsrate, Zeitersparnis, Entwicklerzufriedenheit, Compliance-Rate  
+### Schrittweise Einführung
+
+* Klein starten
+* Feedback sammeln
+* Schnell iterieren
+* Abdeckung erweitern
+
+### Template-Governance
+
+* Template-Owner definieren
+* Review-Prozess
+* Deprecation-Policy
+* Support-Kanäle
+
+### Erfolg messen
+
+* Adoptionsrate
+* Zeitersparnis
+* Entwicklerzufriedenheit
+* Compliance-Rate
 
 ---
 
-## Wichtige Erkenntnisse
+## Nächste Schritte
 
-- Golden-Path-Templates stellen konsistente, sichere und beobachtbare Projekt-Setups sicher.  
-- GitHub-Integration und automatisierte Discovery eliminieren manuelle Katalog-Updates.  
-- Templates profitieren Entwicklern (Geschwindigkeit, Konsistenz), Organisationen (Standards) und Plattform-Teams (Automatisierung).  
-- Sorgfältige Organisation, häufiges Testen und klare Governance ermöglichen Skalierung im gesamten Unternehmen.  
+✅ Golden-Path-Templates implementieren
+✅ GitHub-Integration und Discovery konfigurieren
+✅ Templates sauber organisieren
+✅ Best Practices anwenden
+✅ Erfolg messen
+
+Templates sind ein Grundpfeiler des Platform Engineerings – sie verwandeln Wissen in skalierbare Automatisierung.
 
 ---
 
 ## Zusätzliche Ressourcen
-# Additional Resources
 
 GitHub Discovery Provider
 [documentation](https://backstage.io/docs/integrations/github/discovery/)
@@ -641,7 +742,6 @@ Template Best Practices
 
 Catalog Configuration
 [documentation](https://backstage.io/docs/features/software-catalog/configuration/)
-======================================
 
 
 ====================================
@@ -2371,6 +2471,7 @@ Dieses praxisnahe Lab automatisiert die Katalogverwaltung und demonstriert skali
    Erstelle Test-Repositories mit Catalog-Entities und beobachte, wie Backstage diese automatisch über das Scannen der GitHub-Organisation entdeckt.
 
 ---
+
 
 
 
