@@ -662,50 +662,67 @@ Richte die GitHub-Authentifizierung ein und teste dein vollständiges Template, 
 # - Template Eklärung
 ================================
 
-1. Verständnis von Backstage Software Templates
-   Ziel: Lernen, wie Templates die Projekterstellung automatisieren.
+```md
+===================================
+- Template Erklärung
+===================================
 
-Erkunden:
+## Verständnis von Backstage Software Templates
 
-YAML-Template-Definitionen (template.yaml)
-Skeleton-Verzeichnisse (skeleton/)
-Parameter und Formulare
-Integrierte Actions (fetch:template, publish:github, catalog:register)
+**Ziel:** Lernen, wie Templates die Projekterstellung automatisieren.
 
-Tipp: Vergleichen Sie mit einem bestehenden Template in Ihrem Katalog, um alle Bestandteile im Kontext zu sehen.
+**Erkunden:**
 
-2. Definition von Template-Metadaten
-   Ziel: Das Template auffindbar und verständlich machen.
+- YAML-Template-Definitionen (`template.yaml`)
+- Skeleton-Verzeichnisse (`skeleton/`)
+- Parameter und Formulare
+- Integrierte Actions (`fetch:template`, `publish:github`, `catalog:register`)
 
-Wichtige Felder:
+**Tipp:** Vergleichen Sie mit einem bestehenden Template in Ihrem Katalog, um alle Bestandteile im Kontext zu sehen.
 
-metadata.name – Eindeutige Kennung
-metadata.title – Lesbarer Titel
-metadata.description – Zweck des Templates
-metadata.tags – Kategorien (z. B. nodejs, microservice)
+---
 
-Spec:
+## Definition von Template-Metadaten
 
-spec.owner – Verantwortliches Team für das Template
-spec.type – z. B. service oder library
+**Ziel:** Das Template auffindbar und verständlich machen.
 
-Tipp: Korrekte Metadaten stellen sicher, dass das Template in der Create-Component-UI erscheint.
+**Wichtige Felder:**
 
-3. Erstellung des User-Input-Formulars
-   Ziel: Definieren, welche Informationen Entwickler beim Generieren eines Projekts angeben.
+- `metadata.name` – Eindeutige Kennung  
+- `metadata.title` – Lesbarer Titel  
+- `metadata.description` – Zweck des Templates  
+- `metadata.tags` – Kategorien (z. B. nodejs, microservice)
 
-Parameter-Sektion erstellen:
+**Spec:**
 
-Pflichtfelder (z. B. Name, Beschreibung, Owner)
-Validierung: Min-/Max-Länge, Regex-Patterns, Enums
-UI-Hinweise: Autofocus, Textarea, Picker
+- `spec.owner` – Verantwortliches Team für das Template  
+- `spec.type` – z. B. service oder library  
 
-Tipp: Denken Sie an Standardwerte und Validierung, um Fehler zu reduzieren.
+**Tipp:** Korrekte Metadaten stellen sicher, dass das Template in der Create-Component-UI erscheint.
 
-4. Erstellung des Template-Skeletons
-   Ziel: Projektdateien bereitstellen, die kopiert und angepasst werden.
+---
 
-Beispiel für eine Skeleton-Ordnerstruktur:
+## Erstellung des User-Input-Formulars
+
+**Ziel:** Definieren, welche Informationen Entwickler beim Generieren eines Projekts angeben.
+
+**Parameter-Sektion erstellen:**
+
+- Pflichtfelder (z. B. Name, Beschreibung, Owner)  
+- Validierung: Min-/Max-Länge, Regex-Patterns, Enums  
+- UI-Hinweise: Autofocus, Textarea, Picker  
+
+**Tipp:** Denken Sie an Standardwerte und Validierung, um Fehler zu reduzieren.
+
+---
+
+## Erstellung des Template-Skeletons
+
+**Ziel:** Projektdateien bereitstellen, die kopiert und angepasst werden.
+
+**Beispiel für eine Skeleton-Ordnerstruktur:**
+
+```
 
 skeleton/
 ├── package.json
@@ -716,27 +733,47 @@ skeleton/
 ├── catalog-info.yaml
 └── README.md
 
-Verwenden Sie Nunjucks-Templating für Variablen und Bedingungen:
+```
+
+**Verwenden Sie Nunjucks-Templating für Variablen und Bedingungen:**
+
+```
 
 {{ values.name }} → Projektname
 {% if parameters.include_swagger %} → Bedingter Inhalt
 
-5. Definition der Scaffolding-Schritte
-   Ziel: Actions orchestrieren, die Projekte generieren.
+```
 
-Typische Schritte:
+---
 
-fetch:template → Skeleton-Dateien kopieren
-fs:rename → Dateien bei Bedarf umbenennen
-publish:github → Repository erstellen
-catalog:register → Entity im Katalog registrieren
+## Definition der Scaffolding-Schritte
 
-Schritte können Outputs vorheriger Schritte verwenden: ${{ steps.publish.output.repoContentsUrl }}
+**Ziel:** Actions orchestrieren, die Projekte generieren.
 
-6. Konfiguration der Template-Ausgabe
-   Ziel: Entwicklern Feedback und Links nach der Generierung bereitstellen.
+**Typische Schritte:**
 
-Beispiel für eine Output-Sektion:
+- `fetch:template` → Skeleton-Dateien kopieren  
+- `fs:rename` → Dateien bei Bedarf umbenennen  
+- `publish:github` → Repository erstellen  
+- `catalog:register` → Entity im Katalog registrieren  
+
+Schritte können Outputs vorheriger Schritte verwenden:
+
+```
+
+${{ steps.publish.output.repoContentsUrl }}
+
+```
+
+---
+
+## Konfiguration der Template-Ausgabe
+
+**Ziel:** Entwicklern Feedback und Links nach der Generierung bereitstellen.
+
+**Beispiel für eine Output-Sektion:**
+
+```
 
 output:
 links:
@@ -750,44 +787,62 @@ text:
 - title: Successfully Created ${{ parameters.name | title }}
 content: |
 Your new Node.js service is ready!
-- Name: ${{ parameters.name }}
-- Owner: ${{ parameters.owner }}
+Name: ${{ parameters.name }}
+Owner: ${{ parameters.owner }}
 Next Steps:
-1. Clone repo
-2. Install dependencies
-3. Start development
+Clone repo
+Install dependencies
+Start development
 
-7. Testen und Veröffentlichen von Templates
-   Ziel: Sicherstellen, dass Ihr Template Ende-zu-Ende funktioniert.
+```
 
-Schritte:
+---
 
-GitHub-Integration in app-config.yaml konfigurieren:
+## Testen und Veröffentlichen von Templates
+
+**Ziel:** Sicherstellen, dass Ihr Template Ende-zu-Ende funktioniert.
+
+**Schritte:**
+
+GitHub-Integration in `app-config.yaml` konfigurieren:
+
+```
 
 integrations:
 github:
-- host: github.com
+host: github.com
 token: ${GITHUB_TOKEN}
+
+```
 
 Template lokal validieren:
 
+```
+
 npx @backstage/cli validate-entity template.yaml
+
+```
 
 Template über die Create-Component-UI ausführen.
 
-Überprüfen:
+**Überprüfen:**
 
-Repository wird auf GitHub erstellt
-Katalogeintrag erscheint in Backstage
-Skeleton-Dateien werden mit korrekten Variablen generiert
+- Repository wird auf GitHub erstellt  
+- Katalogeintrag erscheint in Backstage  
+- Skeleton-Dateien werden mit korrekten Variablen generiert  
 
-Tipp: Testen Sie Edge-Cases wie optionale Parameter und ungültige Eingaben.
+**Tipp:** Testen Sie Edge-Cases wie optionale Parameter und ungültige Eingaben.
 
-Lab-Tipps
-Einfach starten: Zuerst ein grundlegendes Node.js-Projekt, dann Funktionen hinzufügen.
-Verwenden Sie bedingte Nunjucks-Templates für optionale Funktionalität.
-Halten Sie Skeleton und Parameter übersichtlich und gut organisiert.
-Dokumentieren Sie Schritte in der README.md im Skeleton, um Entwickler anzuleiten.
+---
+
+## Lab-Tipps
+
+- Einfach starten: Zuerst ein grundlegendes Node.js-Projekt, dann Funktionen hinzufügen.  
+- Verwenden Sie bedingte Nunjucks-Templates für optionale Funktionalität.  
+- Halten Sie Skeleton und Parameter übersichtlich und gut organisiert.  
+- Dokumentieren Sie Schritte in der `README.md` im Skeleton, um Entwickler anzuleiten.
+```
+
 
 ====================================
 
@@ -2273,6 +2328,7 @@ Dieses praxisnahe Lab automatisiert die Katalogverwaltung und demonstriert skali
    Erstelle Test-Repositories mit Catalog-Entities und beobachte, wie Backstage diese automatisch über das Scannen der GitHub-Organisation entdeckt.
 
 ---
+
 
 
 
