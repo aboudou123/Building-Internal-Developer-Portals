@@ -172,9 +172,10 @@ Template Writing Guide
 [documentation](https://backstage.io/docs/features/software-templates/writing-templates/)
 
 
-==========================================
+===========================================
  # 2- Template-Aktionen und Skeleton-Inhalte
-==========================================
+===========================================
+
 ---
 
 ## Template Actions & Skeleton Content
@@ -378,9 +379,11 @@ Writing Custom Actions
 [documentation](https://backstage.io/docs/features/software-templates/writing-custom-actions/)
 
 
-===========================================================
- # 3- Template Integration and Best Practices
-========================================================
+
+
+==============================================
+# 3- Template Integration and Best Practices
+==============================================
 
 
 Here’s a structured summary of **Template Integration and Best Practices** for Backstage, capturing the key concepts and workflow:
@@ -619,11 +622,13 @@ Catalog Configuration
 [documentation](https://backstage.io/docs/features/software-catalog/configuration/)
 
 
-======================================================================================
 
 
+====================================
 
  # 4- **“Build Your First Template”** 
+ 
+====================================
 
 ---
 
@@ -772,13 +777,13 @@ Catalog Configuration
 
 
 
-================
+====================================
+
 # 5 **Erweiterte Scaffolder-Muster**
 
-Du hast die grundlegenden Aktionen gelernt – jetzt erkunden wir erweiterte Muster, die Templates leistungsfähig und flexibel machen. Diese Lektion behandelt die bedingte Ausführung, die Verkettung von Schritt-Ausgaben und den Aufbau vollständiger mehrstufiger Workflows.
+====================================
 
-=================
----
+*Du hast die grundlegenden Aktionen gelernt – jetzt erkunden wir erweiterte Muster, die Templates leistungsfähig und flexibel machen. Diese Lektion behandelt die bedingte Ausführung, die Verkettung von Schritt-Ausgaben und den Aufbau vollständiger mehrstufiger Workflows*.
 
 ## Bedingte Aktionen
 
@@ -1245,13 +1250,15 @@ Erweiterte Scaffolder-Muster verwandeln Templates von einfachen Generatoren in a
 [documentation](https://backstage.io/docs/features/software-templates/writing-templates/)
 
 ---
-================
+
+
+=======================================
+
 # 6 **TechDocs- und MkDocs-Grundlagen**
+=======================================
+
 
 Du hast die grundlegenden Aktionen gelernt – jetzt erkunden wir erweiterte Muster, die Templates leistungsfähig und flexibel machen. Diese Lektion behandelt die bedingte Ausführung, die Verkettung von Schritt-Ausgaben und den Aufbau vollständiger mehrstufiger Workflows.
-
-=================
-
 
 **TechDocs- und MkDocs-Grundlagen**
 TechDocs macht Dokumentation zu Code und erleichtert so, Dokumente aktuell und auffindbar zu halten. Lass uns erkunden, wie Documentation-as-Code funktioniert und wie man mit MkDocs hochwertige Dokumentation schreibt.
@@ -1655,14 +1662,11 @@ Großartige Dokumentation ist ein Multiplikator für Entwicklungsteams – sie r
 
 ---
 
-===================
+====================================================
 
 # 7-**TechDocs-Integration und Veröffentlichung**
 
-
-Du hast gelernt, wie man Dokumentation mit MkDocs schreibt. Jetzt integrieren wir TechDocs in Backstage, automatisieren Veröffentlichungs-Workflows und stellen Dokumentation für deine Services bereit.
 ======================================================
----
 
 ## TechDocs-Plugin-Architektur
 
@@ -2147,9 +2151,6 @@ Die Integration von TechDocs verwandelt Dokumentation von einer Wartungslast in 
 
 ---
 
-
-Hier ist eine **authentische, flüssige deutsche Übersetzung** deines Lab-Beschriebs:
-
 ---
 
 ### Über dieses Lab
@@ -2170,8 +2171,6 @@ Dieses praktische Lab etabliert **Dokumentations-Workflows**, die sich nahtlos i
 
 ---
 
-
-
 # **TechDocs-Setup**
 
 Richte TechDocs für **Documentation-as-Code-Workflows** ein – inklusive **MkDocs-Integration** und **automatischer Veröffentlichung**.
@@ -2184,7 +2183,11 @@ Richte TechDocs für **Documentation-as-Code-Workflows** ein – inklusive **MkD
 
 ---
 
+
+==============================================
 ### Lernziele (8 Aufgaben)
+===========================================
+
 
 1. **TechDocs Frontend Plugin installieren**
 
@@ -2218,8 +2221,9 @@ Richte TechDocs für **Documentation-as-Code-Workflows** ein – inklusive **MkD
 
 
 ---
-
+=====================================
 # 9 **Automatisierte Discovery**
+=====================================
 
 Richte eine **automatisierte Discovery** ein, um Services aus GitHub-Repositories zu importieren – inklusive realer Repository-Erstellung und Tests.
 
@@ -2257,6 +2261,7 @@ Dieses praxisnahe Lab automatisiert die Katalogverwaltung und demonstriert skali
    Erstelle Test-Repositories mit Catalog-Entities und beobachte, wie Backstage diese automatisch über das Scannen der GitHub-Organisation entdeckt.
 
 ---
+
 
 
 
