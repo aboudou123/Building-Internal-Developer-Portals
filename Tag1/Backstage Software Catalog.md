@@ -3,17 +3,20 @@
 
 ## Backstage Software Catalog: Troubleshooting
 
-Wenn du mit dem **Backstage Software Catalog** arbeitest, treten gelegentlich Fehler beim **Ingestieren von Entitäten** auf. Das Verständnis, wie man diese Fehler diagnostiziert und behebt, ist essenziell für Plattformingenieure.
+Wenn du mit dem **Backstage Software Catalog** arbeitest, treten gelegentlich Fehler beim **Ingestieren von Entitäten** auf. 
+Das Verständnis, wie man diese Fehler diagnostiziert und behebt, ist essenziell für Plattformingenieure.
 
 ---
 
 ### Häufige Katalog-Fehler
 
-Backstage verarbeitet Entitäten in mehreren Schritten: **Discovery → Validation → Processing → Indexing**. Fehler können in jedem Schritt auftreten.
+Backstage verarbeitet Entitäten in mehreren Schritten:
+**Discovery → Validation → Processing → Indexing**. Fehler können in jedem Schritt auftreten.
 
 #### 1. EntityRef Not Found
 
 * **Beschreibung:** Eine Entität referenziert eine andere, die nicht existiert (z.B. ein Component verweist auf einen nicht registrierten Owner).
+
 * **Beispiel:**
 
 ```yaml
@@ -174,6 +177,7 @@ Backstage CLI Reference
 
 GitHub Integration for Backstage
 [documentation](https://backstage.io/docs/integrations/github/locations/)
+
 
 
 
