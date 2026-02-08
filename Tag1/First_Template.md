@@ -67,7 +67,10 @@ Untersuchen Sie die Template-Struktur:
 ```bash
 cat sample-template.yaml
 ```
-root@patrickaboudou-backstage-dev-wrf:~
+<img width="828" height="492" alt="image" src="https://github.com/user-attachments/assets/a33b97b9-6010-42c4-b5d5-b3dd9dfea918" />
+
+Hier die ganze yaml file
+
 ```yaml
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
@@ -128,9 +131,6 @@ spec:
           description: "{{ parameters.description }}"
           destination: parameters.repoUrl
           owner: "{{ parameters.owner }}"
-
-
-
 root@patrickaboudou-backstage-dev-wrf:~/labs/templates-study# 
 
 
@@ -152,6 +152,7 @@ Templates bestehen aus mehreren zentralen Bestandteilen:
 * **Spec.output**: Links und Informationen, die nach der Erstellung angezeigt werden
 
 ---
+
 
 
 
