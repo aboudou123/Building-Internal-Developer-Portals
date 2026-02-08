@@ -30,8 +30,7 @@
 * GitOps-Prinzipien verstehen, mit Git als Single Source of Truth
 * Häufige Fehler bei der Katalog-Ingestion und Entitätsvalidierung beheben
 * Backstage-Themes anpassen und Material-UI-Komponenten effektiv einsetzen
-* Ein produktionsnahes Backstage-Setup auf dem eigenen Laptop, Server oder einer Cloud-VM replizieren
-* Umfassende Vorbereitung auf die **CNCF Certified Backstage Associate (CBA)**-Prüfung
+
 
 ---
 
@@ -1571,6 +1570,7 @@ Nach diesem Lab hast du einen vollständig funktionierenden Beispiel-Software-Ka
 * nachvollziehbaren Abhängigkeiten
 
 Damit hast du eine realistische Grundlage geschaffen, um Backstage als zentrales Entwicklerportal in einer Organisation einzusetzen.
+
 
 
 
