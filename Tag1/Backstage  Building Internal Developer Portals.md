@@ -58,7 +58,7 @@
 * Fehleranalyse bei Katalog-Ingestion und Entitätsverarbeitung
 * Material-UI-Theming und responsives UI-Design
 * Aufbau und Betrieb einer selbstgehosteten Backstage-Produktionsumgebung
-* Vorbereitung und Validierung des Wissens für die CBA-Zertifizierungsprüfung
+
 
 ---
 
@@ -70,4 +70,287 @@
 * Grundlegendes Verständnis von Docker-Containern (von Vorteil)
 * Grundlegendes Verständnis von Kubernetes-Konzepten (Pods, Deployments, Services)
 
+===========================================================================================
 
+---
+
+# Was ist Backstage?
+
+Einführung in **Backstage**, die von Spotify entwickelte Open-Source-Plattform für Entwicklerportale, sowie ein grundlegendes Verständnis von **Internal Developer Portals (IDP)**.
+
+---
+
+### Zentrale Punkte
+
+* Internal Developer Portals lösen Produktivitätsprobleme, indem sie Entwickler-Tools und Informationen in einer zentralen Oberfläche bündeln
+* Backstage ist eine von Spotify entwickelte Open-Source-Plattform zum Aufbau von Entwicklerportalen
+* Fünf zentrale Säulen: **Softwarekatalog**, **Templates**, **TechDocs**, **Authentifizierung** und **Suche**
+* Basierend auf modernen Web-Technologien (React, Node.js, PostgreSQL) mit einer erweiterbaren Plugin-Architektur
+* Ein Entitätsmodell zur Strukturierung von Komponenten, APIs, Systemen, Benutzern, Gruppen und Ressourcen inklusive ihrer Beziehungen
+* Bietet messbare Vorteile wie schnellere Auffindbarkeit, konsistente Workflows und verbessertes Onboarding
+* Besonders geeignet für Organisationen mit mehreren Teams, wachsender Anzahl an Services und einer fragmentierten Tool-Landschaft
+
+
+---
+
+### Projektstruktur und Konfiguration
+
+Verständnis der Monorepo-Architektur von Backstage, des **packages**-Verzeichnisses sowie des leistungsfähigen **app-config.yaml**-Konfigurationssystems.
+
+---
+
+### Zentrale Punkte
+
+* Backstage verwendet eine **Monorepo-Struktur** mit `packages/` für die Applikationslogik, `plugins/` für Erweiterungen und `app-config.yaml` als zentrale Konfigurationsdatei
+* Die **Frontend-Anwendung** (`packages/app`) ist eine React-Applikation mit Routing, UI-Komponenten und Theme-Anpassungen
+* Der **Backend-Service** (`packages/backend`) ist ein Node.js-basierter API-Server, der Datenverarbeitung und Integrationen übernimmt
+* `app-config.yaml` fungiert als zentrale Konfigurationsdrehscheibe zur Steuerung von Applikationsmetadaten, Backend-Einstellungen, Integrationen, TechDocs, Authentifizierung und Katalog
+* Die **Katalogkonfiguration** definiert, aus welchen Quellen Backstage Entitätsdefinitionen entdeckt (dateibasierte Locations)
+* **Yarn Workspaces** verwalten Abhängigkeiten über alle Pakete hinweg und ermöglichen gemeinsames Tooling sowie konsistente Versionierung
+
+**Projektstruktur und Konfiguration**
+Nachdem Backstage nun lokal läuft und du im vorherigen Lab bereits die Projektstruktur gesehen hast, dient diese Lektion vor allem der Wiederholung dieser Struktur. Zusätzlich betrachten wir die wichtigsten Dateien, die Backstage funktionsfähig machen.
+
+---
+
+**High-Level-Architektur**
+Backstage folgt einem Monorepo-Ansatz mit klarer Trennung zwischen Frontend und Backend:
+
+```
+my-backstage/
+├── packages/           # Main application code
+├── plugins/           # Custom plugins
+├── app-config.yaml    # Configuration
+├── package.json       # Dependencies
+└── README.md          # Documentation
+```
+
+Diese Struktur unterstützt:
+
+Mehrere Pakete in einem einzigen Repository
+Geteilte Abhängigkeiten und gemeinsames Tooling
+Plugin-Entwicklung parallel zur Kernanwendung
+Konsistente Builds und Deployments
+
+---
+
+**Das packages-Verzeichnis**
+Das Verzeichnis `packages/` enthält die zentralen Anwendungskomponenten. Schauen wir uns jede davon an, um ihre jeweilige Rolle zu verstehen.
+
+---
+
+**Frontend-App (packages/app/)**
+Das React-Frontend, mit dem Benutzer interagieren:
+
+```
+packages/app/
+├── src/
+│   ├── App.tsx              # Main app component with routing
+│   ├── components/          # Reusable UI components
+│   ├── App.test.tsx         # Automated tests
+│   └── index.tsx            # Application entry point
+├── public/                  # Static assets and favicon
+├── package.json             # Frontend dependencies
+└── tsconfig.json            # TypeScript configuration
+```
+
+Was du beim Erkunden findest:
+
+App.tsx: Zentrale React-Komponente, die das gesamte Portal mit Navigation, Routing und Theme rendert
+components/: Verzeichnis für benutzerdefinierte UI-Komponenten, die auf die Anforderungen deines Portals zugeschnitten sind
+App.test.tsx: Automatisierte Tests zur Qualitätssicherung und zur Vermeidung von Regressionen
+
+---
+
+**Backend-Service (packages/backend/)**
+Der Node.js-API-Server, der das Portal antreibt:
+
+```
+packages/backend/
+├── src/
+│   ├── index.ts             # Entry point that starts the server
+│   ├── plugins/             # Backend plugin configuration
+│   └── types.ts             # TypeScript type definitions
+├── package.json             # Backend dependencies
+└── Dockerfile               # Container build instructions
+```
+
+Was du beim Erkunden findest:
+
+index.ts: Einstiegspunkt, der den Backend-Server startet und Plugins lädt
+plugins/: Konfiguration der verschiedenen Backstage-Backend-Plugins
+types.ts: TypeScript-Definitionen für benutzerdefinierte Datenstrukturen
+
+Diese klare Trennung zwischen Frontend und Backend ermöglicht es Teams, beide unabhängig voneinander zu entwickeln und dennoch über die Monorepo-Struktur synchron zu halten.
+
+---
+
+**app-config.yaml verstehen**
+Die Datei `app-config.yaml` ist die zentrale Konfigurationsdrehscheibe für deine gesamte Backstage-Instanz. Sehen wir uns an, was die einzelnen Abschnitte steuern.
+
+---
+
+**Anwendungsmetadaten**
+Diese Einstellungen definieren Identität und Branding deines Portals:
+
+```
+app:
+  title: Scaffolded Backstage App    # Browser tab title and header
+  baseUrl: http://YOUR_IP:3000       # Frontend URL
+
+organization:
+  name: My Company                    # Organization name displayed throughout
+```
+
+---
+
+**Backend-Konfiguration**
+Steuert, wie der Backend-API-Server bereitgestellt wird:
+
+```
+backend:
+  baseUrl: http://YOUR_IP:7007       # Backend API endpoint
+  listen:
+    port: 7007                        # Port for backend service
+    host: 0.0.0.0                     # Listen on all network interfaces
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+  cors:
+    origin: http://YOUR_IP:3000      # Allow frontend to call backend
+    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+    credentials: true
+  database:
+    client: better-sqlite3             # Database type
+    connection: ':memory:'             # In-memory database for development
+```
+
+---
+
+**Integrationskonfiguration**
+Externe Service-Integrationen (initial leer oder mit Platzhalter-Tokens):
+
+```
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}           # Can be set via environment variable
+```
+
+---
+
+**TechDocs-Konfiguration**
+Einstellungen für die Dokumentationsgenerierung:
+
+```
+techdocs:
+  builder: 'local'                     # Build docs locally
+  generator:
+    runIn: 'docker'                    # Use Docker for doc generation
+  publisher:
+    type: 'local'                      # Store docs locally
+```
+
+---
+
+**Authentifizierungskonfiguration**
+Die Standardkonfiguration verwendet für die Entwicklung eine Gast-Authentifizierung:
+
+```
+auth:
+  providers:
+    guest: {}                          # Allow guest access without login
+```
+
+---
+
+**Katalogkonfiguration**
+Steuert die Entitäts-Erkennung und -Validierung:
+
+```
+catalog:
+  import:
+    entityFilename: catalog-info.yaml
+    pullRequestBranchName: backstage-integration
+  rules:
+    - allow: [Component, System, API, Resource, Location]
+  locations:
+    - type: file
+      target: ../../examples/entities.yaml
+    - type: file
+      target: ../../examples/template/template.yaml
+      rules:
+        - allow: [Template]
+    - type: file
+      target: ../../examples/org.yaml
+      rules:
+        - allow: [User, Group]
+```
+
+Katalog-Locations teilen Backstage mit, wo Entitätsdefinitionen gefunden werden können. Die Standardkonfiguration umfasst:
+
+Beispiel-Entitäten zu Demonstrationszwecken
+Beispiel-Templates für das Scaffolding
+Eine Beispiel-Organisationsstruktur (Benutzer und Gruppen)
+
+---
+
+**Paketverwaltung**
+Backstage verwendet Yarn Workspaces zur Verwaltung von Abhängigkeiten über mehrere Pakete hinweg.
+
+---
+
+**Root package.json**
+Definiert gemeinsame Abhängigkeiten und Skripte:
+
+```
+{
+  "name": "root",
+  "private": true,
+  "workspaces": {
+    "packages": ["packages/*", "plugins/*"]
+  },
+  "scripts": {
+    "dev": "concurrently \"yarn start\" \"yarn start:backend\"",
+    "start": "yarn workspace app start",
+    "start:backend": "yarn workspace backend start"
+  }
+}
+```
+
+---
+
+**Vorteile von Workspaces**
+
+Geteilte Abhängigkeiten: Gemeinsame Pakete werden nur einmal installiert
+Konsistente Versionen: Gleiche Versionen über alle Pakete hinweg
+Einfache Skripte: Befehle über alle Workspaces ausführen
+Schnelle Builds: Es wird nur neu gebaut, was sich geändert hat
+
+---
+
+**Nächste Schritte**
+Nachdem du nun die Projektstruktur und Konfiguration von Backstage verstehst:
+
+✅ Vertraut mit der Monorepo-Architektur und dem packages-Verzeichnis
+✅ Verständnis der Trennung von Frontend und Backend sowie ihrer Kommunikation
+✅ Wissen, wie app-config.yaml die gesamte Backstage-Instanz steuert
+✅ Bereit, mehr über Plugins, Builds und Entwicklungs-Workflows zu lernen
+
+In der nächsten Lektion beschäftigen wir uns mit dem Plugin-System, dem Build-Prozess und damit, wie du Backstage an deine Anforderungen anpassen und erweitern kannst!
+
+---
+
+**Zentrale Punkte**
+
+Backstage verwendet eine Monorepo-Struktur mit `packages/` für den Anwendungscode, `plugins/` für Erweiterungen und `app-config.yaml` für die Konfiguration
+Die Frontend-App (`packages/app`) ist eine React-Anwendung mit Routing, Komponenten und Theme-Anpassungen
+Der Backend-Service (`packages/backend`) ist ein Node.js-API-Server, der Datenverarbeitung und Integrationen übernimmt
+`app-config.yaml` ist die zentrale Konfigurationsdrehscheibe für Anwendungsmetadaten, Backend-Einstellungen, Integrationen, TechDocs, Authentifizierung und Katalog
+Die Katalogkonfiguration definiert, wo Backstage Entitätsdefinitionen über dateibasierte Locations entdeckt
+Yarn Workspaces verwalten Abhängigkeiten über alle Pakete hinweg mit gemeinsamem Tooling und konsistenter Versionierung
+
+# Weiteren link
+
+https://backstage.io/docs/overview/architecture-overview/
+
+https://backstage.io/docs/conf/
