@@ -67,7 +67,11 @@ Untersuchen Sie die Template-Struktur:
 ```bash
 cat sample-template.yaml
 ```
-root@patrickaboudou-backstage-dev-wrf:~/labs/templates-study# cat sample-template.yaml
+root@patrickaboudou-backstage-dev-wrf:~
+
+# Sample Template YAML
+
+```yaml
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
@@ -123,32 +127,13 @@ spec:
         copyWithoutRender:
           - .github/workflows/*
         values:
-          component_id: ${{ parameters.component_id }}
-          description: ${{ parameters.description }}
-          destination: ${{ parameters.repoUrl | parseRepoUrl }}
-          owner: ${{ parameters.owner }}
+          component_id: parameters.component_id
+          description: "{{ parameters.description }}"
+          destination: parameters.repoUrl
+          owner: "{{ parameters.owner }}"
 
-    - id: publish
-      name: Publish
-      action: publish:github
-      input:
-        description: This is ${{ parameters.component_id }}
-        repoUrl: ${{ parameters.repoUrl }}
 
-    - id: register
-      name: Register
-      action: catalog:register
-      input:
-        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
-        catalogInfoPath: "/catalog-info.yaml"
 
-  output:
-    links:
-      - title: Repository
-        url: ${{ steps.publish.output.remoteUrl }}
-      - title: Open in catalog
-        icon: catalog
-        entityRef: ${{ steps.register.output.entityRef }}
 root@patrickaboudou-backstage-dev-wrf:~/labs/templates-study# 
 
 
@@ -170,5 +155,6 @@ Templates bestehen aus mehreren zentralen Bestandteilen:
 * **Spec.output**: Links und Informationen, die nach der Erstellung angezeigt werden
 
 ---
+
 
 
