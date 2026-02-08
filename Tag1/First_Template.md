@@ -341,7 +341,37 @@ tags:
   - backend
 ```
 
-### 3) Speichern und prüfen
+### 3) Änder/Update -Speichern und prüfen
+
+
+```yaml
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: nodejs-service-template
+  title: Node.js Microservice Template
+  description: Create a new Node.js microservice with Express, testing, and Docker support
+  tags:
+    - nodejs
+    - microservice
+    - express
+    - rest-api
+    - docker
+    - typescript
+    - recommended
+    - backend
+  links:
+    - url: https://docs.company.com/templates/nodejs
+      title: Node.js Service Standards
+      icon: docs
+    - url: https://github.com/company/nodejs-template-examples
+      title: Example Services
+      icon: github
+spec:
+  owner: platform-team
+  type: service
+  # Parameters, steps, and output will be added in subsequent tasks
+```
 
 Nano: **CTRL+O**, Enter, **CTRL+X**
 
@@ -623,6 +653,7 @@ Im nächsten Schritt erstellen Sie das Benutzereingabeformular (Parameter-Sektio
 Sie haben erfolgreich Template-Metadaten definiert, die Ihr Template auffindbar machen und seinen Zweck klar kommunizieren. Diese Grundlage stellt sicher, dass Entwickler Ihr Template finden und verstehen, bevor sie es verwenden.
 
 ```
+
 
 
 
