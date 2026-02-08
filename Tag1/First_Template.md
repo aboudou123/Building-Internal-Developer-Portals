@@ -26,7 +26,7 @@ Drücken Sie **q**, um die Statusansicht zu verlassen. Klicken Sie im Backstage-
 
 <img width="1072" height="731" alt="image" src="https://github.com/user-attachments/assets/4a29d274-db4f-4b2b-ae95-ad40b856731f" />
 
----
+
 
 ### Schritt 2: Template-Struktur untersuchen
 
@@ -37,7 +37,7 @@ find /root/labs/developer-portal -name "template.yaml" -o -name "*.yaml" | grep 
 ```
 <img width="1308" height="328" alt="image" src="https://github.com/user-attachments/assets/6bdebbc8-12fa-42e7-bab9-7154dcd9aa3d" />
 
----
+
 
 ### Schritt 3: Template-Komponenten analysieren
 
@@ -71,7 +71,6 @@ cat sample-template.yaml
 
 Hier die ganze yaml file
 
-```yaml
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
@@ -133,9 +132,6 @@ spec:
           owner: "{{ parameters.owner }}"
 root@patrickaboudou-backstage-dev-wrf:~/labs/templates-study# 
 
-
----
-
 ### Schritt 4: Template-Komponenten identifizieren
 
 Templates bestehen aus mehreren zentralen Bestandteilen:
@@ -144,8 +140,6 @@ Templates bestehen aus mehreren zentralen Bestandteilen:
 * **Spec.parameters**: Formularfelder für Benutzereingaben
 * **Spec.steps**: Aktionen, die während des Scaffoldings ausgeführt werden
 * **Spec.output**: Links und Informationen, die nach der Erstellung angezeigt werden
-
----
 
 ## Was sind Software-Templates in Backstage?
 
@@ -157,8 +151,6 @@ Software-Templates (auch **Scaffolder** genannt) helfen Entwicklerinnen und Entw
 - **Reduzierte kognitive Last**: Entwickler konzentrieren sich auf die Business-Logik statt auf Boilerplate-Setup  
 
 Man kann sich Templates als „Baupläne“ oder „Cookiecutter“-Werkzeuge vorstellen, die mit nur wenigen Formulareingaben vollständige, sofort einsatzbereite Projekte generieren.
-
-
 
 ## Schritt 1: Verzeichnisstruktur für das Template erstellen
 
@@ -181,11 +173,6 @@ cd templates/nodejs-service-template
 ```
 
 <img width="912" height="753" alt="image" src="https://github.com/user-attachments/assets/47107061-fa25-4feb-8077-f6e2b6f80a29" />
-
-
-
-
-
 
 
 Erstellen Sie Verzeichnisse für die Template-Komponenten:
@@ -363,6 +350,7 @@ Im nächsten Schritt erstellen Sie das Benutzereingabeformular (Parameter-Sektio
 Sie haben erfolgreich Template-Metadaten definiert, die Ihr Template auffindbar machen und seinen Zweck klar kommunizieren. Diese Grundlage stellt sicher, dass Entwickler Ihr Template finden und verstehen, bevor sie es verwenden.
 
 ```
+
 
 
 
