@@ -1614,9 +1614,13 @@ ls -la site/
 Das Verständnis von MkDocs und Documentation-as-Code bereitet dich darauf vor:
 
 ✅ Wartbare Dokumentation in Markdown zu schreiben
+
 ✅ MkDocs für deine Services zu konfigurieren
+
 ✅ Dokumentation für gute Auffindbarkeit zu strukturieren
+
 ✅ Diagramme und Codebeispiele effektiv zu nutzen
+
 ✅ Dokumentation lokal vor der Veröffentlichung zu prüfen
 
 In der nächsten Lektion werden wir erkunden, wie man TechDocs in Backstage integriert, Dokumentation veröffentlicht und den Workflow automatisiert.
@@ -1648,6 +1652,7 @@ Großartige Dokumentation ist ein Multiplikator für Entwicklungsteams – sie r
 [documentation](https://www.markdownguide.org/)
 
 ---
+
 
 
 
