@@ -249,9 +249,13 @@ Ctrl + X
 
 ## Prüfen, ob die Datei gespeichert wurde
 
+
+```bash
 ls
-oder 
+*oder* 
 cat template.yaml
+```
+
 
 <img width="1011" height="196" alt="image" src="https://github.com/user-attachments/assets/fe4e2cf5-03ce-4178-9ff4-399fa36d8c8f" />
 
@@ -383,6 +387,7 @@ Im nächsten Schritt erstellen Sie das Benutzereingabeformular (Parameter-Sektio
 Sie haben erfolgreich Template-Metadaten definiert, die Ihr Template auffindbar machen und seinen Zweck klar kommunizieren. Diese Grundlage stellt sicher, dass Entwickler Ihr Template finden und verstehen, bevor sie es verwenden.
 
 ```
+
 
 
 
