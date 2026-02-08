@@ -69,13 +69,12 @@
 * Grundlegendes Verständnis von Docker-Containern (von Vorteil)
 * Grundlegendes Verständnis von Kubernetes-Konzepten (Pods, Deployments, Services)
 
-===========================================================
-
 ---
 
 # Was ist Backstage?
 
-Einführung in **Backstage**, die von Spotify entwickelte Open-Source-Plattform für Entwicklerportale, sowie ein grundlegendes Verständnis von **Internal Developer Portals (IDP)**.
+Einführung in **Backstage**, die von Spotify entwickelte Open-Source-Plattform für Entwicklerportale, sowie ein grundlegendes Verständnis 
+von **Internal Developer Portals (IDP)**.
 
 ---
 
@@ -367,6 +366,7 @@ Yarn Workspaces verwalten Abhängigkeiten über alle Pakete hinweg mit gemeinsam
 
 
 **Plugins, Build und Entwicklung**
+
 Aufbauend auf deinem Verständnis der Struktur und Konfiguration von Backstage schauen wir uns nun an, wie das Plugin-System funktioniert, wie Builds verwaltet werden und welche Best Practices für Entwicklung und Anpassung gelten.
 
 ---
@@ -1572,6 +1572,7 @@ Nach diesem Lab hast du einen vollständig funktionierenden Beispiel-Software-Ka
 * nachvollziehbaren Abhängigkeiten
 
 Damit hast du eine realistische Grundlage geschaffen, um Backstage als zentrales Entwicklerportal in einer Organisation einzusetzen.
+
 
 
 
