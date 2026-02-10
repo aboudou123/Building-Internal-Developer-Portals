@@ -276,6 +276,8 @@ Dies etabliert die Authentifizierungsgrundlage, auf der Sie in der nächsten Lek
 *   Catalog-Provider synchronisiert Keycloak-Benutzer und -Gruppen zu Backstage unter Verwendung eines Service-Accounts mit Query-Berechtigungen
 *   Sicherheits-Best Practices: Docker Secrets für Credentials, Bind-Mounts für Keycloak-Passwort, HTTPS in der Produktion
 
+```
+
 ## Zusätzliche Ressourcen
 *   [Backstage Authentication](https://backstage.io/docs/auth/)
 *   [OIDC Authentication Provider](https://backstage.io/docs/auth/oidc/provider/)
@@ -283,7 +285,7 @@ Dies etabliert die Authentifizierungsgrundlage, auf der Sie in der nächsten Lek
 *   [OpenID Connect Specification](https://openid.net/specs/openid-connect-core-1_0.html)
 *   [Keycloak Catalog Backend Module](https://github.com/backstage/backstage/tree/master/plugins/catalog-backend-module-keycloak)
 
-```
+
 
 # Über das Lab
 
@@ -332,7 +334,7 @@ Importieren Sie Keycloak-Benutzer und -Gruppen als Entities in den Backstage-Cat
 # Rollenbasierte Zugriffskontrolle mit Berechtigungen
 ==========================================================
 
-```markdown
+
 # Rollenbasierte Zugriffskontrolle mit Berechtigungen
 
 Nachdem Sie nun verstehen, wie Sie Benutzer mit Keycloak authentifizieren und Gruppenmitgliedschaften erfassen, behandelt diese Lektion, wie Sie diese Informationen nutzen können, um über das Berechtigungs-Framework zu steuern, was Benutzer in Backstage tun dürfen.
