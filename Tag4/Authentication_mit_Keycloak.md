@@ -224,6 +224,7 @@ Dieses Pattern hält Credentials aus `docker-compose.yml`-Dateien und Umgebungsv
 
 ### HTTPS-Anforderungen
 Produktionsbereitstellungen erfordern HTTPS für sichere Authentifizierungsflows:
+
 ```yaml
 app:
   baseUrl: https://backstage.company.com
@@ -268,6 +269,7 @@ Im kommenden Lab werden Sie alles implementieren, was in dieser Lektion behandel
 Dies etabliert die Authentifizierungsgrundlage, auf der Sie in der nächsten Lektion aufbauen werden, um rollenbasierte Zugriffskontrolle zu implementieren.
 
 ## Kernpunkte
+
 *   Authentifizierung stellt die Benutzeridentität vor der Autorisierung fest – OIDC bietet standardisierte, JWT-Token-basierte Authentifizierung
 *   Keycloak-Realms isolieren Sicherheitsdomänen, Clients repräsentieren Anwendungen mit Redirect-URIs und Secrets
 *   Group-Mapper in Keycloak ist kritisch – fügt Gruppenmitgliedschaft zu Token-Claims für Berechtigungsrichtlinien hinzu
@@ -279,6 +281,7 @@ Dies etabliert die Authentifizierungsgrundlage, auf der Sie in der nächsten Lek
 ```
 
 ## Zusätzliche Ressourcen
+
 *   [Backstage Authentication](https://backstage.io/docs/auth/)
 *   [OIDC Authentication Provider](https://backstage.io/docs/auth/oidc/provider/)
 *   [Keycloak Documentation](https://www.keycloak.org/documentation)
@@ -339,8 +342,6 @@ Importieren Sie Keycloak-Benutzer und -Gruppen als Entities in den Backstage-Cat
 ==========================================================
 
 
-# Rollenbasierte Zugriffskontrolle mit Berechtigungen
-
 Nachdem Sie nun verstehen, wie Sie Benutzer mit Keycloak authentifizieren und Gruppenmitgliedschaften erfassen, behandelt diese Lektion, wie Sie diese Informationen nutzen können, um über das Berechtigungs-Framework zu steuern, was Benutzer in Backstage tun dürfen.
 
 ## Autorisierung: Aufbauend auf Authentifizierung
@@ -380,6 +381,7 @@ permission:
 ```
 
 ### Berechtigungsrichtlinien-Architektur
+
 Eine Richtlinie (Policy) ist TypeScript-Code, der Berechtigungsanfragen empfängt und Entscheidungen trifft. Der Ablauf ist:
 
 Benutzeraktion → Plugin → Berechtigungs-Framework → Ihre Richtlinie → ALLOW/DENY → Aktionsergebnis
