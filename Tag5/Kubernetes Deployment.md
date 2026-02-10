@@ -1,4 +1,4 @@
-```markdown
+
 # Kubernetes-Grundlagen und Image-Building
 
 Der Wechsel von Docker Compose zu Kubernetes bietet produktionsreife Skalierbarkeit, Zuverlässigkeit und Betriebsfähigkeiten für Ihre Backstage-Bereitstellung. Diese Lektion führt in die Vorteile von Kubernetes ein und lehrt Sie, wie Sie benutzerdefinierte Docker-Images gemäß dem offiziellen Backstage-Leitfaden erstellen.
