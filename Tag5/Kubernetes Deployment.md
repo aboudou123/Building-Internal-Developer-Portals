@@ -139,11 +139,319 @@ In der nächsten Lektion lernen Sie, wie Sie PostgreSQL und Backstage auf Kubern
 *   [Kubernetes Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 *   [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
 
-## Lektionsnotizen (Privat)
-Nehmen Sie private Notizen während Sie lernen...
 
-## Studiengruppe
-Diesem Kurs ist noch keine Studiengruppe zugeordnet.
 
-Bitten Sie Ihren Instruktor, eine Studiengruppe zu verlinken, um Diskussionen zu ermöglichen.
+===============================================
+
+# Bereitstellung auf Kubernetes mit Manifests
+
+===============================================
+
+
+Diese Lektion folgt dem offiziellen Backstage Kubernetes-Bereitstellungsleitfaden unter Verwendung von Raw Manifests. Sie stellen PostgreSQL mit persistentem Speicher bereit, deployen Backstage mit korrekter Konfiguration und lernen, wie Sie auf Ihre Bereitstellung zugreifen und Probleme beheben.
+
+## PostgreSQL mit Kubernetes Manifests bereitstellen
+
+### Secrets für Datenbankzugangsdaten
+Sichere Speicherung sensibler Datenbankzugangsdaten mit Kubernetes Secrets:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secrets
+  namespace: backstage
+type: Opaque
+data:
+  POSTGRES_USER: YmFja3N0YWdl      # base64: backstage
+  POSTGRES_PASSWORD: aHVudGVyMg==  # base64: hunter2
 ```
+
+### Persistenter Speicher für Daten
+PostgreSQL benötigt persistenten Speicher, der Pod-Neustarts überlebt:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-storage
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2G
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: '/mnt/data'
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-storage-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2G
+```
+
+### PostgreSQL Deployment
+Das Deployment zieht Zugangsdaten aus dem Secret und mountet persistenten Speicher:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: backstage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:13.2-alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5432
+        envFrom:
+        - secretRef:
+            name: postgres-secrets
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgresdb
+      volumes:
+      - name: postgresdb
+        persistentVolumeClaim:
+          claimName: postgres-storage-claim
+```
+
+### PostgreSQL Service
+Erstellen Sie einen ClusterIP-Service für internen Datenbankzugriff:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: backstage
+spec:
+  selector:
+    app: postgres
+  ports:
+  - port: 5432
+```
+
+## Backstage mit Kubernetes Manifests bereitstellen
+
+### Backstage Secrets
+Speichern Sie API-Tokens und sensible Konfiguration:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backstage-secrets
+  namespace: backstage
+type: Opaque
+data:
+  GITHUB_TOKEN: Z2hwX0VYQU1QTEU=  # base64 encoded token
+```
+
+### Backstage Deployment
+Das Deployment referenziert das benutzerdefinierte Docker-Image und injiziert Umgebungsvariablen aus Secrets:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backstage
+  namespace: backstage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backstage
+  template:
+    metadata:
+      labels:
+        app: backstage
+    spec:
+      containers:
+      - name: backstage
+        image: backstage:1.0.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 7007
+        env:
+        - name: POSTGRES_HOST
+          value: postgres
+        - name: POSTGRES_PORT
+          value: '5432'
+        - name: POSTGRES_USER
+          value: backstage
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secrets
+              key: POSTGRES_PASSWORD
+        - name: GITHUB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: backstage-secrets
+              key: GITHUB_TOKEN
+```
+
+### Backstage Service
+Exponieren Sie Backstage auf Port 7007 für internen Cluster-Zugriff:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: backstage
+  namespace: backstage
+spec:
+  selector:
+    app: backstage
+  ports:
+  - name: http
+    port: 7007
+    targetPort: http
+```
+
+## Auf Backstage mit Port Forwarding zugreifen
+
+### Lab-Zugriffsmethode (Port Forwarding)
+In unserer Lab-Umgebung verwenden wir `kubectl port-forward` für lokalen Zugriff:
+
+```bash
+kubectl port-forward --namespace=backstage --address=0.0.0.0 svc/backstage 7007:7007
+```
+
+Dies leitet den lokalen Port 7007 zum Backstage-Service weiter (http://localhost:7007) und läuft bis zum Stoppen mit Strg+C.
+
+### Produktions-Zugriffsmethoden
+Produktionsumgebungen benötigen ordentlichen externen Zugriff statt Port Forwarding:
+
+*   **Ingress Controller:** Hostname-basiertes Routing mit TLS-Terminierung (empfohlen)
+*   **LoadBalancer Service:** Cloud-Provider-Load-Balancer mit öffentlicher IP
+*   **API Gateway:** Zentralisiertes API-Management mit Authentifizierung und Rate-Limiting
+
+## Kubernetes-Bereitstellungen troubleshooten
+
+### Pod-Status prüfen
+Überwachen Sie den Pod-Lebenszyklus und Status:
+
+```bash
+kubectl get pods -n backstage
+kubectl describe pod <pod-name> -n backstage
+kubectl logs -n backstage deployment/backstage --tail=50
+```
+
+### Datenbankverbindung verifizieren
+PostgreSQL-Konnektivität testen:
+
+```bash
+kubectl exec -it deployment/postgres -n backstage -- psql -U backstage -c "SELECT version();"
+```
+
+### Health Check Endpoints
+Anwendungsgesundheit verifizieren:
+
+```bash
+curl -s -o /dev/null -w "HTTP Status: %{http_code}\n" http://localhost:7007/healthcheck
+```
+
+Backend-API testen (erwartet 401 für nicht authentifizierte Anfragen):
+
+```bash
+curl -s -o /dev/null -w "HTTP Status: %{http_code}\n" http://localhost:7007/api/catalog/entities
+```
+
+### Häufige Probleme
+*   **ImagePullBackOff:** Image im Cluster nicht gefunden (`minikube image load` verwenden)
+*   **CrashLoopBackOff:** Anwendung startet nicht (Logs prüfen)
+*   **Pending Pods:** Ressourcenbeschränkungen oder Speicherprobleme (Pod beschreiben)
+*   **Connection Refused:** Service nicht bereit oder falscher Port (Service-Endpunkte prüfen)
+
+## Nächste Schritte
+Das Verständnis der Kubernetes-Bereitstellung mit Manifests ermöglicht Ihnen:
+
+✅ PostgreSQL mit Manifests unter Verwendung von Secrets und persistentem Speicher bereitzustellen  
+✅ Backstage mit Umgebungsvariablen-Injektion aus Secrets zu deployen  
+✅ Auf Anwendungen mit `kubectl port-forward` für die Entwicklung zuzugreifen  
+✅ Bereitstellungsprobleme mit `kubectl`-Befehlen zu beheben  
+✅ Health-Endpunkte und Datenbank-Konnektivität zu verifizieren  
+
+Im kommenden Lab werden Sie:
+
+*   PostgreSQL mit Secrets, persistentem Speicher, Deployment und Service bereitstellen
+*   Ein benutzerdefiniertes Backstage Docker-Image mit der Host-Build-Methode erstellen
+*   Das Image in Minikube laden und Backstage mit korrekter Konfiguration deployen
+*   Auf Backstage mit Port-Forwarding zugreifen und die komplette Bereitstellung verifizieren
+
+## Kernpunkte
+*   Raw Kubernetes Manifests bieten vollständige Kontrolle über PostgreSQL- und Backstage-Bereitstellungskonfiguration
+*   Kubernetes Secrets speichern Datenbankzugangsdaten und API-Tokens unter Verwendung von Base64-Kodierung
+*   PersistentVolumes und PersistentVolumeClaims stellen sicher, dass PostgreSQL-Daten Pod-Neustarts überleben
+*   Umgebungsvariablen injizieren Secret-Werte unter Verwendung von `valueFrom` und `secretKeyRef`-Patterns
+*   ClusterIP-Services exponieren Anwendungen intern für Service-zu-Service-Kommunikation
+*   `kubectl port-forward` wird in Labs verwendet; die Produktion verwendet Ingress-Controller, LoadBalancer oder API-Gateways
+*   Troubleshooting verwendet `kubectl`-Befehle zum Prüfen von Pods, Logs und Verifizieren der Datenbank-Konnektivität
+
+## Zusätzliche Ressourcen
+*   [Backstage Kubernetes Deployment](https://backstage.io/docs/deployment/kubernetes/)
+*   [Kubernetes Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
+*   [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+
+
+===============================================
+
+# Über das Lab
+=============================================
+
+Bringen Sie Backstage von der Docker-Entwicklung zur Produktions-Kubernetes-Bereitstellung, indem Sie der offiziellen Backstage-Dokumentation folgen. Stellen Sie PostgreSQL mit Kubernetes-Manifests bereit, erstellen Sie ein benutzerdefiniertes Backstage Docker-Image und deployen Sie es auf Kubernetes mit ordentlichem Secrets-Management und Service-Konfiguration.
+
+**Sie werden lernen:**
+
+*   Den Kubernetes-Cluster-Status und verfügbare Ressourcen zu verifizieren
+*   PostgreSQL mit Kubernetes-Manifests bereitzustellen (Secrets, PV/PVC, Deployment, Service)
+*   Benutzerdefinierte Backstage Docker-Images mit dem empfohlenen Host-Build-Ansatz zu erstellen
+*   Backstage auf Kubernetes mit korrekter Umgebungsvariablen-Injektion bereitzustellen
+*   Auf Backstage mit `kubectl port-forwarding` zuzugreifen
+*   Die vollständige Integration zwischen Backstage und PostgreSQL zu verifizieren
+
+Dieses Lab folgt dem offiziellen Backstage Kubernetes-Bereitstellungsleitfaden und lehrt Sie produktionsreife Bereitstellungspraktiken ohne Helm-Abstraktionen – und gibt Ihnen volle Kontrolle über jeden Aspekt der Bereitstellung.
+
+## Wichtige Ressourcen
+
+*   [Backstage Kubernetes Deployment](https://backstage.io/docs/deployment/kubernetes/)
+*   [Backstage Docker Build](https://backstage.io/docs/deployment/docker/)
+*   [Kubernetes Documentation](https://kubernetes.io/docs/home/)
+
+## Was Sie lernen werden (4 Aufgaben)
+
+### 1. PostgreSQL-Datenbank einrichten
+Stellen Sie die PostgreSQL-Datenbank mit Kubernetes-Manifests bereit, inklusive korrekter Secrets, persistentem Speicher und Service-Konfiguration.
+
+### 2. Backstage Docker Image erstellen
+Erstellen Sie ein produktionsreifes Backstage Docker-Image mit dem empfohlenen Host-Build-Ansatz für optimale Performance.
+
+### 3. Backstage auf Kubernetes deployen
+Stellen Sie Backstage auf Kubernetes mit offiziellen Manifests, inklusive Secrets, Deployment und Service-Konfiguration, bereit.
+
+### 4. Auf Backstage zugreifen und testen
+Greifen Sie mit Port-Forwarding auf Backstage zu und verifizieren Sie, dass die komplette Bereitstellung korrekt funktioniert.
+
+
