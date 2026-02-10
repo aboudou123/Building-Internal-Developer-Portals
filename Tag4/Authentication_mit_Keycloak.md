@@ -600,7 +600,7 @@ Dieses Lab baut direkt auf dem Authentifizierungsfundament aus dem Keycloak-Inte
 # Über das Lab
 
 Bauen Sie auf Ihrem Keycloak-Authentifizierungs-Setup auf, um Autorisierung zu implementieren. Dieses Lab kommt mit vollständig konfiguriertem Keycloak (Realm, Benutzer, Gruppen, OIDC), sodass Sie sich vollständig auf das Berechtigungs-Framework konzentrieren können.
-
+```
 **Für Sie vorkonfiguriert:**
 
 *   Keycloak mit Backstage-Realm und OIDC-Client
@@ -611,6 +611,8 @@ Bauen Sie auf Ihrem Keycloak-Authentifizierungs-Setup auf, um Autorisierung zu i
     *   `carol.guest` (`guests`) – Nur Lesen
 *   Sign-in-Resolver, der Gruppen aus Tokens extrahiert
 
+```
+```
 **Sie werden lernen:**
 
 *   Das Backstage-Berechtigungs-Framework zu aktivieren und zu konfigurieren
@@ -619,10 +621,10 @@ Bauen Sie auf Ihrem Keycloak-Authentifizierungs-Setup auf, um Autorisierung zu i
 *   Software-Templates und Catalog-Aktionen rollenbasiert zu sichern
 *   Zu testen, dass verschiedene Benutzer unterschiedliche Berechtigungen haben
 *   Richtlinienentscheidungen zu verstehen: ALLOW, DENY, CONDITIONAL
-
-Dieses praxisorientierte Lab etabliert rollenbasierte Sicherheitsgrenzen unter Verwendung Ihrer bestehenden Identity-Provider-Gruppen.
-
 ```
+Dieses praxisorientierte Lab etabliert rollenbasierte Sicherheitsgrenzen unter Verwendung Ihrer bestehenden Identity-Provider-Gruppen.
+```
+
 
 
 ## Wichtige Ressourcen
