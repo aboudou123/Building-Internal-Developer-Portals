@@ -670,3 +670,136 @@ In dieser Aufgabe wird der Abschnitt „Parameter“ des Software-Templates erst
 #### Schritt 2: Hinzufügen von Repository- und Integrations-Einstellungen
 
 #### Schritt 3: Hinzufügen von technischen Konfigurationsoptionen
+
+
+---
+
+### Erstellen des Benutzer-Eingabeformulars
+
+In dieser Aufgabe erstellst du den Parameterbereich deines Software-Templates. Dieser definiert das Formular, das Entwickler ausfüllen, wenn sie dein Template verwenden. Das Formular sammelt die Informationen, die benötigt werden, um das generierte Projekt an die jeweiligen Anforderungen anzupassen.
+
+---
+
+### Warum benötigen Templates Benutzer-Eingabeformulare?
+
+Benutzer-Eingabeformulare machen Templates flexibel und wiederverwendbar, da sie eine individuelle Anpassung ermöglichen:
+
+* **Projektbenennung:** Jedes Projekt benötigt eindeutige Namen und Kennungen
+* **Konfigurationsoptionen:** Unterschiedliche Teams benötigen möglicherweise unterschiedliche aktivierte Funktionen
+* **Repository-Einrichtung:** Projekte benötigen unterschiedliche Git-Repositories und Zuständigkeiten
+* **Umgebungseinstellungen:** Entwicklungs- und Produktionskonfigurationen können variieren
+* **Integrationsentscheidungen:** Teams können unterschiedliche Datenbanken, CI/CD-Werkzeuge oder Cloud-Anbieter verwenden
+
+Das Formular übersetzt die Benutzerauswahl in Variablen, die den generierten Code anpassen, sodass ein einziges Template für viele verschiedene Anwendungsfälle genutzt werden kann.
+
+---
+
+### Verständnis der Parameterstruktur
+
+Backstage-Template-Parameter verwenden JSON Schema zur Definition der Formularfelder. Dies bietet:
+
+* **Typvalidierung:** Stellt sicher, dass Benutzer geeignete Datentypen eingeben
+* **Benutzererlebnis:** Umfangreiche Formularsteuerelemente wie Dropdown-Menüs, Kontrollkästchen und Textbereiche
+* **Dokumentation:** Integrierte Hilfetexte und Feldbeschreibungen
+* **Bedingte Logik:** Ein- oder Ausblenden von Feldern basierend auf anderen Auswahlen
+
+---
+
+### Schritt 1: Erstellen grundlegender Felder für Projektinformationen
+
+Aktualisiere dein Template, um Benutzer-Eingabeparameter hinzuzufügen. Öffne im Reiter „Code Editor“ die Datei `nodejs-service-template/template.yaml` und füge den Parameterbereich nach den Metadaten hinzu.
+
+
+
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: nodejs-service-template
+  title: Node.js Microservice Template
+  description: |
+    Creates a production-ready Node.js microservice with Express, testing, and Docker support.
+    
+    ## What this template creates
+    
+    - **Express.js API** with TypeScript for type safety
+    - **Testing setup** with Jest and Supertest
+    - **Docker configuration** for containerized deployment  
+    - **GitHub Actions** CI/CD pipeline
+    - **OpenAPI documentation** with Swagger UI
+    - **Health check endpoints** for monitoring
+    - **ESLint and Prettier** for code quality
+  
+  tags:
+    - nodejs
+    - microservice
+    - express
+    - rest-api
+    - docker
+    - typescript
+    - recommended
+    - backend
+    - api
+  
+  links:
+    - url: https://expressjs.com/
+      title: Express.js Documentation
+      icon: web
+    - url: https://github.com/your-org/nodejs-examples
+      title: Example Services
+      icon: github
+
+spec:
+  owner: platform-team
+  type: service
+  system: developer-tools
+  
+  # User input form definition
+  parameters:
+    - title: Project Information
+      required:
+        - name
+        - description
+        - owner
+      properties:
+        name:
+          title: Service Name
+          type: string
+          description: Name of your new microservice (will be used for repository and package names)
+          pattern: '^[a-z0-9-]+$'
+          minLength: 3
+          maxLength: 50
+          ui:autofocus: true
+          ui:help: 'Use lowercase letters, numbers, and hyphens only. Example: user-auth-service'
+          ui:placeholder: 'my-awesome-service'
+        
+        description:
+          title: Service Description
+          type: string
+          description: Brief description of what this service does
+          minLength: 10
+          maxLength: 200
+          ui:widget: textarea
+          ui:options:
+            rows: 3
+          ui:help: 'This will appear in README files and service documentation'
+          ui:placeholder: 'This service handles user authentication and session management'
+        
+        owner:
+          title: Team Owner
+          type: string
+          description: Which team will own and maintain this service
+          enum:
+            - platform-team
+            - frontend-team
+            - backend-team
+            - data-team
+            - devops-team
+          enumNames:
+            - Platform Team
+            - Frontend Team  
+            - Backend Team
+            - Data Team
+            - DevOps Team
+          ui:help: 'This determines who gets notified about service issues and changes'
+---
+
