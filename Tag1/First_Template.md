@@ -811,20 +811,34 @@ spec:
 ### Erklärung der Formularfeldtypen:
 
 **string mit pattern:** Texteingabe mit Validierung mittels regulärem Ausdruck (der Servicename muss URL-sicher sein)
+
 **string mit minLength/maxLength:** Texteingabe mit Längenbeschränkungen
+
 **Textarea-Widget:** Mehrzeilige Texteingabe für längere Beschreibungen
+
 **Enum-Dropdown:** Vordefinierte Auswahlmöglichkeiten aus einer Liste (Teamzuordnung, Datenbanktyp usw.)
+
 **Boolean-Kontrollkästchen:** Ja/Nein-Umschalter für Funktionsoptionen (CI/CD aktivieren, Swagger einbinden usw.)
+
 **minLength/maxLength:** Stellt angemessene Eingabelängen sicher
+
 **Integer-Eingabe:** Numerische Werte mit Minimal- und Maximalgrenzen (z. B. Portnummern)
+
 **Standardwerte:** Felder werden mit sinnvollen Standardwerten vorausgefüllt
+
 **Template-Ausdrücke:** `{{ parameters.fieldName }}` zur Referenzierung anderer Formularwerte
+
 **Pflichtfelder:** Diese Felder müssen ausgefüllt sein, bevor das Template verwendet werden kann
+
 **ui:help:** Hilfreicher Anleitungstext für Benutzer
+
 **ui:placeholder:** Beispieltext, der die erwartete Eingabe zeigt
+
 **ui:autofocus:** Setzt den Cursor beim Laden des Formulars automatisch auf dieses Feld
+
 **ui:widget:** Anpassung der Darstellung eines Feldes (z. B. Textarea für Zeichenketten)
 
 ---
+
 
 
