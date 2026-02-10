@@ -885,6 +885,7 @@ curl -s -X POST http://localhost:8082/admin/realms/backstage/clients/$CLIENT_UUI
 ```
 
 ### Mapper-Konfigurationsoptionen
+
 - **full.path: false** – Schließt nur Gruppennamen ein, nicht vollständige Pfade. Auf `true` setzen, wenn verschachtelte Gruppen verwendet werden.
 - **id.token.claim: true** – Schließt Gruppen in das ID-Token ein, das vom Frontend verwendet wird.
 - **access.token.claim: true** – Schließt Gruppen in das Access-Token ein, das von Backend-API-Aufrufen verwendet wird.
@@ -893,7 +894,7 @@ curl -s -X POST http://localhost:8082/admin/realms/backstage/clients/$CLIENT_UUI
 ## Service-Account-Rollen
 Damit Backstage Benutzer von Keycloak synchronisieren kann, benötigt der Service-Account `view-users`-Berechtigung:
 
-```bash
+bash
 # Service-Account-Benutzer holen
 SERVICE_ACCOUNT_USER=$(curl -s http://localhost:8082/admin/realms/backstage/clients/$CLIENT_UUID/service-account-user \
     -H "Authorization: Bearer $TOKEN" | jq -r '.id')
@@ -937,15 +938,17 @@ Beim Troubleshooting von OIDC-Flows verwenden Sie Browser-Entwicklertools, um di
 - [Backstage OIDC Authentication](https://backstage.io/docs/auth/oidc/provider/)
 
 
+```
+```
 
 
 ==================================
 
+
 # Den Docker-Build-Prozess verstehen
 
+
 ===================================
-
-
 
 
 Diese Lektion erklärt, wie das vorbereitete Backstage Docker-Image konstruiert wird. Das Verständnis des Build-Prozesses ermöglicht es Ihnen, das Image für die spezifischen Bedürfnisse Ihrer Organisation anzupassen.
@@ -1012,6 +1015,8 @@ with open('packages/backend/package.json', 'w') as f:
     json.dump(pkg, f, indent=2)
 EOF
 ```
+
+
 
 Dieser Ansatz:
 - Modifiziert das generierte Template vor der Installation
