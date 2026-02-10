@@ -614,11 +614,14 @@ Bauen Sie auf Ihrem Keycloak-Authentifizierungs-Setup auf, um Autorisierung zu i
 
 Dieses praxisorientierte Lab etabliert rollenbasierte Sicherheitsgrenzen unter Verwendung Ihrer bestehenden Identity-Provider-Gruppen.
 
+```
+
+
 ## Wichtige Ressourcen
 
 *   [Permissions Overview](https://backstage.io/docs/permissions/overview/)
 *   [Permission Concepts](https://backstage.io/docs/permissions/concepts/)
 *   [Writing Policies](https://backstage.io/docs/permissions/writing-policies/)
-```
+
 
 
