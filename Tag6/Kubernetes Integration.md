@@ -130,17 +130,9 @@ In der nächsten Lektion lernen Sie über Konfigurationskonzepte: Wie Backstage 
 *   [Kubernetes Backend Plugin](https://github.com/backstage/backstage/tree/master/plugins/kubernetes-backend)
 *   [Kubernetes Configuration](https://backstage.io/docs/features/kubernetes/configuration/)
 
-## Lektionsnotizen (Privat)
-Nehmen Sie private Notizen während Sie lernen...
-
-## Studiengruppe
-Diesem Kurs ist noch keine Studiengruppe zugeordnet.
-
-Bitten Sie Ihren Instruktor, eine Studiengruppe zu verlinken, um Diskussionen zu ermöglichen.
-```
 
 
-```markdown
+
 
 # Kubernetes-Plugin-Setup
 
@@ -187,4 +179,3 @@ Aktualisieren Sie Catalog-Entities mit Kubernetes-Annotations und fügen Sie pas
 
 ### 4. Kubernetes-Workloads in Backstage erkunden
 Erkunden Sie Ihre Kubernetes-Workloads durch die Backstage-UI und verifizieren Sie, dass das Plugin korrekt funktioniert.
-```
