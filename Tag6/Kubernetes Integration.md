@@ -1,5 +1,6 @@
-
+=================================
 # Kubernetes-Plugin-Übersicht
+===================================
 
 Das Backstage Kubernetes-Plugin bietet Entwicklern Workload-Transparenz direkt im Developer Portal und eliminiert die Notwendigkeit, zwischen Tools wie `kubectl` und Dashboards zu wechseln.
 
@@ -132,9 +133,11 @@ In der nächsten Lektion lernen Sie über Konfigurationskonzepte: Wie Backstage 
 
 
 
-
+====================================
 
 # Kubernetes-Plugin-Setup
+======================================
+
 
 Konfigurieren Sie das Backstage Kubernetes-Plugin, um Entwicklern Transparenz in ihre Kubernetes-Workloads direkt aus dem Developer Portal zu bieten.
 
@@ -179,3 +182,56 @@ Aktualisieren Sie Catalog-Entities mit Kubernetes-Annotations und fügen Sie pas
 
 ### 4. Kubernetes-Workloads in Backstage erkunden
 Erkunden Sie Ihre Kubernetes-Workloads durch die Backstage-UI und verifizieren Sie, dass das Plugin korrekt funktioniert.
+
+
+===================
+# Über dieses Lab
+====================
+
+Bauen Sie ein produktionsreifes Developer Portal mit GitOps-Deployment-Patterns. Erleben Sie den kompletten Developer-Workflow vom Identity-Onboarding via Keycloak zu automatisierten Deployments mit Backstage, ArgoCD und GitHub Actions.
+
+**Sie werden lernen:**
+
+*   ArgoCD-Integration mit Backstage für Deployment-Transparenz zu konfigurieren
+*   Keycloak-SSO für Developer-Onboarding und Group-Management zu integrieren
+*   Produktionsreife Golden-Path-Templates mit vollständigen CI/CD-Pipelines zu erkunden
+*   Live-Kubernetes-Workloads direkt in Backstage mit dem Kubernetes-Plugin anzusehen
+*   Den kompletten Developer-Self-Service-Workflow vom Onboarding bis zum Deployment zu erleben
+*   Platform-Engineering-Patterns zu verstehen, die bei Unternehmen wie Spotify und Netflix verwendet werden
+
+Dieses Lab demonstriert echte Produktions-Patterns: Neue Entwickler onboarden via Keycloak-SSO, erstellen Services durch Self-Service-Templates und beobachten, wie ihre Anwendungen automatisch via GitOps deployen, während sie Deployment-Status und Kubernetes-Ressourcen direkt in Backstage überwachen.
+
+**Voraussetzungen:** Vertrautheit mit ArgoCD-Konzepten (kurze Auffrischung bereitgestellt)
+
+## Wichtige Ressourcen
+
+*   [ArgoCD Documentation](https://argo-cd.readthedocs.io/)
+*   [Backstage ArgoCD Plugin](https://github.com/backstage/backstage/tree/master/plugins/argocd)
+*   [GitHub Actions](https://docs.github.com/en/actions)
+
+## Was Sie lernen werden (3 Aufgaben)
+
+### 1. ArgoCD-Setup und Backstage-Integration
+Verstehen Sie die vorbereitete Produktionsinfrastruktur und konfigurieren Sie die GitHub-Integration für GitOps-Workflows.
+
+### 2. Das GitOps-fähige Golden-Path-Template erkunden
+Überprüfen Sie die produktionsreife Template-Struktur, inklusive Kubernetes-Manifests, ArgoCD-Konfiguration und CI/CD-Workflows.
+
+### 3. Kompletten Developer-Onboarding- und Deployment-Workflow abschließen
+Erleben Sie den vollständigen Produktions-Workflow – einen neuen Entwickler onboarden, einen Service via Template erstellen und ihn deployen.
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
