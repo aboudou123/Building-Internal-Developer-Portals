@@ -285,7 +285,7 @@ Dies etabliert die Authentifizierungsgrundlage, auf der Sie in der nächsten Lek
 *   [OpenID Connect Specification](https://openid.net/specs/openid-connect-core-1_0.html)
 *   [Keycloak Catalog Backend Module](https://github.com/backstage/backstage/tree/master/plugins/catalog-backend-module-keycloak)
 
-
+```
 
 # Über das Lab
 
@@ -328,6 +328,10 @@ Testen Sie den kompletten Authentifizierungs-Workflow und erstellen Sie Benutzer
 
 ### 6. Keycloak-Benutzer und -Gruppen zum Catalog synchronisieren
 Importieren Sie Keycloak-Benutzer und -Gruppen als Entities in den Backstage-Catalog.
+
+```
+```
+
 
 
 ==========================================================
