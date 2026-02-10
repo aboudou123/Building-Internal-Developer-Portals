@@ -254,11 +254,42 @@ Im Lab implementieren Sie eine Docker-Secrets-Bereitstellung und sehen die Siche
 *   [Docker Security Best Practices](https://docs.docker.com/engine/security/)
 *   [gosu - Simple Go-based setuid+setgid+setgroups+exec](https://github.com/tianon/gosu)
 
-## Lektionsnotizen (Privat)
-Nehmen Sie private Notizen während Sie lernen...
+```
 
-## Studiengruppe
-Diesem Kurs ist noch keine Studiengruppe zugeordnet.
+```markdown
+# Über dieses Lab
 
-Bitten Sie Ihren Instruktor, eine Studiengruppe zu verlinken, um Diskussionen zu ermöglichen.
+Übergang von der lokalen Entwicklung zur produktionsreifen Docker-Bereitstellung. Konfigurieren Sie Docker Compose mit PostgreSQL, richten Sie persistente Speicher ein und lernen Sie kritische Sicherheitspraktiken für containerisierte Anwendungen kennen.
+
+**Sie werden lernen:**
+
+*   Eine produktionsreife Dockerfile für Backstage-Anwendungen zu schreiben
+*   Eine Docker-Compose-Konfiguration mit Multi-Service-Architektur zu erstellen
+*   PostgreSQL-Datenbankintegration mit korrekten Schemata zu konfigurieren
+*   Persistenten Speicher und Volume-Management einzurichten
+*   **KRITISCH:** Produktionssicherheit mit Docker Secrets (nicht mit Umgebungsvariablen) zu erlernen
+*   Containerisierte Bereitstellung zu testen und häufige Probleme zu beheben
+*   Best Practices und Sicherheitsüberlegungen für die Bereitstellung zu verstehen
+
+Dieses praxisorientierte Lab bereitet Ihre Backstage-Anwendung auf eine sichere Produktionsbereitstellung mittels Containerisierung vor.
+
+## Wichtige Ressourcen
+
+*   [Docker-Bereitstellung](https://backstage.io/docs/deployment/docker/)
+*   [Datenbank-Konfiguration](https://backstage.io/docs/tutorials/configuring-plugin-database/)
+*   [Docker Compose Guide](https://docs.docker.com/compose/)
+
+## Was Sie lernen werden (4 Aufgaben)
+
+### 1. Schreiben der Dockerfile
+Erstellen Sie eine Dockerfile, die Ihre Backstage-Anwendung mit Multi-Stage-Builds containerisiert.
+
+### 2. Konfiguration für PostgreSQL
+Konfigurieren Sie Backstage für die Verwendung von PostgreSQL anstelle von SQLite für die Produktionsbereitstellung.
+
+### 3. Erstellen der Docker-Compose-Datei
+Erstellen Sie eine Docker-Compose-Datei, die Ihre Backstage-Anwendung und die PostgreSQL-Datenbank orchestriert.
+
+### 4. Produktionsbereitstellung mit Secrets
+**KRITISCHE SICHERHEIT:** Erfahren Sie, warum Umgebungsvariablen gefährlich sind und wie Sie Docker Secrets für die Produktion verwenden.
 ```
