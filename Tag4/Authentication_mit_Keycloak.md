@@ -283,11 +283,342 @@ Dies etabliert die Authentifizierungsgrundlage, auf der Sie in der nächsten Lek
 *   [OpenID Connect Specification](https://openid.net/specs/openid-connect-core-1_0.html)
 *   [Keycloak Catalog Backend Module](https://github.com/backstage/backstage/tree/master/plugins/catalog-backend-module-keycloak)
 
-## Lektionsnotizen (Privat)
-Nehmen Sie private Notizen während Sie lernen...
-
-## Studiengruppe
-Diesem Kurs ist noch keine Studiengruppe zugeordnet.
-
-Bitten Sie Ihren Instruktor, eine Studiengruppe zu verlinken, um Diskussionen zu ermöglichen.
 ```
+
+# Über das Lab
+
+Implementieren Sie produktionsreife Authentifizierung mit Keycloak als OIDC-Provider. Konfigurieren Sie Realms und Clients, richten Sie Benutzerverwaltung ein, integrieren Sie diese mit der Backstage-Authentifizierung und testen Sie komplette Authentifizierungs-Workflows.
+
+**Sie werden lernen:**
+
+*   Keycloak mit Docker und korrekter Konfiguration bereitzustellen
+*   Realms, Clients und OIDC-Einstellungen für die Backstage-Integration zu konfigurieren
+*   Den Backstage OIDC-Authentifizierungsprovider zu konfigurieren
+*   Komplette Authentifizierungs-Workflows und Benutzersitzungen zu testen
+*   Best Practices für Authentifizierungssicherheit zu verstehen
+*   Benutzergruppen und Rollenzuordnungen für Berechtigungen einzurichten
+*   Keycloak-Benutzer und -Gruppen zum Backstage-Catalog zu synchronisieren
+
+Dieses praxisorientierte Lab etabliert Enterprise-fähige Authentifizierung für Ihr Developer Portal.
+
+## Wichtige Ressourcen
+
+*   [Authentifizierungs-Überblick](https://backstage.io/docs/auth/)
+*   [OIDC-Provider Setup](https://backstage.io/docs/auth/oidc/provider/)
+*   [Keycloak Dokumentation](https://www.keycloak.org/documentation)
+
+## Was Sie lernen werden (6 Aufgaben)
+
+### 1. Keycloak zu Docker Compose hinzufügen
+Fügen Sie den Keycloak Identity Provider zu Ihrem bestehenden Docker Compose Stack neben Backstage hinzu.
+
+### 2. Backstage-Realm und OIDC-Client konfigurieren
+Erstellen Sie einen dedizierten Realm für Backstage mit korrekter OIDC-Client-Konfiguration in Keycloak.
+
+### 3. Backstage-Backend für OIDC konfigurieren
+Konfigurieren Sie das Backstage-Backend, um Benutzer über Keycloak mittels OIDC zu authentifizieren.
+
+### 4. Backstage-Frontend für OIDC konfigurieren
+Konfigurieren Sie das Backstage-Frontend, um die Keycloak-Sign-in-Option mit OIDC anzuzeigen.
+
+### 5. Authentifizierung testen und Benutzer erstellen
+Testen Sie den kompletten Authentifizierungs-Workflow und erstellen Sie Benutzer für verschiedene Zugriffsszenarien.
+
+### 6. Keycloak-Benutzer und -Gruppen zum Catalog synchronisieren
+Importieren Sie Keycloak-Benutzer und -Gruppen als Entities in den Backstage-Catalog.
+
+
+==========================================================
+# Rollenbasierte Zugriffskontrolle mit Berechtigungen
+==========================================================
+
+```markdown
+# Rollenbasierte Zugriffskontrolle mit Berechtigungen
+
+Nachdem Sie nun verstehen, wie Sie Benutzer mit Keycloak authentifizieren und Gruppenmitgliedschaften erfassen, behandelt diese Lektion, wie Sie diese Informationen nutzen können, um über das Berechtigungs-Framework zu steuern, was Benutzer in Backstage tun dürfen.
+
+## Autorisierung: Aufbauend auf Authentifizierung
+In der vorherigen Lektion haben Sie gelernt, wie Authentifizierung Identität feststellt. Jetzt werden wir diese Identität (und Gruppenmitgliedschaft) für Autorisierungsentscheidungen nutzen.
+
+**Rückblick aus der Authentifizierungslektion:**
+
+*   Benutzer authentifizieren sich über Keycloak OIDC
+*   Sign-in-Resolver extrahiert Benutzername und Gruppen aus Token-Claims
+*   Gruppen werden im `ent`-Claim (Ownership Entities) enthalten
+*   Beispiel: `['user:default/alice.admin', 'group:default/platform-admins']`
+
+**Autorisierung baut auf diesem Fundament auf:**
+
+*   Berechtigungsrichtlinien (Permission Policies) prüfen den `ent`-Claim, um die Gruppen des Benutzers zu sehen
+*   Verschiedene Gruppen erhalten unterschiedliche Zugriffsstufen
+*   Richtlinien treffen ALLOW/DENY-Entscheidungen für jede Aktion
+
+## Backstage-Berechtigungs-Framework
+
+### Was sind Berechtigungen?
+Berechtigungen kontrollieren, was authentifizierte Benutzer in Backstage tun dürfen. Nachdem die Authentifizierung die Identität festgestellt hat, setzt das Berechtigungs-Framework die Autorisierung durch.
+
+**Häufige Berechtigungsbeispiele:**
+
+*   `catalog.entity.read` – Catalog-Entities ansehen
+*   `catalog.entity.create` – Neue Entities erstellen
+*   `catalog.entity.update` – Bestehende Entities ändern
+*   `catalog.entity.delete` – Entities entfernen
+*   `scaffolder.template.execute` – Software-Templates ausführen
+
+### Aktivierung des Berechtigungs-Frameworks in Backstage
+Das Berechtigungs-Framework wird in `app-config.yaml` aktiviert:
+```yaml
+permission:
+  enabled: true
+```
+
+### Berechtigungsrichtlinien-Architektur
+Eine Richtlinie (Policy) ist TypeScript-Code, der Berechtigungsanfragen empfängt und Entscheidungen trifft. Der Ablauf ist:
+
+Benutzeraktion → Plugin → Berechtigungs-Framework → Ihre Richtlinie → ALLOW/DENY → Aktionsergebnis
+
+**Drei Schlüsselkomponenten:**
+
+1.  **PolicyQuery** – Enthält die geprüfte Berechtigung
+    *   Berechtigungsname (z.B. `catalog.entity.delete`)
+    *   Berechtigungsattribute (z.B. `action: 'delete'`)
+
+2.  **PolicyQueryUser** – Enthält Benutzerinformationen vom Sign-in-Resolver
+    *   `user.info.ownershipEntityRefs` – Array von Benutzer- und Group-Entity-Referenzen
+    *   Beispiel: `['user:default/alice.admin', 'group:default/platform-admins']`
+
+3.  **PolicyDecision** – Die Antwort Ihrer Richtlinie
+    *   `AuthorizeResult.ALLOW` – Berechtigung gewährt
+    *   `AuthorizeResult.DENY` – Berechtigung verweigert
+    *   `AuthorizeResult.CONDITIONAL` – Berechtigung mit Bedingungen gewährt (fortgeschritten)
+
+## Gruppenbasierte Berechtigungsrichtlinie
+Hier ist eine vollständige Berechtigungsrichtlinie, die Keycloak-Gruppenmitgliedschaft prüft:
+
+```typescript
+import { createBackendModule } from '@backstage/backend-plugin-api';
+import {
+  PolicyDecision,
+  AuthorizeResult,
+} from '@backstage/plugin-permission-common';
+import {
+  PermissionPolicy,
+  PolicyQuery,
+  PolicyQueryUser,
+} from '@backstage/plugin-permission-node';
+import { policyExtensionPoint } from '@backstage/plugin-permission-node/alpha';
+
+class KeycloakGroupPolicy implements PermissionPolicy {
+  async handle(
+    request: PolicyQuery,
+    user?: PolicyQueryUser,
+  ): Promise<PolicyDecision> {
+    // Verweigern, wenn nicht authentifiziert
+    if (!user) {
+      return { result: AuthorizeResult.DENY };
+    }
+
+    // Gruppen des Benutzers aus dem ent-Claim holen (vom Sign-in-Resolver gesetzt)
+    const groups = user.info.ownershipEntityRefs || [];
+
+    // Platform-Admins haben vollen Zugriff
+    if (groups.some(g => g === 'group:default/platform-admins')) {
+      return { result: AuthorizeResult.ALLOW };
+    }
+
+    // Entwickler können alles außer löschen
+    if (groups.some(g => g === 'group:default/developers')) {
+      const action = request.permission.attributes.action;
+      if (action === 'delete') {
+        return { result: AuthorizeResult.DENY };
+      }
+      return { result: AuthorizeResult.ALLOW };
+    }
+
+    // Gäste können nur lesen
+    if (groups.some(g => g === 'group:default/guests')) {
+      if (request.permission.attributes.action === 'read') {
+        return { result: AuthorizeResult.ALLOW };
+      }
+      return { result: AuthorizeResult.DENY };
+    }
+
+    // Standard: unbekannte Gruppen verweigern
+    return { result: AuthorizeResult.DENY };
+  }
+}
+
+export const permissionPolicyModule = createBackendModule({
+  pluginId: 'permission',
+  moduleId: 'keycloak-group-policy',
+  register(reg) {
+    reg.registerInit({
+      deps: { policy: policyExtensionPoint },
+      async init({ policy }) {
+        policy.setPolicy(new KeycloakGroupPolicy());
+      },
+    });
+  },
+});
+```
+
+### Wie die Richtlinie funktioniert
+**Schritt-für-Schritt-Ablauf:**
+
+1.  Benutzer versucht Aktion (z.B. löschen einer Catalog-Entity)
+2.  Plugin ruft Berechtigungs-Framework mit der Berechtigungsanfrage auf
+3.  Framework ruft Ihre Richtlinie mit `PolicyQuery` und `PolicyQueryUser` auf
+4.  Richtlinie extrahiert Gruppen aus `user.info.ownershipEntityRefs`
+5.  Richtlinie prüft Gruppenmitgliedschaft mit `groups.some()`
+6.  Richtlinie gibt Entscheidung zurück (ALLOW oder DENY)
+7.  Framework setzt Entscheidung durch – Aktion wird fortgesetzt oder blockiert
+
+**Wichtige Implementierungsdetails:**
+
+*   Zuerst prüfen, ob Benutzer existiert – nicht authentifizierte Benutzer werden verweigert
+*   `user.info.ownershipEntityRefs` verwenden, um Gruppen zu erhalten (vom Sign-in-Resolver gesetzt)
+*   Group-Refs folgen dem Muster: `group:default/group-name`
+*   `request.permission.attributes.action` prüfen, um read/create/update/delete zu unterscheiden
+*   Explizites ALLOW oder DENY für jeden Fall zurückgeben
+
+## Gruppenbasierte Zugriffskontrollstufen
+Entwerfen Sie Ihre Zugriffsebenen basierend auf den Bedürfnissen Ihrer Organisation:
+
+| Gruppe | Zugriffsebene | Anwendungsfall |
+| :--- | :--- | :--- |
+| `platform-admins` | Vollzugriff (alle Operationen) | Plattformteam, das Backstage verwaltet |
+| `developers` | Lesen + Erstellen + Aktualisieren (kein Löschen) | Ingenieure, die Templates und Catalog nutzen |
+| `guests` | Nur Lesezugriff | Stakeholder, die Dokumentation einsehen |
+
+**Beispiele aus der Praxis:**
+
+**Platform Admins:**
+*   Software-Templates erstellen und ändern
+*   Catalog-Entities löschen
+*   TechDocs und Plugins verwalten
+*   Vollständiger administrativer Zugriff
+
+**Developers:**
+*   Software-Templates ausführen, um Projekte zu erstellen
+*   Catalog-Entities registrieren und aktualisieren
+*   **Können nicht löschen**, um versehentlichen Datenverlust zu verhindern
+*   TechDocs erstellen und ansehen
+
+**Guests:**
+*   Catalog-Entities und Dokumentation ansehen
+*   Verfügbare Templates durchsuchen
+*   **Können keine Änderungen vornehmen**
+*   Nützlich für Manager, Stakeholder, Auditoren
+
+## Richtlinien-Registrierung
+Registrieren Sie Ihre Berechtigungsrichtlinie im Backend:
+
+```typescript
+// In packages/backend/src/index.ts
+import { permissionPolicyModule } from './permissionPolicy';
+
+// Allow-All-Richtlinie entfernen (nur EINE Richtlinie kann aktiv sein)
+// backend.add(import('@backstage/plugin-permission-backend-module-allow-all-policy'));
+
+// Eigene benutzerdefinierte Richtlinie hinzufügen
+backend.add(permissionPolicyModule);
+```
+
+**Wichtig:** Backstage kann nur eine aktive Berechtigungsrichtlinie haben. Wenn Sie die allow-all-policy aktiviert lassen, wird sie mit Ihrer benutzerdefinierten Richtlinie in Konflikt stehen.
+
+## Sicherheitsüberlegungen
+
+### Verweigern als Standard
+Beenden Sie Ihre Richtlinie immer mit `return { result: AuthorizeResult.DENY }`, um sicherzustellen, dass unbekannte Fälle blockiert werden.
+
+### Benutzerobjekt validieren
+Prüfen Sie, dass der Benutzer existiert, bevor Sie auf Eigenschaften zugreifen, um unauthentifizierte Anfragen sicher zu handhaben.
+
+### Gruppenreferenz-Format
+Group-Entity-Refs folgen dem Muster `group:default/group-name`. Passen Sie dies genau in Ihren Vergleichen an.
+
+### Verweigerte Berechtigungen loggen
+Erwägen Sie, verweigerte Berechtigungen zu loggen (besonders in der Entwicklung), um das Richtlinienverhalten zu verstehen:
+
+```typescript
+if (result === AuthorizeResult.DENY) {
+  console.log(`Permission denied: ${request.permission.name} for user ${user?.entity?.metadata.name}`);
+}
+```
+
+## Lab-Vorschau: Rollenbasierte Zugriffskontrolle
+Im kommenden Lab werden Sie alles implementieren, was in dieser Lektion behandelt wurde:
+
+**Lab-Umgebung:**
+
+*   Keycloak-Authentifizierung ist für Sie vorkonfiguriert
+*   Drei Testbenutzer existieren bereits mit verschiedenen Gruppen:
+    *   `alice.admin` (`platform-admins`)
+    *   `bob.developer` (`developers`)
+    *   `carol.guest` (`guests`)
+*   Sign-in-Resolver extrahiert bereits Gruppen in den `ent`-Claim
+
+**Ihre Aufgaben:**
+
+1.  Berechtigungs-Framework in `app-config.yaml` aktivieren
+2.  Berechtigungsrichtlinien-Modul erstellen, das Keycloak-Gruppenmitgliedschaft prüft
+3.  Zugriffsebenen für die drei Gruppen (admin, developer, guest) implementieren
+4.  Allow-All-Richtlinie entfernen, um Ihre benutzerdefinierte Richtlinie zu aktivieren
+5.  Mit verschiedenen Benutzern testen, um zu verifizieren, dass jede Gruppe angemessene Berechtigungen hat
+6.  Template- und Catalog-Zugriffskontrolle basierend auf Gruppenmitgliedschaft verifizieren
+
+Dieses Lab baut direkt auf dem Authentifizierungsfundament aus dem Keycloak-Integration-Lab auf.
+
+## Kernpunkte
+*   Autorisierung baut auf Authentifizierung auf – Berechtigungsrichtlinien verwenden Gruppen aus dem `ent`-Claim des Sign-in-Resolvers
+*   `user.info.ownershipEntityRefs` enthält Array von Benutzer- und Group-Entity-Refs aus der Authentifizierung
+*   Berechtigungsrichtlinien prüfen `PolicyQuery` (Berechtigung und Aktion) und `PolicyQueryUser` (Identität und Gruppen)
+*   Drei Entscheidungstypen: ALLOW gewährt Zugriff, DENY blockiert Zugriff, CONDITIONAL erlaubt mit zusätzlichen Regeln
+*   `request.permission.attributes.action` verwenden, um read/create/update/delete-Operationen zu unterscheiden
+*   Immer standardmäßig verweigern und Benutzerexistenz validieren – nur eine Richtlinie kann gleichzeitig aktiv sein
+
+## Zusätzliche Ressourcen
+*   [Backstage Permissions Framework](https://backstage.io/docs/permissions/overview/)
+*   [Permission Concepts](https://backstage.io/docs/permissions/concepts/)
+*   [Writing Permission Policies](https://backstage.io/docs/permissions/writing-policies/)
+*   [Getting Started with Permissions](https://backstage.io/docs/permissions/getting-started/)
+
+```
+
+
+```markdown
+
+# Über das Lab
+
+Bauen Sie auf Ihrem Keycloak-Authentifizierungs-Setup auf, um Autorisierung zu implementieren. Dieses Lab kommt mit vollständig konfiguriertem Keycloak (Realm, Benutzer, Gruppen, OIDC), sodass Sie sich vollständig auf das Berechtigungs-Framework konzentrieren können.
+
+**Für Sie vorkonfiguriert:**
+
+*   Keycloak mit Backstage-Realm und OIDC-Client
+*   Group-Mapper, der Gruppen an Backstage-Tokens sendet
+*   Drei Testbenutzer mit verschiedenen Gruppenmitgliedschaften:
+    *   `alice.admin` (`platform-admins`) – Vollzugriff
+    *   `bob.developer` (`developers`) – Lesen + eingeschränktes Schreiben
+    *   `carol.guest` (`guests`) – Nur Lesen
+*   Sign-in-Resolver, der Gruppen aus Tokens extrahiert
+
+**Sie werden lernen:**
+
+*   Das Backstage-Berechtigungs-Framework zu aktivieren und zu konfigurieren
+*   Berechtigungsrichtlinien zu schreiben, die Keycloak-Gruppenmitgliedschaft prüfen
+*   Unterschiedliche Zugriffsebenen (Admin, Developer, Guest) zu implementieren
+*   Software-Templates und Catalog-Aktionen rollenbasiert zu sichern
+*   Zu testen, dass verschiedene Benutzer unterschiedliche Berechtigungen haben
+*   Richtlinienentscheidungen zu verstehen: ALLOW, DENY, CONDITIONAL
+
+Dieses praxisorientierte Lab etabliert rollenbasierte Sicherheitsgrenzen unter Verwendung Ihrer bestehenden Identity-Provider-Gruppen.
+
+## Wichtige Ressourcen
+
+*   [Permissions Overview](https://backstage.io/docs/permissions/overview/)
+*   [Permission Concepts](https://backstage.io/docs/permissions/concepts/)
+*   [Writing Policies](https://backstage.io/docs/permissions/writing-policies/)
+```
+
+
