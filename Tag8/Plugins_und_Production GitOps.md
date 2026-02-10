@@ -764,10 +764,9 @@ Das Verständnis dieser Muster jetzt hilft Ihnen, sich während der praktischen 
 - [Material-UI v4 Dokumentation](https://v4.mui.com/)
 - [Backstage Theming Guide](https://backstage.io/docs/theming/overview/)
 - [Material-UI Grid System](https://v4.mui.com/components/grid/)
-```
 
 
-```markdown
+
 
 ===================================================
 # Produktions-GitOps und Platform-Engineering-Muster
@@ -980,11 +979,3 @@ Sie werden sehen, wie Platform-Engineering-Muster nahtlose Developer-Experiences
 - [Backstage ArgoCD Plugin](https://github.com/backstage/backstage/tree/master/plugins/argocd)
 - [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
 
-## Lektionsnotizen (Privat)
-Nehmen Sie private Notizen während Sie lernen...
-
-## Studiengruppe
-Diesem Kurs ist noch keine Studiengruppe zugeordnet.
-
-Bitten Sie Ihren Instruktor, eine Studiengruppe zu verlinken, um Diskussionen zu ermöglichen.
-```
