@@ -806,6 +806,15 @@ spec:
           ui:help: 'This determines who gets notified about service issues and changes'
 ```
 
+<img width="1066" height="498" alt="image" src="https://github.com/user-attachments/assets/09ad34dd-ac18-420a-b324-8674379d0b56" />
+
+
+<img width="1072" height="898" alt="image" src="https://github.com/user-attachments/assets/92f2749a-a61c-4ce2-a970-e8f78fe39988" />
+
+
+<img width="970" height="1028" alt="image" src="https://github.com/user-attachments/assets/4632d54c-c230-466a-88ab-d08089bc8d4b" />
+
+
 ---
 
 ### Erklärung der Formularfeldtypen:
@@ -839,6 +848,147 @@ spec:
 **ui:widget:** Anpassung der Darstellung eines Feldes (z. B. Textarea für Zeichenketten)
 
 ---
+ **Step 2** hinzufügen: eine **zweite Parameter-Sektion** („Repository and Integration“) in `spec.parameters`, ohne Einrückungsfehler.
+
+## Schritt 1: Datei öffnen
+
+```bash
+cd /root/labs/developer-portal/templates/nodejs-service-template
+nano template.yaml
+```
+
+## Schritt 2: `parameters:` komplett ersetzen (Step 1 + Step 2 zusammen)
+
+Suche in `spec:` den Block `parameters:` und ersetze ihn **komplett** durch diesen korrekten Block:
+
+```yaml
+  parameters:
+    - title: Project Information
+      required:
+        - name
+        - description
+        - owner
+      properties:
+        name:
+          title: Service Name
+          type: string
+          description: Name of your new microservice (will be used for repository and package names)
+          pattern: '^[a-z0-9-]+$'
+          minLength: 3
+          maxLength: 50
+          ui:autofocus: true
+          ui:help: 'Use lowercase letters, numbers, and hyphens only. Example: user-auth-service'
+          ui:placeholder: 'my-awesome-service'
+
+        description:
+          title: Service Description
+          type: string
+          description: Brief description of what this service does
+          minLength: 10
+          maxLength: 200
+          ui:widget: textarea
+          ui:options:
+            rows: 3
+          ui:help: 'This will appear in README files and service documentation'
+          ui:placeholder: 'This service handles user authentication and session management'
+
+        owner:
+          title: Team Owner
+          type: string
+          description: Which team will own and maintain this service
+          enum:
+            - platform-team
+            - frontend-team
+            - backend-team
+            - data-team
+            - devops-team
+          enumNames:
+            - Platform Team
+            - Frontend Team
+            - Backend Team
+            - Data Team
+            - DevOps Team
+          ui:help: 'This determines who gets notified about service issues and changes'
+
+    - title: Repository and Integration
+      required:
+        - github_owner
+        - repository_name
+      properties:
+        github_owner:
+          title: GitHub Owner
+          type: string
+          description: Your GitHub username or organization name where the repository will be created
+          pattern: '^[a-z0-9-]+$'
+          minLength: 1
+          maxLength: 39
+          ui:help: 'Example: my-github-username or my-company-org. The repository will be created at github.com/[owner]/[repository-name]'
+          ui:placeholder: 'your-github-username'
+
+        repository_name:
+          title: Repository Name
+          type: string
+          description: GitHub repository name (usually same as service name)
+          pattern: '^[a-z0-9-]+$'
+          ui:help: 'Combined with GitHub Owner above to create: github.com/[owner]/[repository-name]'
+          ui:placeholder: 'my-awesome-service'
+
+        enable_cicd:
+          title: Enable CI/CD Pipeline
+          type: boolean
+          description: Include GitHub Actions workflow for automated testing and deployment
+          default: true
+          ui:help: 'Recommended for all services. Creates automated testing on every commit.'
+
+        database_type:
+          title: Database Integration
+          type: string
+          description: Which database will this service use
+          enum:
+            - none
+            - postgresql
+            - mysql
+            - mongodb
+          enumNames:
+            - No Database
+            - PostgreSQL
+            - MySQL
+            - MongoDB
+          default: postgresql
+          ui:help: 'PostgreSQL is recommended for most applications. Choose "none" for stateless services.'
+```
+
+**Wichtig zur Einrückung:**
+
+* `parameters:` hat **2 Leerzeichen** voran (weil es unter `spec:` steht).
+* Jede Sektion beginnt mit `- title: ...` (auch 4 Leerzeichen vor `-`).
+
+## Schritt 3: Speichern
+
+Nano:
+
+* **CTRL + O**, Enter
+* **CTRL + X**
+
+<img width="1110" height="1067" alt="image" src="https://github.com/user-attachments/assets/d9b3cff9-34ed-42ce-8aeb-5641b1b92d3b" />
+
+
+<img width="1116" height="1057" alt="image" src="https://github.com/user-attachments/assets/bb8b8830-90e9-4019-bbdd-08404097e3cf" />
+
+<img width="1143" height="1029" alt="image" src="https://github.com/user-attachments/assets/2c3e37c1-0ec8-4b24-a6a9-7f995c20bb98" />
+
+<img width="1127" height="1020" alt="image" src="https://github.com/user-attachments/assets/48042cde-e4d0-46b3-afdb-f55528b40885" />
+
+
+## Schritt 4: YAML prüfen (muss OK sein)
+
+```bash
+python3 - <<'PY'
+import yaml
+yaml.safe_load(open("template.yaml","r",encoding="utf-8"))
+print("OK: template.yaml ist gültig")
+PY
+```
 
 
 
