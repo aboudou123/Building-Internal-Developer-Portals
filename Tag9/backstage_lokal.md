@@ -1,190 +1,226 @@
 
-# Kubernetes-Plugin-Übersicht
+Du hast aktuell **kein Node.js**, und `corepack` zeigt auf einen kaputten Pfad. Ohne sauberes Node/Yarn können wir Backstage nicht erstellen/starten.
 
-Das Backstage Kubernetes-Plugin bietet Entwicklern Workload-Transparenz direkt im Developer Portal und eliminiert die Notwendigkeit, zwischen Tools wie `kubectl` und Dashboards zu wechseln.
+## Schritt 1: Node 20 LTS + Yarn (über NVM + Corepack)
 
-## Das Developer-Experience-Problem
+Führe diese Befehle nacheinander aus:
 
-Ohne das Plugin müssen Entwickler zwischen Backstage für Service-Informationen und `kubectl` oder Dashboards für Kubernetes-Status hin- und herwechseln. Dies fragmentiert die Developer-Experience und verlangsamt die Fehlerbehebung.
+```bash
+sudo apt update
+sudo apt install -y curl ca-certificates
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm install 20
+nvm use 20
+nvm alias default 20
+corepack enable
+corepack prepare yarn@stable --activate
+```
 
-Mit dem Plugin sind Workload-Status, Pod-Health und Logs direkt in Backstage sichtbar. Entwickler erhalten Self-Service-Debugging-Fähigkeiten ohne tiefgreifende Kubernetes-Kenntnisse.
+## Schritt 2: Prüfen, ob alles passt
 
-## Entwickler-zentriertes Design
+Danach:
 
-Das Plugin ist für Service-Eigentümer, nicht für Cluster-Administratoren, gebaut:
+```bash
+node -v
+npm -v
+corepack --version
+yarn -v
+```
 
-**Entwickler-Fragen:**
-*   Läuft mein Service?
-*   Gibt es Fehler in meinen Pods?
-*   Was zeigen die Logs an?
+<img width="1272" height="701" alt="image" src="https://github.com/user-attachments/assets/3ff355ad-8471-4d36-a0f0-bf530dd023fb" />
 
-**Nicht dafür entwickelt:**
-*   Cluster-Kapazitätsplanung
-*   Node-Management
-*   Netzwerkrichtlinien-Konfiguration
+ Du bist in einer Umgebung, die **Windows-npm Pfade** im `PATH` hat (`C:\Users\patri\...`). Deshalb versucht `npm` auf Windows-Verzeichnisse zuzugreifen und knallt.
 
-## Zwei-Komponenten-Architektur
+Bevor wir Node installieren, müssen wir **nvm in dieser Shell aktivieren** und sicherstellen, dass wir **Linux-Node/npm** benutzen (nicht Windows).
 
-Das Plugin benötigt sowohl Frontend- als auch Backend-Komponenten:
+<img width="1495" height="726" alt="image" src="https://github.com/user-attachments/assets/772e756e-fe32-4401-9280-7ddb530113fa" />
+## Schritt 1: nvm in der aktuellen Shell aktivieren
 
-**Frontend (@backstage/plugin-kubernetes):**
-*   React-Komponenten, die Workload-Informationen anzeigen
-*   In `EntityPage.tsx` als Tab integriert
-*   Konfigurierbare Aktualisierungsintervalle für Live-Updates
-*   Pod-Log-Viewer für die Fehlerbehebung
+Führe aus:
 
-**Backend (@backstage/plugin-kubernetes-backend):**
-*   Kommuniziert mit Kubernetes-API-Servern
-*   Authentifiziert sich mit ServiceAccount-Tokens
-*   Aggregiert Ressourcen über Cluster hinweg
-*   Stellt REST-API für das Frontend bereit
+```bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+```
 
-**Wie das Resource-Matching funktioniert:**
-1.  Catalog-Entity hat Annotation: `backstage.io/kubernetes-id: my-service`
-2.  Kubernetes-Ressourcen haben passendes Label: `backstage.io/kubernetes-id=my-service`
-3.  Backend sucht in Clustern nach Ressourcen mit diesem Label
-4.  Alle passenden Ressourcen erscheinen in der Backstage-UI
-5.  Frontend aktualisiert Daten automatisch in konfigurierten Intervallen
+## Schritt 2: Kurz prüfen, was gerade “npm/node” ist
 
-## Was das Plugin anzeigt
-
-Das Plugin zeigt standardmäßige Kubernetes-Ressourcen:
-*   **Workloads:** Deployments, ReplicaSets, Pods, StatefulSets, DaemonSets, Jobs, CronJobs
-*   **Networking:** Services, Ingresses
-*   **Configuration:** ConfigMaps, Secrets (nur Metadaten)
-*   **Storage:** PersistentVolumeClaims
-
-Das Plugin kann auch konfiguriert werden, um Custom Resources (CRDs) anzuzeigen, wie z.B. ArgoCD Applications, Crossplane-Ressourcen oder Cert-manager Certificates.
-
-## UI-Funktionen
-
-Der Kubernetes-Tab zeigt:
-
-**Fehlerberichterstattung:**
-*   Fehlgeschlagene Pods oben hervorgehoben
-*   Fehlermeldungen und Neustartzähler
-*   Visuelle Indikatoren für Pod-Gesundheit
-
-**Cluster-Übersicht:**
-*   Cluster-Name und Pod-Zählungen
-*   Deployments nach Cluster gruppiert
-*   Health-Status-Indikatoren
-
-**Pod-Details-Tabelle:**
-*   **NAME:** Pod-Identifikator
-*   **PHASE:** Running, Pending oder Failed
-*   **STATUS:** Health-Status (grünes Häkchen für gesund)
-*   **CONTAINERS READY:** Readiness-Zähler (z.B. 1/1)
-*   **TOTAL RESTARTS:** Neustart-Zähler
-*   **CPU/MEMORY USAGE:** Ressourcenverbrauch (benötigt metrics-server)
-
-**Pod-Details-Drawer:**
-Klicken Sie auf einen Pod, um zu sehen:
-*   Pod-IP-Adresse und YAML-Spezifikation
-*   Container-Health-Checks (Gestartet, Ready, Neustart-Zähler)
-*   **LOGS**-Button für Live-Log-Streaming
-
-**Log-Viewer:**
-*   Zeilennummerierte, durchsuchbare Logs
-*   Echtzeit-Streaming
-*   Kein `kubectl`-Zugriff erforderlich
-
-## Warum Entwickler dies lieben
-
-**Schnelle Fehlerbehebung:**
-Anstatt zu `kubectl` zu wechseln, sehen Entwickler Pod-Status und Logs direkt in Backstage, was die Fehlerbehebungszeit von Minuten auf Sekunden reduziert.
-
-**Self-Service-Debugging:**
-Junior-Entwickler können Probleme ohne `kubectl`-Kenntnisse oder Cluster-Zugriff untersuchen. Die visuelle Oberfläche führt sie durch Pod-Health, Events und Logs.
-
-**Multi-Umgebung-Transparenz:**
-Wenn Services über Dev-, Staging- und Produktions-Cluster hinweg laufen, sehen Entwickler alle Umgebungen in einer Ansicht, was es einfach macht, Versionsunterschiede oder umgebungsspezifische Probleme zu erkennen.
-
-## Was das Plugin NICHT ist
-
-**Kein Deployment-Tool:**
-Das Plugin ist standardmäßig read-only. Es zeigt Workloads an, löst aber keine Deployments aus oder ändert Ressourcen.
-
-**Nicht für Cluster-Admins:**
-Das Plugin konzentriert sich auf die Bedürfnisse von Service-Eigentümern (Pod-Status, Logs, Fehler) statt auf Cluster-Operationen (Node-Management, Kapazitätsplanung, Netzwerkrichtlinien).
-
-**Sicherheitsmodell:**
-Die meisten Bereitstellungen verwenden read-only ServiceAccounts nach dem Prinzip der geringsten Rechte. Dies verhindert versehentliche Änderungen bei gleichzeitiger Ermöglichung von Transparenz.
-
-## Nächste Schritte
-
-In der nächsten Lektion lernen Sie über Konfigurationskonzepte: Wie Backstage Cluster entdeckt, sich bei Kubernetes-APIs authentifiziert und Catalog-Entities mittels Annotations und Labels auf Ressourcen abbildet.
-
-## Kernpunkte
-*   Plugin eliminiert Kontextwechsel durch Anzeige von Kubernetes-Workloads direkt in Backstage
-*   Zwei-Komponenten-Architektur: Frontend für UI-Anzeige, Backend für Kubernetes-API-Kommunikation
-*   Resource-Matching verwendet Annotations auf Catalog-Entities und Labels auf Kubernetes-Ressourcen
-*   UI zeigt Pod-Health, Deployment-Status, Container-Logs und Fehlerindikatoren
-*   Pod-Logs mit einem Klick zugänglich, keine `kubectl`-Kenntnisse erforderlich
-*   Standardmäßig read-only, folgt dem Prinzip der geringsten Rechte
-*   Für Service-Eigentümer, nicht für Cluster-Administratoren, entwickelt
-*   Ermöglicht Self-Service-Debugging für Entwickler aller Kenntnisstufen
-
-## Zusätzliche Ressourcen
-*   [Kubernetes Plugin Documentation](https://backstage.io/docs/features/kubernetes/overview/)
-*   [Kubernetes Backend Plugin](https://github.com/backstage/backstage/tree/master/plugins/kubernetes-backend)
-*   [Kubernetes Configuration](https://backstage.io/docs/features/kubernetes/configuration/)
-
-## Lektionsnotizen (Privat)
-Nehmen Sie private Notizen während Sie lernen...
-
-## Studiengruppe
-Diesem Kurs ist noch keine Studiengruppe zugeordnet.
-
-Bitten Sie Ihren Instruktor, eine Studiengruppe zu verlinken, um Diskussionen zu ermöglichen.
+```bash
+which node || true
+which npm || true
+echo $PATH
 ```
 
 
-```markdown
+## Schritt 3: Node 20 LTS über nvm installieren (erst danach!)
 
-# Kubernetes-Plugin-Setup
+Sobald `nvm` aktiv ist, dann:
 
-Konfigurieren Sie das Backstage Kubernetes-Plugin, um Entwicklern Transparenz in ihre Kubernetes-Workloads direkt aus dem Developer Portal zu bieten.
-
-**Intermediate | 135 min | Developer Experience / backstage**
-
-**Tags:** backstage, kubernetes, kubernetes-plugin, developer-experience, workload-visibility, self-monitoring
-
-## Voraussetzungen:
-- backstage-kubernetes-deployment
-
-## Über dieses Lab
-
-Aktivieren Sie Self-Monitoring in Backstage, indem Sie das Kubernetes-Plugin konfigurieren, um Workloads anzuzeigen, die in Ihrem Cluster laufen. Dieses Lab lehrt Sie, wie Sie das Plugin einrichten, RBAC-Berechtigungen konfigurieren und Catalog-Entities auf Kubernetes-Ressourcen abbilden.
-
-**Sie werden lernen:**
-
-*   Die Kubernetes-Frontend- und Backend-Plugins zu installieren
-*   Einen ServiceAccount mit Read-Only-RBAC-Berechtigungen zu erstellen
-*   Cluster-Locators und Authentifizierungsstrategien zu konfigurieren
-*   Entity-Annotations hinzuzufügen, um Catalog-Entities auf Kubernetes-Ressourcen abzubilden
-*   Passende Labels zu Kubernetes-Deployments hinzuzufügen
-*   Pods, Deployments und Services durch die Backstage-UI zu erkunden
-
-Dieses Lab demonstriert die entwicklerzentrierte Transparenz, die das Kubernetes-Plugin bietet, und ermöglicht es Service-Eigentümern, ihre Workloads zu troubleshooten und zu überwachen, ohne Backstage zu verlassen.
-
-## Wichtige Ressourcen
-
-*   [Kubernetes Plugin Documentation](https://backstage.io/docs/features/kubernetes/overview/)
-*   [Kubernetes Plugin Configuration](https://backstage.io/docs/features/kubernetes/configuration/)
-*   [Kubernetes Authentication](https://backstage.io/docs/features/kubernetes/authentication/)
-
-## Was Sie lernen werden (4 Aufgaben)
-
-### 1. Kubernetes-Plugin installieren
-Installieren Sie die Backstage Kubernetes-Frontend- und Backend-Plugins, um Workload-Transparenz zu ermöglichen.
-
-### 2. Cluster-Verbindung und RBAC konfigurieren
-Erstellen Sie einen ServiceAccount mit Read-Only-Berechtigungen und konfigurieren Sie Backstage für die Verbindung zum Kubernetes-Cluster.
-
-### 3. Entity-Annotations und Labels hinzufügen
-Aktualisieren Sie Catalog-Entities mit Kubernetes-Annotations und fügen Sie passende Labels zu Kubernetes-Deployments hinzu.
-
-### 4. Kubernetes-Workloads in Backstage erkunden
-Erkunden Sie Ihre Kubernetes-Workloads durch die Backstage-UI und verifizieren Sie, dass das Plugin korrekt funktioniert.
+```bash
+nvm install 20
+nvm use 20
+nvm alias default 20
 ```
+<img width="1653" height="267" alt="image" src="https://github.com/user-attachments/assets/0080a027-f077-4b4f-aeda-cb0aa5da0ea1" />
+
+
+<img width="846" height="227" alt="image" src="https://github.com/user-attachments/assets/7aae13f0-c628-48fa-a712-a67ef8d32992" />
+
+## Schritt 4: Yarn via Corepack
+
+```bash
+corepack enable
+corepack prepare yarn@stable --activate
+```
+<img width="990" height="158" alt="image" src="https://github.com/user-attachments/assets/2822e32f-6e6e-4bfd-abb3-8c45fcfb9ddd" />
+
+
+
+<img width="861" height="278" alt="image" src="https://github.com/user-attachments/assets/afd4930e-903f-4aac-b171-dcaa5f23c63e" />
+
+## Schritt 5: Finaler Check
+
+```bash
+node -v
+npm -v
+yarn -v
+```
+
+Wenn `which npm` bei Schritt 2 **irgendwas mit `/mnt/c/` oder `C:\...`** zeigt, fixen wir als nächstes deinen `PATH` sauber, damit Linux-Tools zuerst kommen.
+
+
+<img width="1666" height="474" alt="image" src="https://github.com/user-attachments/assets/98984d84-8146-4ce4-a02e-096de0c324bf" />
+
+
+
+Sehr gut, jetzt ist die Ursache eindeutig: Dein `PATH` enthält viele Windows-Pfade (`/mnt/c/...`) und deshalb wird **Windows-npm** verwendet:
+
+* `which npm` → `/mnt/c/Program Files/nodejs//npm`
+
+Damit Backstage sauber läuft, müssen wir sicherstellen, dass **Linux Node/NPM/Yarn (über nvm)** verwendet werden, nicht Windows.
+
+## Schritt 1: Node 20 via nvm installieren (damit Linux-node vorhanden ist)
+
+Führe aus:
+
+```bash
+nvm install 20
+nvm use 20
+nvm alias default 20
+```
+
+Danach prüfen:
+
+```bash
+which node
+which npm
+node -v
+npm -v
+```
+
+Wichtig: `which node` und `which npm` müssen jetzt auf etwas wie `/home/koffi/.nvm/...` zeigen.
+
+## Schritt 2: Corepack/Yarn aktivieren
+
+```bash
+corepack enable
+corepack prepare yarn@stable --activate
+yarn -v
+```
+
+## Schritt 3: Backstage App erstellen
+
+Wenn Schritt 1–2 sauber sind:
+
+```bash
+mkdir -p ~/idp
+cd ~/idp
+npx @backstage/create-app@latest
+```
+
+<img width="1499" height="830" alt="image" src="https://github.com/user-attachments/assets/6c1b0075-addf-48a5-ab68-18899c4c1adf" />
+
+
+Danach starten:
+
+```bash
+cd my-idp
+yarn install
+yarn dev
+```
+
+<img width="1607" height="738" alt="image" src="https://github.com/user-attachments/assets/4ebe90f2-66f0-407e-a06e-60ddc7a69a77" />
+
+<img width="1535" height="1138" alt="image" src="https://github.com/user-attachments/assets/ecdd3207-35cf-4484-bdb3-a1776d1457a9" />
+
+
+Backstage sollte dann typischerweise hier erreichbar sein:
+
+* Frontend: `http://localhost:3000`
+* Backend: `http://localhost:7007`
+
+---
+
+### Jetzt du
+
+Führe bitte **nur Schritt 1** aus und poste die Ausgabe von:
+
+```bash
+which node
+which npm
+node -v
+npm -v
+```
+
+Dann gehen wir direkt weiter (Yarn → Create App).
+
+
+
+Danke — deine Toolchain (gcc/g++/python/build-essential) ist jetzt sauber. Dass `isolated-vm` **trotzdem** auf **Node v20.20.0** failt, passt leider zu einem bekannten Backstage-Problem rund um `isolated-vm` Builds auf Node 20. In einem aktuellen Backstage-Issue wird explizit beschrieben, dass der Wechsel auf **Node 22** das Problem löst. ([GitHub][1])
+
+Auch die offizielle Backstage-Installationsseite sagt: **Node “Active LTS”** (und Yarn 4.4.1) verwenden. ([backstage.io][2])
+
+## Nächster Schritt (professionell, zielgerichtet): Auf Node 22 wechseln und neu installieren
+
+Im Projektordner:
+
+```bash
+nvm install 22
+nvm use 22
+node -v
+```
+<img width="1111" height="433" alt="image" src="https://github.com/user-attachments/assets/24529053-8cb4-43cd-a80e-7fa4298dd7ad" />
+
+Dann sicherstellen, dass Yarn korrekt ist (Backstage nutzt 4.4.1):
+
+```bash
+corepack enable
+yarn set version 4.4.1
+yarn -v
+```
+
+
+<img width="1019" height="201" alt="image" src="https://github.com/user-attachments/assets/1c320a6c-bff4-4db4-ba26-55deb82c29e5" />
+
+Jetzt Dependencies erneut:
+
+```bash
+cd ~/idp/koffitapp
+yarn install
+```
+<img width="1656" height="794" alt="image" src="https://github.com/user-attachments/assets/c57308ae-989e-445e-87db-381cb6293f63" />
+
+Wenn das durchläuft, starten wir direkt:
+
+```bash
+yarn start
+```
+<img width="1510" height="533" alt="image" src="https://github.com/user-attachments/assets/a728cd89-2d88-45bf-a30f-963f4325c283" />
+
+
+
+## Was ich als Nächstes von dir brauche
+
+
+
