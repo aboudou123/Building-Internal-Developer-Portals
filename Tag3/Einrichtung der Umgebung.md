@@ -202,32 +202,17 @@ catalog:
     #   rules:
     #     - allow: [User, Group]
 
+```
+
+``` 
 
 ---
 
-kubernetes:
-  # Configuration for Kubernetes integration goes here
+# Ziel:
 
-permission:
-  enabled: true
-
----
-=====================================
-
-====================================
-
-
-
-### Ziel:
-
-* Standardmäßig hört Backstage nur auf `localhost` (127.0.0.1) → nur lokal erreichbar.
-* Um Backstage aus dem Netzwerk deiner VM erreichbar zu machen, musst du die URL- und Netzwerk-Einstellungen auf die IP-Adresse deiner VM ändern und Backstage so konfigurieren, dass es auf allen Interfaces (`0.0.0.0`) lauscht.
-
----
 
 ### Schritt-für-Schritt-Anleitung für deine Datei `app-config.yaml`:
 
----
 
 #### 1. **Finde die IP-Adresse deiner VM:**
 
