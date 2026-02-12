@@ -1,4 +1,6 @@
 **Einrichtung der Umgebung und Voraussetzungen**
+
+
 In dieser Aufgabe überprüfen Sie, ob Ihre Entwicklungsumgebung für Backstage bereit ist, und installieren fehlende Abhängigkeiten. Backstage benötigt Node.js, npm/yarn und Git, um korrekt zu funktionieren.
 
 ---
@@ -24,6 +26,12 @@ it
 ```bash
 npm --version
 ```
+<img width="1591" height="503" alt="T§" src="https://github.com/user-attachments/assets/3e495d18-9dd1-4db6-9ac8-b6c496e3de1c" />
+
+<img width="912" height="753" alt="t05" src="https://github.com/user-attachments/assets/4c25f2d9-0d03-437f-b29b-450cd29beb50" />
+
+
+
 <img width="1038" height="273" alt="image" src="https://github.com/user-attachments/assets/3383efd9-4990-41a5-a3e2-afc551b2ad1c" />
 
 Stellen Sie sicher, dass Yarn installiert ist (Backstage funktioniert besser mit Yarn als mit npm):
@@ -74,6 +82,17 @@ Wechseln Sie in Ihr neues Arbeitsverzeichnis:
 cd /root/labs
 ```
 
+
+
+
+<img width="1175" height="751" alt="l1" src="https://github.com/user-attachments/assets/729475c4-0d95-498c-b5a0-e0eec78456f2" />
+
+<img width="1200" height="938" alt="l2" src="https://github.com/user-attachments/assets/c4aa60d0-f484-4402-aa4d-9c3aed86944c" />
+
+
+
+<img width="1201" height="1053" alt="L3" src="https://github.com/user-attachments/assets/e3ce6b46-d3a7-4ed3-8a27-3db13f109cb6" />
+
 ---
 
 **Schritt 4: Netzwerkzugang konfigurieren**
@@ -93,6 +112,10 @@ hostname -I | awk '{print $1}'
 * Ändern Sie `backend.cors.origin` von `http://localhost:3000` auf `http://IHRE_VM_IP:3000`
 
 Ersetzen Sie `IHRE_VM_IP` durch die zuvor ermittelte IP-Adresse.
+
+<img width="1155" height="949" alt="image" src="https://github.com/user-attachments/assets/2085aa8e-dad7-43cd-92a4-c9449536991d" />
+
+<img width="1162" height="984" alt="x2" src="https://github.com/user-attachments/assets/73a0e05a-5308-4f8d-993a-c11cb7fcca2d" />
 
 Ihre Backstage-Anwendung ist nun erstellt und für den Remote-Zugriff konfiguriert! Als Nächstes werden wir sie starten und die Benutzeroberfläche erkunden.
 
@@ -179,17 +202,21 @@ catalog:
     #   rules:
     #     - allow: [User, Group]
 
+
+---
+
 kubernetes:
   # Configuration for Kubernetes integration goes here
 
 permission:
   enabled: true
 
+---
 =====================================
 
 ====================================
 
----
+
 
 ### Ziel:
 
@@ -325,10 +352,18 @@ backend:
 
 ---
 
+<img width="1203" height="861" alt="aa1" src="https://github.com/user-attachments/assets/2250e82e-5949-4547-8d61-fa8bcce01e43" />
 
 
 
 
+<img width="1226" height="647" alt="x1" src="https://github.com/user-attachments/assets/263bb5f1-01bf-46d6-9c9e-8279b0d5c1a9" />
+
+
+<img width="1162" height="984" alt="x2" src="https://github.com/user-attachments/assets/40f371fb-def0-4e5b-a300-5d0b1561e700" />
+
+
+<img width="1092" height="959" alt="aar22" src="https://github.com/user-attachments/assets/90f12914-990e-4a49-8530-55e221a349d7" />
 
 
 ================================
@@ -422,6 +457,10 @@ kubernetes:
 permission:
   enabled: true
 ```
+
+
+
+
 
 ---
 
