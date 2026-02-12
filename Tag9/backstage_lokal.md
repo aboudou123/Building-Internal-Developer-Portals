@@ -310,3 +310,126 @@ Ctrl+B puis D
 ```
 
 ---
+
+
+Parfait ! Git a bien identifié tous les fichiers non suivis. On va maintenant les **ajouter et faire le premier commit** pour sécuriser ton état actuel.
+
+---
+
+### **1️⃣ Ajouter tous les fichiers à Git**
+
+```bash
+git add -A
+```
+
+
+<img width="972" height="366" alt="image" src="https://github.com/user-attachments/assets/17851b88-c6c5-45b5-be87-7d6fd45ff4ff" />
+
+
+> `-A` ajoute **tous les fichiers** (nouveaux, modifiés et supprimés) à l’index pour le commit.
+
+---
+
+### **2️⃣ Faire le premier commit**
+
+```bash
+git commit -m "Initial commit - snapshot before securing project"
+```
+
+
+
+<img width="1182" height="1126" alt="image" src="https://github.com/user-attachments/assets/48645709-7c33-4847-a9b7-a676e6c0d56d" />
+
+
+
+2️⃣ Ajouter tous les fichiers et faire le commit initial
+
+Toujours dans ton projet :
+cd ~/idp/koffitapp
+git add -A
+git commit -m "Initial commit - snapshot before securing project"
+
+
+<img width="984" height="1290" alt="image" src="https://github.com/user-attachments/assets/a188b62b-4911-40b3-875d-dfaed65b6448" />
+
+
+> ✅ Ton projet est maintenant versionné localement.
+
+---
+
+### **3️⃣ Renommer la branche principale en `main`**
+
+Actuellement, tu es sur `master`. On va renommer :
+
+```bash
+git branch -M main
+```
+
+Vérifie :
+
+```bash
+git branch
+```
+
+<img width="1081" height="424" alt="image" src="https://github.com/user-attachments/assets/beee1b83-51d5-42be-9383-e0a040019645" />
+
+
+
+
+Tu devrais voir :
+
+```
+* main
+```
+
+---
+
+### **4️⃣ Ajouter le repository GitHub distant**
+
+1. Crée un **nouveau repository sur GitHub** (privé si tu veux garder le code confidentiel) nommé `koffitapp`.
+2. Note l’URL HTTPS du repo, par exemple :
+
+```
+https://github.com/TonNomUtilisateur/koffitapp.git
+```
+
+3. Connecte ton dépôt local à GitHub :
+
+```bash
+git remote add origin https://github.com/TonNomUtilisateur/koffitapp.git
+```
+<img width="1020" height="314" alt="image" src="https://github.com/user-attachments/assets/c779adb1-39af-4240-afe7-4a1e8115cbb2" />
+
+Vérifie que tout est bien configuré :
+
+```bash
+git remote -v
+```
+
+---
+
+### **5️⃣ Envoyer ton projet sur GitHub**
+
+```bash
+git push -u origin main
+```
+
+<img width="1251" height="630" alt="image" src="https://github.com/user-attachments/assets/db2cda03-6d1f-457f-a98e-a940471711a1" />
+
+---
+
+https://github.com/aboudou123/koffitapp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
