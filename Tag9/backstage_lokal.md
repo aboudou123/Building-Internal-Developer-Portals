@@ -423,13 +423,383 @@ https://github.com/aboudou123/koffitapp
 
 
 
+=================================================================
+
+
+
+
+<img width="1828" height="479" alt="image" src="https://github.com/user-attachments/assets/a02bca9b-8baf-4824-bce1-f3d3ec10f912" />
+
+Parfait — tu es **au bon endroit** : tu as bien ouvert **`templates/react-ssr-template/template.yaml`** dans nano. ✅
+Maintenant on va juste **coller le contenu**, **enregistrer**, puis faire les 2 fichiers restants.
+
+## 1) Coller le contenu du template dans nano
+
+Dans cette fenêtre nano :
+
+1. **Colle** (clic droit → Paste, ou Shift+Insert, ou Ctrl+Shift+V selon ton terminal) le contenu ci-dessous :
+
+```yaml
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: react-ssr-template
+  title: React SSR Template
+  description: Create a website powered with Next.js
+  tags:
+    - recommended
+    - react
+spec:
+  owner: web@example.com
+  type: website
+
+  parameters:
+    - title: Provide some simple information
+      required:
+        - component_id
+        - owner
+      properties:
+        component_id:
+          title: Name
+          type: string
+          description: Unique name of the component
+          ui:field: EntityNamePicker
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this website is for.
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the component
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - Group
+    - title: Choose a location
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+
+  steps:
+    - id: template
+      name: Fetch Skeleton + Template
+      action: fetch:template
+      input:
+        url: ./skeleton
+        copyWithoutRender:
+          - .github/workflows/*
+        values:
+          component_id: ${{ parameters.component_id }}
+          description: ${{ parameters.description }}
+          owner: ${{ parameters.owner }}
+
+  output:
+    text:
+      - title: Next steps
+        content: |
+          Skeleton rendered. Next: add publish:github + catalog:register.
+```
+
+<img width="1828" height="479" alt="image" src="https://github.com/user-attachments/assets/af6b6d70-9d99-4ed3-9050-1976d1c49ece" />
+
+
+
+2. **Enregistrer** : `Ctrl + O` puis `Enter`
+3. **Quitter** : `Ctrl + X`
+
+---
+
+## 2) Créer le skeleton minimal (fichier README)
+
+Ensuite dans ton terminal :
+
+```bash
+cat > templates/react-ssr-template/skeleton/README.md <<'EOF'
+# ${{ values.component_id }}
+
+${{ values.description }}
+
+Owner: ${{ values.owner }}
+EOF
+```
+<img width="1232" height="285" alt="image" src="https://github.com/user-attachments/assets/d3156969-7382-4d3c-ab04-b494ade3e6a1" />
+
+---
+
+## 3) Ajouter le template dans `app-config.yaml`
+
+Ouvre le fichier :
+
+```bash
+nano app-config.yaml
+```
+
+Trouve le bloc `catalog:` → `locations:` et ajoute cet item :
+
+```yaml
+- type: file
+  target: ./templates/react-ssr-template/template.yaml
+  rules:
+    - allow: [Template]
+```
+
+Enregistre (`Ctrl+O` + Enter) puis quitte (`Ctrl+X`).
+
+
+<img width="1286" height="1171" alt="image" src="https://github.com/user-attachments/assets/c89c0924-0166-4402-8801-deecd077279c" />
+
+---
+
+## 4) Redémarrer Backstage pour qu’il prenne le nouveau template
+
+Dans la fenêtre où `yarn start` tourne : `Ctrl + C` puis :
+
+```bash
+cd ~/idp/koffitapp
+yarn start
+```
+
+Puis dans le navigateur : **Create** → tu dois voir **React SSR Template**.
+
+---
+
+Quand tu as fait ça, dis-moi :
+
+* Est-ce que tu vois le template dans **Create** ?
+  Si non, envoie-moi le message d’erreur (ou une capture de l’endroit `catalog.locations` dans `app-config.yaml`).
 
 
 
 
 
+<img width="1290" height="618" alt="image" src="https://github.com/user-attachments/assets/9b56bbe2-dc2d-4b29-a4ea-c2e6372bf345" />
 
 
+Oui, parfait — on a les deux PIDs.
+
+Dans **la même fenêtre**, exécute exactement :
+
+```bash
+kill 12071 12094
+```
+<img width="1159" height="157" alt="image" src="https://github.com/user-attachments/assets/9ae627b7-21ce-4bf7-8a77-25a5cb7ca1bb" />
+
+Puis vérifie que c’est bien stoppé :
+
+```bash
+ss -ltnp | egrep ':(3000|7007)\b' || true
+```
+
+Ensuite relance Backstage (toujours Node 22) :
+
+```bash
+nvm use 22
+cd ~/idp/koffitapp
+yarn start
+```
+<img width="1383" height="1090" alt="image" src="https://github.com/user-attachments/assets/6d9cb307-9027-4cc6-b97d-bcccd81dcd42" />
+
+
+<img width="949" height="633" alt="image" src="https://github.com/user-attachments/assets/2b46eefb-4913-4585-aed3-decedc7a8bb9" />
+
+
+<img width="1434" height="808" alt="image" src="https://github.com/user-attachments/assets/8867219a-d302-4b2c-9bfe-617a12c3d140" />
+
+
+Super — Backstage läuft jetzt sauber auf **3000** und **7007**. ✅
+Die zwei “echten” Probleme sieht man ganz unten in den Logs:
+
+1. `packages/backend/catalog-info.yaml does not exist`
+2. `packages/backend/templates/react-ssr-template/template.yaml does not exist`
+
+Das bedeutet: **der Backend-Prozess sucht die Dateien relativ zu `packages/backend/`**, nicht relativ zum Repo-Root.
+
+Du hast die Dateien sehr wahrscheinlich unter:
+
+* `~/idp/koffitapp/catalog-info.yaml`
+* `~/idp/koffitapp/templates/react-ssr-template/template.yaml`
+
+angelegt (Repo-Root) – aber im Config steht `./...` und das wird vom Backend als `packages/backend/./...` interpretiert.
+
+---
+
+# Lösung (sauber, professionell): Targets auf korrekte Pfade ändern
+
+## Schritt 1: Prüfen, wo deine Dateien wirklich liegen
+
+Öffne **ein neues Terminal** (Backstage läuft ja im aktuellen) und führe aus:
+
+```bash
+cd ~/idp/koffitapp
+ls -la catalog-info.yaml || true
+ls -la templates/react-ssr-template/template.yaml || true
+```
+
+Wenn die beiden existieren → perfekt.
+
+---
+
+## Schritt 2: `app-config.yaml` korrigieren (nur die targets)
+
+Öffne:
+
+```bash
+nano ~/idp/koffitapp/app-config.yaml
+```
+
+Im `catalog.locations` ändere **nur** diese beiden Targets:
+
+**Alt (falsch, weil relativ zu packages/backend):**
+
+```yaml
+target: ./catalog-info.yaml
+target: ./templates/react-ssr-template/template.yaml
+```
+
+**Neu (korrekt, relativ von packages/backend aus):**
+
+```yaml
+target: ../../catalog-info.yaml
+target: ../../templates/react-ssr-template/template.yaml
+```
+
+So sollte der Block dann aussehen:
+
+```yaml
+catalog:
+  rules:
+    - allow: [Component, System, API, Resource, Location, Template, User, Group]
+
+  locations:
+    - type: file
+      target: ../../catalog-info.yaml
+
+    - type: file
+      target: ../../templates/react-ssr-template/template.yaml
+```
+
+Speichern: `Ctrl+O` → Enter, Beenden: `Ctrl+X`
+
+---
+
+## Schritt 3: Backstage neu starten
+
+Im laufenden `yarn start` Terminal: `Ctrl + C`, dann:
+
+```bash
+nvm use 22
+cd ~/idp/koffitapp
+yarn start
+```
+
+✅ Danach sollten die “file … does not exist”-Warnungen verschwinden.
+
+---
+
+# Zu den 401 “permission/authorize”
+
+Das ist **kein Crash**. Du hast `permission.enabled: true` und nutzt `guest` auth – je nach Setup kann das zu 401 führen. Für dein Template-Training würde ich es erstmal vereinfachen:
+
+**Option (empfohlen fürs lokale Lernen):**
+In `app-config.yaml` setze:
+
+```yaml
+permission:
+  enabled: false
+```
+
+Dann werden viele 401 verschwinden.
+
+---
+
+## Sag mir nur eins:
+
+Hast du die Dateien **im Repo-Root** (`~/idp/koffitapp/templates/...`) oder wirklich unter `packages/backend/...` angelegt?
+
+Wenn du willst, kann ich dir auch sofort die **kompletten richtigen Befehle** geben, um die Dateien an die Stelle zu legen, die zu deinem Config passt (entweder Pfade ändern ODER Dateien nach `packages/backend/` verschieben).
+
+
+===================================================================
+
+Klar 👍 Hier ist der saubere “Stop jetzt / Start morgen”-Plan, genau ab dem Punkt, wo du aufgehört hast.
+
+## Jetzt stoppen (heute)
+
+In dem Terminal, wo `yarn start` läuft (mit Logs):
+
+* **Drück:** `Ctrl + C`
+
+Optional prüfen, dass nichts mehr läuft:
+
+```bash
+ss -ltnp | egrep ':(3000|7007)\b' || true
+```
+
+---
+
+## Morgen wieder starten (genau da weitermachen)
+
+### 1) In den Projektordner gehen
+
+```bash
+cd ~/idp/koffitapp
+```
+
+### 2) Node-Version korrekt setzen (wichtig!)
+
+```bash
+nvm use 22
+node -v
+```
+
+Du solltest `v22.22.0` sehen.
+
+### 3) Backstage starten
+
+```bash
+yarn start
+```
+
+### 4) Prüfen ob es läuft
+
+In einem **zweiten Terminal** (oder nach dem Start in einem neuen Tab):
+
+```bash
+ss -ltnp | egrep ':(3000|7007)\b' || true
+```
+
+Und im Browser:
+
+* [http://localhost:3000](http://localhost:3000)
+
+---
+
+## Wo wir morgen inhaltlich einsteigen
+
+Wir starten mit dem Fix aus den Logs:
+
+* `catalog-info.yaml` und `templates/react-ssr-template/template.yaml` werden vom Backend unter `packages/backend/...` gesucht → wir korrigieren **die Pfade in `app-config.yaml`** **oder** verschieben die Dateien.
+
+**Erster Befehl morgen dafür:**
+
+```bash
+cd ~/idp/koffitapp
+ls -la catalog-info.yaml templates/react-ssr-template/template.yaml
+```
+
+Dann entscheiden wir: **Pfade ändern** (meist besser) oder **Dateien verschieben**.
+
+Wenn du willst, kann ich dir auch noch eine Mini-Notiz geben, die du dir kopierst (“Morgen: Node22 → yarn start → Pfade fixen”).
+
+<img width="1340" height="907" alt="image" src="https://github.com/user-attachments/assets/ef2a7da9-b627-40f4-92ad-f4c6a208263e" />
 
 
 
