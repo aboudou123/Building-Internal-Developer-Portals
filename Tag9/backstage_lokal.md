@@ -223,4 +223,90 @@ yarn start
 ## Was ich als Nächstes von dir brauche
 
 
+Parfait 👍 on analyse calmement.
 
+Ce que ça montre :
+
+* ❌ `systemctl status backstage` → normal (tu n’as jamais créé de service systemd)
+* ❌ `ss -ltnp` → rien écoute sur 3000 / 7007
+* ❌ `curl` → rien ne répond
+
+👉 Donc **Backstage n’est plus en train de tourner**.
+
+Très probablement tu as :
+
+* fermé le terminal
+* ou stoppé le process (Ctrl+C)
+
+---
+
+# ✅ Pour le relancer
+
+Retourne dans ton projet :
+
+```bash
+cd ~/idp/koffitapp
+yarn start
+```
+
+Attends jusqu’à voir :
+
+```
+Rspack compiled successfully
+Listening on :7007
+```
+
+Ensuite dans un **autre terminal** :
+
+```bash
+ss -ltnp | egrep ':(3000|7007)\b'
+```
+
+Tu devrais voir node écouter sur ces ports.
+
+Puis :
+
+```bash
+curl -I http://localhost:3000
+curl -I http://localhost:7007/healthcheck
+```
+
+---
+
+# 🧠 Important : pourquoi systemctl ne marche pas ?
+
+Tu es sous **WSL** :
+
+```
+Linux 5.15.167.4-microsoft-standard-WSL2
+```
+
+👉 WSL n’utilise pas systemd par défaut
+👉 Backstage n’est pas installé comme service
+👉 Il tourne juste comme process Node
+
+---
+
+# 🚀 Si tu veux le garder en arrière-plan
+
+Option simple :
+
+```bash
+nohup yarn start &
+```
+
+Option propre (recommandée pour dev) :
+
+```bash
+sudo apt install tmux
+tmux
+yarn start
+```
+
+Puis tu peux détacher avec :
+
+```
+Ctrl+B puis D
+```
+
+---
