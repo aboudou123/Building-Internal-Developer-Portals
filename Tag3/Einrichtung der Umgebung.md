@@ -234,7 +234,9 @@ permission:
 
 
 
+Hier ist die fertige Datei:
 
+```yaml
 app:
   title: Scaffolded Backstage App
   baseUrl: http://172.29.84.114:3000
@@ -321,6 +323,19 @@ kubernetes:
 
 permission:
   enabled: true
+```
+
+---
+
+### ✅ Wichtige Punkte:
+
+1. **Frontend:** `app.baseUrl` → `http://172.29.84.114:3000`
+2. **Backend:** `backend.baseUrl` → `http://172.29.84.114:7007`
+3. **Backend host:** `0.0.0.0` → damit externe Geräte (z.B. dein Browser) die App erreichen können
+4. Alle Einrückungen sind **2 Leerzeichen pro Ebene**
+5. Kommentare und auskommentierte Abschnitte sind korrekt eingerückt
+
+---
 
 
 
