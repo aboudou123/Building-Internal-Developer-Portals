@@ -1,6 +1,8 @@
 
+# IDPs und Backstage-Grundlagen
+---
 
-# 1 - Backstage ist eine Plattform zur Entwicklung und zum Betrieb interner Entwicklerportale
+## 1 - Backstage ist eine Plattform zur Entwicklung und zum Betrieb interner Entwicklerportale
 
 ---
 
@@ -1572,6 +1574,7 @@ Nach diesem Lab hast du einen vollständig funktionierenden Beispiel-Software-Ka
 * nachvollziehbaren Abhängigkeiten
 
 Damit hast du eine realistische Grundlage geschaffen, um Backstage als zentrales Entwicklerportal in einer Organisation einzusetzen.
+
 
 
 
