@@ -29,7 +29,9 @@ yarn -v
 <img width="1272" height="701" alt="image" src="https://github.com/user-attachments/assets/3ff355ad-8471-4d36-a0f0-bf530dd023fb" />
 
 
+
 **Windows-npm Pfade** im `PATH` hat (`C:\Users\patri\...`). 
+
 Versuchen wir `npm` auf Windows-Verzeichnisse zuzugreifen und knallt.
 
 **nvm in dieser Shell aktivieren** und sicherstellen, dass wir **Linux-Node/npm** benutzen (nicht Windows).
