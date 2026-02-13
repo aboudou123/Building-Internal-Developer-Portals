@@ -79,6 +79,7 @@ corepack prepare yarn@stable --activate
 
 <img width="861" height="278" alt="image" src="https://github.com/user-attachments/assets/afd4930e-903f-4aac-b171-dcaa5f23c63e" />
 
+
 ## Schritt 5: Finaler Check
 
 ```bash
@@ -94,13 +95,14 @@ Wenn `which npm` bei Schritt 2 **irgendwas mit `/mnt/c/` oder `C:\...`** zeigt, 
 
 
 
-Sehr gut, jetzt ist die Ursache eindeutig: Dein `PATH` enthält viele Windows-Pfade (`/mnt/c/...`) und deshalb wird **Windows-npm** verwendet:
+Dein `PATH` enthält viele Windows-Pfade (`/mnt/c/...`) und deshalb wird **Windows-npm** verwendet:
 
 * `which npm` → `/mnt/c/Program Files/nodejs//npm`
 
 **Linux Node/NPM/Yarn (über nvm)**.
 
 ## Schritt 1: Node 20 via nvm installieren (damit Linux-node vorhanden ist)
+
 
 Führe aus:
 
@@ -152,6 +154,7 @@ yarn dev
 
 <img width="1607" height="738" alt="image" src="https://github.com/user-attachments/assets/4ebe90f2-66f0-407e-a06e-60ddc7a69a77" />
 
+
 <img width="1535" height="1138" alt="image" src="https://github.com/user-attachments/assets/ecdd3207-35cf-4484-bdb3-a1776d1457a9" />
 
 
@@ -161,6 +164,7 @@ Backstage sollte dann typischerweise hier erreichbar sein:
 * Backend: `http://localhost:7007`
 
 ---
+
 
 ### Jetzt du
 
