@@ -1,5 +1,4 @@
 
-
 ## Schritt 1: Node 20 LTS + Yarn (über NVM + Corepack)
 
 Führe diese Befehle nacheinander aus:
@@ -97,7 +96,7 @@ Sehr gut, jetzt ist die Ursache eindeutig: Dein `PATH` enthält viele Windows-Pf
 
 * `which npm` → `/mnt/c/Program Files/nodejs//npm`
 
-Damit Backstage sauber läuft, müssen wir sicherstellen, dass **Linux Node/NPM/Yarn (über nvm)** verwendet werden, nicht Windows.
+**Linux Node/NPM/Yarn (über nvm)**.
 
 ## Schritt 1: Node 20 via nvm installieren (damit Linux-node vorhanden ist)
 
@@ -118,7 +117,7 @@ node -v
 npm -v
 ```
 
-Wichtig: `which node` und `which npm` müssen jetzt auf etwas wie `/home/koffi/.nvm/...` zeigen.
+Wichtig: `which node` und `which npm` müssen jetzt auf etwas wie `/home/koffi/.nvm/...`.
 
 ## Schritt 2: Corepack/Yarn aktivieren
 
@@ -172,13 +171,14 @@ node -v
 npm -v
 ```
 
-Dann gehen wir direkt weiter (Yarn → Create App).
+Yarn → Create App
 
+Dass `isolated-vm` **trotzdem** auf **Node v20.20.0** failt, passt leider zu einem bekannten Backstage-Problem rund um `isolated-vm` Builds auf Node 20. In einem aktuellen Backstage-Issue wird explizit beschrieben, dass der Wechsel auf **Node 22** .
+([GitHub][1])
 
+Auch die offizielle Backstage-Installationsseite sagt: **Node “Active LTS”** (und Yarn 4.4.1) verwenden.
 
-Danke — deine Toolchain (gcc/g++/python/build-essential) ist jetzt sauber. Dass `isolated-vm` **trotzdem** auf **Node v20.20.0** failt, passt leider zu einem bekannten Backstage-Problem rund um `isolated-vm` Builds auf Node 20. In einem aktuellen Backstage-Issue wird explizit beschrieben, dass der Wechsel auf **Node 22** das Problem löst. ([GitHub][1])
-
-Auch die offizielle Backstage-Installationsseite sagt: **Node “Active LTS”** (und Yarn 4.4.1) verwenden. ([backstage.io][2])
+([backstage.io][2])
 
 ## Nächster Schritt (professionell, zielgerichtet): Auf Node 22 wechseln und neu installieren
 
@@ -384,7 +384,7 @@ Tu devrais voir :
 
 ### **4️⃣ Ajouter le repository GitHub distant**
 
-1. Crée un **nouveau repository sur GitHub** (privé si tu veux garder le code confidentiel) nommé `koffitapp`.
+1. **nouveau repository sur GitHub** (privé si tu veux garder le code confidentiel) nommé `koffitapp`.
 2. Note l’URL HTTPS du repo, par exemple :
 
 ```
@@ -419,9 +419,7 @@ git push -u origin main
 https://github.com/aboudou123/koffitapp
 
 
-
-
-=================================================================
+==========================================
 
 
 
