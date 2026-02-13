@@ -372,8 +372,6 @@ git branch
 <img width="1081" height="424" alt="image" src="https://github.com/user-attachments/assets/beee1b83-51d5-42be-9383-e0a040019645" />
 
 
-
-
 Tu devrais voir :
 
 ```
@@ -724,10 +722,8 @@ Hast du die Dateien **im Repo-Root** (`~/idp/koffitapp/templates/...`) oder wirk
 
 Wenn du willst, kann ich dir auch sofort die **kompletten richtigen Befehle** geben, um die Dateien an die Stelle zu legen, die zu deinem Config passt (entweder Pfade ändern ODER Dateien nach `packages/backend/` verschieben).
 
+===================================
 
-===================================================================
-
-Klar 👍 Hier ist der saubere “Stop jetzt / Start morgen”-Plan, genau ab dem Punkt, wo du aufgehört hast.
 
 ## Jetzt stoppen (heute)
 
