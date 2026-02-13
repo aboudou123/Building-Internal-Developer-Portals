@@ -109,11 +109,13 @@ Verständnis der Monorepo-Architektur von Backstage, des **packages**-Verzeichni
 * **Yarn Workspaces** verwalten Abhängigkeiten über alle Pakete hinweg und ermöglichen gemeinsames Tooling sowie konsistente Versionierung
 
 **Projektstruktur und Konfiguration**
-Nachdem Backstage nun lokal läuft und du im vorherigen Lab bereits die Projektstruktur gesehen hast, dient diese Lektion vor allem der Wiederholung dieser Struktur. Zusätzlich betrachten wir die wichtigsten Dateien, die Backstage funktionsfähig machen.
+
+Nachdem Backstage nun lokal läuft und im vorherigen Lab bereits die Projektstruktur betrachtet wurde, dient diese Lektion vor allem der Wiederholung dieser Struktur. Zusätzlich werden die wichtigsten Dateien betrachtet, die Backstage funktionsfähig machen.
 
 ---
 
 **High-Level-Architektur**
+
 Backstage folgt einem Monorepo-Ansatz mit klarer Trennung zwischen Frontend und Backend:
 
 ```
@@ -154,9 +156,9 @@ packages/app/
 └── tsconfig.json            # TypeScript configuration
 ```
 
-Was du beim Erkunden findest:
+Beim Erkunden werden neue Erkenntnisse gefunden:
 
-*App.tsx*: Zentrale React-Komponente, die das gesamte Portal mit Navigation, Routing und Theme rendert
+*App.tsx*:  Zentrale React-Komponente, die das gesamte Portal mit Navigation, Routing und Theme rendert
 *components/*: Verzeichnis für benutzerdefinierte UI-Komponenten, die auf die Anforderungen deines Portals zugeschnitten sind
 *App.test.tsx*: Automatisierte Tests zur Qualitätssicherung und zur Vermeidung von Regressionen
 
@@ -227,6 +229,7 @@ backend:
 ---
 
 **Integrationskonfiguration**
+
 Externe Service-Integrationen (initial leer oder mit Platzhalter-Tokens):
 
 ```
@@ -288,9 +291,9 @@ catalog:
 
 Katalog-Locations teilen Backstage mit, wo Entitätsdefinitionen gefunden werden können. Die Standardkonfiguration umfasst:
 
-Beispiel-Entitäten zu Demonstrationszwecken
-Beispiel-Templates für das Scaffolding
-Eine Beispiel-Organisationsstruktur (Benutzer und Gruppen)
+*Beispiel-Entitäten zu Demonstrationszwecken
+*Beispiel-Templates für das Scaffolding
+*Eine Beispiel-Organisationsstruktur (Benutzer und Gruppen)
 
 ---
 
@@ -321,10 +324,10 @@ Definiert gemeinsame Abhängigkeiten und Skripte:
 
 **Vorteile von Workspaces**
 
-Geteilte Abhängigkeiten: Gemeinsame Pakete werden nur einmal installiert
-Konsistente Versionen: Gleiche Versionen über alle Pakete hinweg
-Einfache Skripte: Befehle über alle Workspaces ausführen
-Schnelle Builds: Es wird nur neu gebaut, was sich geändert hat
+*Geteilte Abhängigkeiten: Gemeinsame Pakete werden nur einmal installiert
+*Konsistente Versionen: Gleiche Versionen über alle Pakete hinweg
+*Einfache Skripte: Befehle über alle Workspaces ausführen
+*Schnelle Builds: Es wird nur neu gebaut, was sich geändert hat
 
 ---
 
@@ -1574,6 +1577,7 @@ Nach diesem Lab hast du einen vollständig funktionierenden Beispiel-Software-Ka
 * nachvollziehbaren Abhängigkeiten
 
 Damit hast du eine realistische Grundlage geschaffen, um Backstage als zentrales Entwicklerportal in einer Organisation einzusetzen.
+
 
 
 
