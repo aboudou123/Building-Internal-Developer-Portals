@@ -1,5 +1,4 @@
 
-Du hast aktuell **kein Node.js**, und `corepack` zeigt auf einen kaputten Pfad. Ohne sauberes Node/Yarn können wir Backstage nicht erstellen/starten.
 
 ## Schritt 1: Node 20 LTS + Yarn (über NVM + Corepack)
 
@@ -312,7 +311,6 @@ Ctrl+B puis D
 ---
 
 
-Parfait ! Git a bien identifié tous les fichiers non suivis. On va maintenant les **ajouter et faire le premier commit** pour sécuriser ton état actuel.
 
 ---
 
@@ -614,7 +612,9 @@ yarn start
 <img width="1434" height="808" alt="image" src="https://github.com/user-attachments/assets/8867219a-d302-4b2c-9bfe-617a12c3d140" />
 
 
-Super — Backstage läuft jetzt sauber auf **3000** und **7007**. ✅
+Backstage läuft jetzt sauber auf **3000** und **7007**. ✅
+
+
 Die zwei “echten” Probleme sieht man ganz unten in den Logs:
 
 1. `packages/backend/catalog-info.yaml does not exist`
