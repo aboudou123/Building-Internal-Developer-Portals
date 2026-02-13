@@ -636,9 +636,6 @@ Nachdem du nun das Plugin-System, den Build-Prozess und die Entwicklungs-Workflo
 
 ✅ Bereit, mit dem Softwarekatalog zu arbeiten
 
-In der nächsten Lektion tauchen wir tief in den Softwarekatalog ein und lernen die sechs Entitätstypen kennen, mit denen Services, Teams und Dokumentation organisiert werden.
-
-Das Verständnis dieser Entwicklungskonzepte macht dich deutlich effektiver darin, Backstage an die Anforderungen deiner Organisation anzupassen und zu erweitern.
 
 ---
 
@@ -678,11 +675,11 @@ Der Softwarekatalog ist das Fundament von Backstage – hier befinden sich all d
 
 Der Softwarekatalog ist das Fundament von Backstage – ein zentrales Register, das Folgendes bereitstellt:
 
-Single Source of Truth: Alle Services, APIs und Ressourcen an einem Ort
-Ownership-Informationen: Klare Zuordnung, wem was gehört
-Beziehungsabbildung: Wie Services miteinander verbunden sind und voneinander abhängen
-Metadaten-Management: Konsistente Informationen zu jedem Service
-Discovery-Oberfläche: Einfache Möglichkeit, Services zu finden und zu erkunden
+*Single Source of Truth*: Alle Services, APIs und Ressourcen an einem Ort
+*Ownership-Informationen*: Klare Zuordnung, wem was gehört
+*Beziehungsabbildung*: Wie Services miteinander verbunden sind und voneinander abhängen
+*Metadaten-Management*: Konsistente Informationen zu jedem Service
+*Discovery-Oberfläche*: Einfache Möglichkeit, Services zu finden und zu erkunden
 
 Man kann ihn sich als einen „digitalen Zwilling“ deiner Softwareorganisation vorstellen – er bildet sowohl die technische Architektur als auch die dafür verantwortliche menschliche Struktur ab.
 
@@ -690,7 +687,7 @@ Man kann ihn sich als einen „digitalen Zwilling“ deiner Softwareorganisation
 
 ## Entitätstypen
 
-Backstage organisiert alles als Entitäten mit spezifischen Typen. In dieser Lektion behandeln wir die drei zentralen technischen Entitätstypen, die deine Software und Systeme repräsentieren.
+Backstage organisiert alles als Entitäten mit spezifischen Typen.
 
 ---
 
@@ -698,11 +695,11 @@ Backstage organisiert alles als Entitäten mit spezifischen Typen. In dieser Lek
 
 **Zweck:** Einzelne Softwarebestandteile (Services, Websites, Bibliotheken)
 
-Components repräsentieren die tatsächliche Software in deiner Organisation:
+Components repräsentieren die tatsächliche Software in der Organisation:
 
-Services: Backend-APIs, Microservices, Webanwendungen
-Websites: Frontend-Anwendungen, Dokumentationsseiten
-Libraries: Gemeinsame Codepakete, SDKs, Frameworks
+*Services*: Backend-APIs, Microservices, Webanwendungen
+*Websites*: Frontend-Anwendungen, Dokumentationsseiten
+*Libraries*: Gemeinsame Codepakete, SDKs, Frameworks
 
 Jede Component sollte einen klaren Owner (User oder Group) haben und kann Teil größerer Systems sein.
 
@@ -732,12 +729,12 @@ spec:
 
 **Erklärung der wichtigsten Felder:**
 
-spec.type: „service“ für Backend-APIs, „website“ für Frontends, „library“ für Pakete
-spec.lifecycle: production, experimental, deprecated – zeigt den Reifegrad
-spec.owner: Welches Team oder welche Person verantwortlich ist (Referenz auf Group oder User)
-spec.system: Logische Gruppierung zusammengehöriger Components
-spec.dependsOn: Von welchen anderen Components diese abhängt
-annotations: Externe Verweise wie GitHub-Repositories oder Dokumentations-URLs
+*spec.type: „service“ für Backend-APIs, „website“ für Frontends, „library“ für Pakete
+*spec.lifecycle: production, experimental, deprecated – zeigt den Reifegrad
+*spec.owner: Welches Team oder welche Person verantwortlich ist (Referenz auf Group oder User)
+*spec.system: Logische Gruppierung zusammengehöriger Components
+*spec.dependsOn: Von welchen anderen Components diese abhängt
+*annotations: Externe Verweise wie GitHub-Repositories oder Dokumentations-URLs
 
 ---
 
@@ -747,10 +744,10 @@ annotations: Externe Verweise wie GitHub-Repositories oder Dokumentations-URLs
 
 API-Entitäten repräsentieren die Schnittstellen, die Components anderen Systemen bereitstellen:
 
-REST-APIs: HTTP-Endpunkte mit definierten Request-/Response-Formaten
-GraphQL-APIs: Abfragebasierte APIs mit Schemas
-gRPC-Services: Hochperformante RPC-Schnittstellen
-Event-Streams: Asynchrone Kommunikationsschnittstellen
+**REST-APIs**: HTTP-Endpunkte mit definierten Request-/Response-Formaten
+**GraphQL-APIs**: Abfragebasierte APIs mit Schemas
+**gRPC-Services**: Hochperformante RPC-Schnittstellen
+**Event-Streams**: Asynchrone Kommunikationsschnittstellen
 
 APIs helfen Teams zu verstehen, welche Services verfügbar sind, wie sie integriert werden und welche Datenformate existieren.
 
@@ -796,10 +793,10 @@ spec:
 
 **Erklärung der wichtigsten Felder:**
 
-spec.type: „openapi“ für REST-APIs, „graphql“ für GraphQL, „grpc“ für gRPC
-spec.definition: Die eigentliche API-Spezifikation, eingebettet in YAML
-Gleiche Ownership-Felder: APIs haben Owner und gehören – wie Components – zu Systems
-Eingebettete Dokumentation: Die Definition dient als lebendige, auffindbare Dokumentation
+*spec.type:** „openapi“ für REST-APIs, „graphql“ für GraphQL, „grpc“ für gRPC
+*spec.definition:** Die eigentliche API-Spezifikation, eingebettet in YAML
+*Gleiche Ownership-Felder**: APIs haben Owner und gehören – wie Components – zu Systems
+*Eingebettete Dokumentation**: Die Definition dient als lebendige, auffindbare Dokumentation
 
 ---
 
@@ -811,16 +808,16 @@ Systems repräsentieren logische Gruppierungen zusammengehöriger Components, di
 
 **Warum Systems verwenden?**
 
-Business-Ausrichtung: Abbildung der technischen Architektur auf fachliche Fähigkeiten
-Team-Grenzen: Klare Ownership ganzer Funktionsbereiche
-Abhängigkeitsvisualisierung: Überblick über alle Services einer Geschäftsfunktion
-Onboarding: Unterstützung neuer Entwickler beim Verständnis fachlicher Zusammenhänge
+*Business-Ausrichtung: Abbildung der technischen Architektur auf fachliche Fähigkeiten
+*Team-Grenzen: Klare Ownership ganzer Funktionsbereiche
+*Abhängigkeitsvisualisierung: Überblick über alle Services einer Geschäftsfunktion
+*Onboarding: Unterstützung neuer Entwickler beim Verständnis fachlicher Zusammenhänge
 
 **Beispiele:**
 
-Payment System: payment-service, billing-service, invoice-service, receipt-generator
-User Management: user-service, auth-service, profile-service, preferences-service
-Content Platform: cms-service, media-service, search-service, recommendation-engine
+*Payment System: payment-service, billing-service, invoice-service, receipt-generator
+*User Management: user-service, auth-service, profile-service, preferences-service
+*Content Platform: cms-service, media-service, search-service, recommendation-engine
 
 **YAML-Struktur:**
 
@@ -841,11 +838,11 @@ spec:
 
 **Erklärung der wichtigsten Felder:**
 
-metadata.name: Eindeutiger Bezeichner des Systems (Kleinbuchstaben, Bindestriche)
-metadata.description: Welche fachliche Fähigkeit dieses System bereitstellt
-spec.owner: Welches Team das gesamte System verantwortet (meist eine Group)
-spec.domain: Optionale übergeordnete fachliche Domäne
-tags: Nützlich zur Kategorisierung nach Kritikalität oder Geschäftsbereich
+*metadata.name: Eindeutiger Bezeichner des Systems (Kleinbuchstaben, Bindestriche)
+*metadata.description: Welche fachliche Fähigkeit dieses System bereitstellt
+*spec.owner: Welches Team das gesamte System verantwortet (meist eine Group)
+*spec.domain: Optionale übergeordnete fachliche Domäne
+*tags: Nützlich zur Kategorisierung nach Kritikalität oder Geschäftsbereich
 
 **Wie Components mit Systems verknüpft werden:**
 Components referenzieren ihr übergeordnetes System über das Feld `system`:
@@ -862,7 +859,7 @@ Dadurch entsteht eine logische Hierarchie: **Domain → System → Component**
 
 ## Nächste Schritte
 
-Nachdem du nun die drei zentralen technischen Entitätstypen (Components, APIs und Systems) verstanden hast, bist du bereit, die organisatorischen Entitätstypen (Users, Groups und Resources) kennenzulernen, mit denen Ownership und Infrastrukturabhängigkeiten verwaltet werden.
+Nachdem man nun die drei zentralen technischen Entitätstypen (Components, APIs und Systems) verstanden hast, bist du bereit, die organisatorischen Entitätstypen (Users, Groups und Resources) kennenzulernen, mit denen Ownership und Infrastrukturabhängigkeiten verwaltet werden.
 
 Diese technischen Entitäten bilden das Fundament deines Softwarekatalogs – sie repräsentieren den tatsächlichen Code und die Systeme, die deine Teams entwickeln und betreiben.
 
@@ -873,7 +870,7 @@ Diese technischen Entitäten bilden das Fundament deines Softwarekatalogs – si
 Components repräsentieren einzelne Softwarebestandteile: Services, Websites und Libraries mit klarer Ownership
 APIs definieren Schnittstellen zwischen Components mit eingebetteten Spezifikationen (OpenAPI, GraphQL, gRPC)
 Systems gruppieren zusammengehörige Components nach fachlicher Fähigkeit statt rein technischer Grenzen
-Jeder Entitätstyp besitzt eine spezifische YAML-Struktur mit metadata- und spec-Bereichen
+Jeder Entitätstyp besitzt eine spezifische **YAML-Struktur** mit metadata- und spec-Bereichen
 Components sind mit Systems verknüpft und bilden eine Domain → System → Component-Hierarchie
 Sauberes Entitätsmodellieren verbessert Discovery, Ownership-Tracking und das Architekturverständnis
 
@@ -881,6 +878,7 @@ Sauberes Entitätsmodellieren verbessert Discovery, Ownership-Tracking und das A
 ====================================================
 
 # 3- Entitätstypen – Users, Groups und Resources
+
 In der vorherigen Lektion haben wir die zentralen technischen Entitätstypen behandelt. Jetzt schauen wir uns die organisatorischen Entitäten (Users und Groups) an, die Personen und Teams repräsentieren, sowie Resources, die Infrastrukturabhängigkeiten darstellen.
 
 =====================================================
@@ -937,10 +935,10 @@ Users können mehreren Groups angehören, was besonders für teamübergreifende 
 
 Groups repräsentieren Teams oder Organisationseinheiten und erfüllen mehrere wichtige Aufgaben:
 
-Ownership: Groups können Owner von Components, APIs und anderen Ressourcen sein
-Organisation: Sie helfen, die Unternehmenshierarchie abzubilden
-Berechtigungen: Groups werden für Zugriffskontrolle verwendet
-Discovery: Teams können leicht gefunden und kontaktiert werden
+*Ownership: Groups können Owner von Components, APIs und anderen Ressourcen sein
+*Organisation: Sie helfen, die Unternehmenshierarchie abzubilden
+*Berechtigungen: Groups werden für Zugriffskontrolle verwendet
+*Discovery: Teams können leicht gefunden und kontaktiert werden
 
 **YAML-Struktur:**
 
@@ -989,18 +987,18 @@ Infrastruktur: Kubernetes-Cluster, VPCs, Load Balancer
 
 **Resources vs. Components – was ist der Unterschied?**
 
-Components: Code, den du schreibst, wartest und deployest (Services, Libraries, Websites)
-Resources: Infrastruktur, die du bereitstellst und konfigurierst (Datenbanken, Queues, Storage)
+*Components: Code, den du schreibst, wartest und deployest (Services, Libraries, Websites)
+*Resources: Infrastruktur, die du bereitstellst und konfigurierst (Datenbanken, Queues, Storage)
 
-Faustregel: Liegt es in einem Git-Repository mit deinem Code → Component.
+*Faustregel: Liegt es in einem Git-Repository mit deinem Code → Component.
 Ist es provisionierte Infrastruktur → Resource.
 
 **Warum Resources katalogisieren?**
 
-Abhängigkeitsverfolgung: Sehen, welche Services von welchen Datenbanken abhängen
-Kostenmanagement: Infrastrukturkosten Systemen zuordnen
-Zugriffskontrolle: Dokumentieren, wer Zugriff auf welche Infrastruktur hat
-Disaster Recovery: Infrastrukturabhängigkeiten bei Incidents verstehen
+*Abhängigkeitsverfolgung: Sehen, welche Services von welchen Datenbanken abhängen
+*Kostenmanagement: Infrastrukturkosten Systemen zuordnen
+*Zugriffskontrolle: Dokumentieren, wer Zugriff auf welche Infrastruktur hat
+*Disaster Recovery: Infrastrukturabhängigkeiten bei Incidents verstehen
 
 **YAML-Struktur:**
 
@@ -1028,20 +1026,20 @@ spec:
 
 **Erklärung der wichtigsten Felder:**
 
-spec.type: Typ der Resource – „database“, „queue“, „storage-bucket“, „api“, „dashboard“
-spec.owner: Welches Team diese Resource verwaltet (Infrastruktur- oder Applikationsteam)
-spec.system: Welches System diese Resource verwendet
-spec.dependsOn: Andere Resources, von denen diese abhängt (Replikate, Backups, Monitoring)
-annotations: Cloud-Provider-IDs, Backup-Zeitpläne, Connection-Strings
+*spec.type: Typ der Resource – „database“, „queue“, „storage-bucket“, „api“, „dashboard“
+*spec.owner: Welches Team diese Resource verwaltet (Infrastruktur- oder Applikationsteam)
+*spec.system: Welches System diese Resource verwendet
+*spec.dependsOn: Andere Resources, von denen diese abhängt (Replikate, Backups, Monitoring)
+*annotations: Cloud-Provider-IDs, Backup-Zeitpläne, Connection-Strings
 
 **Häufige Resource-Typen:**
 
-database: PostgreSQL, MySQL, MongoDB, Redis
-queue: RabbitMQ, Kafka, SQS, Azure Service Bus
-storage-bucket: S3, GCS, Azure Blob
-api: Externe Drittanbieter-APIs
-dashboard: Grafana, Datadog, CloudWatch
-cluster: Kubernetes-, Datenbank-Cluster
+*database: PostgreSQL, MySQL, MongoDB, Redis
+*queue: RabbitMQ, Kafka, SQS, Azure Service Bus
+*storage-bucket: S3, GCS, Azure Blob
+*api: Externe Drittanbieter-APIs
+*dashboard: Grafana, Datadog, CloudWatch
+*cluster: Kubernetes-, Datenbank-Cluster
 
 ---
 
@@ -1577,6 +1575,7 @@ Nach diesem Lab hast du einen vollständig funktionierenden Beispiel-Software-Ka
 * nachvollziehbaren Abhängigkeiten
 
 Damit hast du eine realistische Grundlage geschaffen, um Backstage als zentrales Entwicklerportal in einer Organisation einzusetzen.
+
 
 
 
