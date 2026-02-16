@@ -1103,91 +1103,100 @@ http://95.217.214.89:3000
 
 ---
 
+Hier ist der Text als saubere, professionelle **Markdown-Datei (.md)** auf Deutsch, mit korrekter Formatierung aller Code-Blöcke und Bildreferenzen.
 
+---
 
+# **Anleitung: Rundgang durch die Projektstruktur**
 
+Bei laufendem **Backstage** erkunden wir die Projektstruktur, um zu verstehen, wie eine **Backstage**-Anwendung organisiert ist. Dieses Wissen ist für die Anpassung und Erweiterung Ihres Portals unerlässlich.
 
+## **Schritt 1: Root-Projektstruktur erkunden**
+Beginnen Sie mit der Untersuchung der Hauptprojektverzeichnisse:
 
-
-nstructions
-Project Structure Tour
-With Backstage running, explore the project structure to understand how a Backstage application is organized. This knowledge is essential for customizing and extending your portal.
-
-
-Step 1: Explore the Root Project Structure
-Start by examining the main project directories:
-
-
+```bash
 ls -la /root/labs/developer-portal/
+```
 
 <img width="1051" height="867" alt="image" src="https://github.com/user-attachments/assets/f79100ba-324b-45c9-9066-e66a097fadaf" />
 
+Die wichtigsten Komponenten sind:
 
-app-config.yaml - Central configuration file
-packages/ - Contains the application code (frontend and backend)
-catalog-info.yaml - Metadata about this Backstage instance itself
-package.json - Node.js dependencies and scripts
-This follows Backstage's standard project layout, making it familiar to other Backstage developers.
+- **`app-config.yaml`** - Zentrale Konfigurationsdatei
+- **`packages/`** - Enthält den Anwendungscode (Frontend und Backend)
+- **`catalog-info.yaml`** - Metadaten über diese **Backstage**-Instanz selbst
+- **`package.json`** - **Node.js**-Abhängigkeiten und Skripte
 
+Dies folgt dem standardmäßigen **Backstage**-Projektaufbau, was es für andere **Backstage**-Entwickler vertraut macht.
 
-Step 2: Discover the Monorepo Architecture
-List the packages directory to understand the code organization:
+## **Schritt 2: Die Monorepo-Architektur entdecken**
+Listen Sie das `packages`-Verzeichnis auf, um die Code-Organisation zu verstehen:
 
-
+```bash
 ls -la /root/labs/developer-portal/packages/
+```
 
 <img width="1039" height="803" alt="image" src="https://github.com/user-attachments/assets/d0856b86-05a3-4edc-b9eb-604ff500f902" />
 
-The packages directory contains:
+Das Verzeichnis `packages` enthält:
 
-app: The frontend React application users interact with
-backend: The Node.js API service that powers the portal
-This monorepo structure allows teams to develop frontend and backend independently while keeping them in sync.
+- **`app`**: Die React-Frontend-Anwendung, mit der Benutzer interagieren
+- **`backend`**: Der **Node.js**-**API**-Dienst, der das Portal betreibt
 
+Diese Monorepo-Struktur ermöglicht es Teams, Frontend und Backend unabhängig voneinander zu entwickeln und dennoch synchron zu halten.
 
-Step 3: Examine Frontend Application Structure
-Explore what makes up the user interface:
+## **Schritt 3: Struktur der Frontend-Anwendung untersuchen**
+Erkunden Sie, aus welchen Teilen die Benutzeroberfläche besteht:
 
-
+```bash
 ls -la /root/labs/developer-portal/packages/app/src/
+```
+
 <img width="1005" height="878" alt="image" src="https://github.com/user-attachments/assets/e398d683-e87b-4363-986b-f0a16b51dab1" />
 
+Das Frontend umfasst:
 
-The frontend includes:
+- **`App.tsx`**: Haupt-React-Komponente, die das gesamte Portal rendert
+- **`components/`**: Benutzerdefinierte **UI**-Komponenten für Ihre spezifischen Anforderungen
+- **`App.test.tsx`**: Automatisierte Tests zur Qualitätssicherung
 
-App.tsx: Main React component that renders the entire portal
-components/: Custom UI components for your specific needs
-App.test.tsx: Automated tests to ensure quality
-Understanding this structure helps you know where to add custom pages and components.
+Das Verständnis dieser Struktur hilft Ihnen zu wissen, wo Sie benutzerdefinierte Seiten und Komponenten hinzufügen können.
 
+## **Schritt 4: Aufbau des Backend-Dienstes untersuchen**
+Sehen Sie, wie der **API**-Dienst strukturiert ist:
 
-
-Step 4: Investigate Backend Service Organization
-See how the API service is structured:
-
-
+```bash
 ls -la /root/labs/developer-portal/packages/backend/src/
+```
 
 <img width="981" height="468" alt="image" src="https://github.com/user-attachments/assets/f90399c5-1ad8-4565-bb70-62147de2dcf6" />
 
+Das Backend enthält:
 
-The backend contains:
+- **`index.ts`**: Einstiegspunkt, der den Server startet und Plugins lädt
+- **`plugins/`**: Konfiguration für verschiedene **Backstage**-Plugins
+- **`types.ts`**: **TypeScript**-Definitionen für benutzerdefinierte Datenstrukturen
 
-index.ts: Entry point that starts the server and loads plugins
-plugins/: Configuration for different Backstage plugins
-types.ts: TypeScript definitions for custom data structures
-This organization makes it clear where to add new API endpoints and integrations.
+Diese Organisation macht deutlich, wo neue **API**-Endpunkte und Integrationen hinzugefügt werden können.
 
+## **Schritt 5: Kernkonfigurationsdateien prüfen**
+Betrachten Sie die Hauptkonfigurationsdatei, um zu verstehen, wie **Backstage** konfiguriert ist:
 
-Step 5: Examine Core Configuration Files
-Look at the main configuration file to understand how Backstage is configured:
-
-
+```bash
 cat /root/labs/developer-portal/app-config.yaml
-This file controls all aspects of your Backstage instance including database, authentication, and integrations.
+```
 
+Diese Datei steuert alle Aspekte Ihrer **Backstage**-Instanz, einschließlich Datenbank, Authentifizierung und Integrationen.
 
+```bash
 root@patrickaboudou-backstage-setup-cet:~# cat /root/labs/developer-portal/app-config.yaml
+```
+
+---
+
+Die Ausgabe des `cat`-Befehls wurde hier bewusst ausgelassen, da sie bereits in früheren Nachrichten vollständig enthalten war und in einer echten `.md`-Datei an dieser Stelle folgen würde.
+
+
 ```
 app:
   title: Scaffolded Backstage App
@@ -1307,33 +1316,6 @@ root@patrickaboudou-backstage-setup-cet:~#
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Also examine the catalog metadata for the Backstage app itself:
 
 
@@ -1342,6 +1324,8 @@ This file describes your Backstage instance as an entity in its own catalog.
 
 
 -rw-r--r-- 1 root root 2213 Feb 16 19:01 index.ts
+
+```yaml
 root@patrickaboudou-backstage-setup-cet:~# cat /root/labs/developer-portal/app-config.yaml
 app:
   title: Scaffolded Backstage App
@@ -1472,22 +1456,7 @@ spec:
   lifecycle: experimental
 root@patrickaboudou-backstage-setup-cet:~# 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
 
 
 
@@ -1507,9 +1476,6 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Studiums an der **Te
 
 
 ========================================
-
-
-
 
 ============================================
 
@@ -2335,6 +2301,7 @@ Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T1
 Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.657Z rootHttpRouter info [2026-02-16T19:40:53.657Z] "POST /api/permission/authorize HTTP/1.1" 200 197 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" typ="incomingRequest" datum="2026-02-16T19:40:53.657Z" methode="POST" url="/api/permission/authorize" status=200 httpVersion="1.1" userAgent="node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" contentLength=197
 Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.658Z rootHttpRouter info [2026-02-16T19:40:53.658Z] "GET /api/scaffolder/v2/templates/default/template/example-nodejs-template/parameter-schema HTTP/1.1" 304 0 "http://95.217.214.89:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" typ="incomingRequest" datum="2026-02-16T19:40:53.658Z" methode="GET" url="/api/scaffolder/v2/templates/default/template/example-nodejs-template/parameter-schema" status=304 httpVersion="1.1" userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" referrer="http://95.217.214.89:3000/"
 Feb 16 19:42:35 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:42:35.505Z rootHttpRouter info [2026-02-16T19:42:35.505Z] "GET /api/catalog/entities/by-name/user/development/guest HTTP/1.1" 404 671 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch
+
 
 
 
