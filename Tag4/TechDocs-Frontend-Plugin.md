@@ -153,6 +153,38 @@ Beschreiben Sie, wie aus einem Template ein neues Projekt generiert wird.
 
 **Antwortbereich:**
 
+**1 – TechDocs-Frontend-Plugin installieren**
+Installieren Sie das **TechDocs-Frontend-Plugin**, um die Anzeige von Dokumentationen in **Backstage** zu ermöglichen.
+
+**2 – TechDocs-Backend-Plugin installieren**
+Installieren Sie das **TechDocs-Backend-Plugin**, um die Generierung und Bereitstellung von Dokumentationen zu aktivieren.
+
+**3 – TechDocs für lokale Generierung konfigurieren**
+Konfigurieren Sie **TechDocs** so, dass die Dokumentation lokal und ohne **Docker-Container** generiert wird.
+
+**4 – MkDocs lokal für TechDocs installieren**
+Installieren Sie **MkDocs** sowie die erforderlichen Plugins lokal, um die Dokumentation zu erzeugen.
+
+**5 – TechDocs-Routen zum Frontend hinzufügen**
+Fügen Sie **TechDocs-Routen** und entsprechende Komponenten zur **Backstage-Frontend-Anwendung** hinzu.
+
+**6 – Dokumentation für Catalog-Entitäten erstellen**
+Erstellen Sie eine **MkDocs-Dokumentationsstruktur** sowie Inhalte für **Catalog-Entitäten**.
+
+**7 – Dokumentation testen und Vorschau anzeigen**
+Testen Sie die vollständige **TechDocs-Einrichtung** und überprüfen Sie die Dokumentation in der Vorschau.
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 
 ## Aufgabe 8 – Testen und Veröffentlichen von Templates
@@ -168,6 +200,7 @@ Stellen Sie dar, wie ein neues Template qualitätsgesichert und für Teams verf�
 > Die GitHub-Authentifizierung einrichten und das vollständige Template testen, indem es end-to-end ausgeführt wird, um ein echtes Repository zu erstellen.
 
 **Antwortbereich:**
+
 
 ---
 
