@@ -1,4 +1,4 @@
-# Test: Building Internal Developer Portals mit Backstage
+# Plan: Building Internal Developer Portals mit Backstage
 
 ## Inhaltsverzeichnis
 
