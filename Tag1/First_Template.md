@@ -990,6 +990,123 @@ print("OK: template.yaml ist gültig")
 PY
 ```
 
+
+
+## Ergebniss
+
+<img width="1219" height="949" alt="image" src="https://github.com/user-attachments/assets/d330c691-2134-49a7-a447-e59c8fa1e72e" />
+
+
+
+<img width="1067" height="854" alt="image" src="https://github.com/user-attachments/assets/d510a683-f73e-4379-bb4b-e6925d52f7fb" />
+
+
+
+
+<img width="1234" height="970" alt="image" src="https://github.com/user-attachments/assets/0905dbe4-6a92-42b5-8145-e3da57120175" />
+
+
+
+
+<img width="1337" height="998" alt="image" src="https://github.com/user-attachments/assets/5fc35bae-714c-4504-9908-acd1061b309c" />
+
+
+
+
+---
+
+# ✅ **Datei aussehen**
+
+---
+
+
+```yaml
+# host: 127.0.0.1
+```
+
+### ✅ ändern zu
+
+```yaml
+host: 0.0.0.0
+```
+
+👉 `0.0.0.0` = akzeptiert Verbindungen von außen
+👉 `127.0.0.1` = nur lokal
+
+---
+
+
+
+```yaml
+origin: http://localhost:3000
+```
+
+### ✅ ändern zu
+
+```yaml
+origin: http://95.217.214.89:3000
+```
+
+---
+
+# 🟢 **Finale korrekte Version **
+
+So sollte es am Ende aussehen:
+
+```yaml
+backend:
+  baseUrl: http://95.217.214.89:7007
+  listen:
+    port: 7007
+    host: 0.0.0.0
+
+  cors:
+    origin: http://95.217.214.89:3000
+    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+    credentials: true
+```
+
+---
+
+#  **Danach neu starten**
+
+Im Projektordner:
+
+```bash
+CTRL + C   # falls läuft stoppen
+yarn dev
+```
+
+oder
+
+```bash
+yarn start
+```
+
+---
+
+#  **im Browser öffnen**
+
+```
+http://95.217.214.89:3000
+```
+
+---
+
+#  Kurz erklärt warum
+
+| Setting               | Warum                            |
+| --------------------- | -------------------------------- |
+| host: 0.0.0.0         | Server von außen erreichbar      |
+| VM-IP statt localhost | Browser kann verbinden           |
+| CORS origin           | Frontend darf Backend ansprechen |
+
+---
+
+
+
+
+
 ### **© ALLE RECHTE VORBEHALTEN**
 
 Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Studiums an der **Technischen Hochschule Deggendorf (THD)** im Auftrag der **KUKA GmbH**  realisiert.
@@ -1001,3 +1118,4 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Studiums an der **Te
 
 
 **Hinweis**: Dieser Abschnitt der Arbeit stellt nur einen Teil des Gesamtprojekts dar. Das vollständige Projekt ist Eigentum des Unternehmens und daher nicht öffentlich zugänglich. Es handelt sich um ein Projekt, bei dem lediglich ein Teil veröffentlicht wird.
+
