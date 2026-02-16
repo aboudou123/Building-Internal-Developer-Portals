@@ -1330,28 +1330,8 @@ spec:
 
 ---
 
-Sie verstehen jetzt, wie **Backstage**-Projekte organisiert sind und warum diese Struktur sowohl Anpassbarkeit als auch Wartbarkeit unterstützt!
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<img width="1337" height="998" alt="image" src="https://github.com/user-attachments/assets/c500ed15-0f80-4e4c-8d7d-e69cb84e3057" />
 
 
 ### **© ALLE RECHTE VORBEHALTEN**
@@ -1365,5 +1345,6 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Studiums an der **Te
 
 
 **Hinweis**: Dieser Abschnitt der Arbeit stellt nur einen Teil des Gesamtprojekts dar. Das vollständige Projekt ist Eigentum des Unternehmens und daher nicht öffentlich zugänglich. Es handelt sich um ein Projekt, bei dem lediglich ein Teil veröffentlicht wird.
+
 
 
