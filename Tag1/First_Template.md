@@ -1103,7 +1103,6 @@ http://95.217.214.89:3000
 
 ---
 
-Hier ist der vollständige Text als professionelle, sauber formatierte **Markdown-Datei (.md)** auf Deutsch. Alle Code-Blöcke, Bildreferenzen und die gesamte Struktur wurden exakt nach Ihren Vorgaben übersetzt und formatiert.
 
 ---
 
@@ -1138,7 +1137,25 @@ ls -la /root/labs/developer-portal/packages/
 
 <img width="1039" height="803" alt="image" src="https://github.com/user-attachments/assets/d0856b86-05a3-4edc-b9eb-604ff500f902" />
 
-Das Verzeichnis `packages` enthält:
+
+
+<img width="1039" height="803" alt="image" src="https://github.com/user-attachments/assets/5119d2d9-7e75-4b2c-9e94-09feffb6357c" />
+
+
+<img width="1058" height="828" alt="image" src="https://github.com/user-attachments/assets/1efde67e-4171-40ad-929c-f61c70a6d621" />
+
+
+
+
+<img width="1005" height="878" alt="image" src="https://github.com/user-attachments/assets/d65939a7-661d-409e-81ea-2fb6ad790c73" />
+
+
+<img width="981" height="468" alt="image" src="https://github.com/user-attachments/assets/2a084b98-0a7a-47f7-b1af-13bca0126943" />
+
+
+
+
+# Das Verzeichnis `packages` enthält:
 
 - **`app`**: Die React-Frontend-Anwendung, mit der Benutzer interagieren
 - **`backend`**: Der **Node.js**-**API**-Dienst, der das Portal betreibt
@@ -1331,7 +1348,14 @@ spec:
 ---
 
 
+<img width="1797" height="866" alt="image" src="https://github.com/user-attachments/assets/9701e99f-b968-4e2b-9739-be6cb281e139" />
+
+
+
+
 <img width="1337" height="998" alt="image" src="https://github.com/user-attachments/assets/c500ed15-0f80-4e4c-8d7d-e69cb84e3057" />
+
+
 
 
 ### **© ALLE RECHTE VORBEHALTEN**
@@ -1345,6 +1369,7 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Studiums an der **Te
 
 
 **Hinweis**: Dieser Abschnitt der Arbeit stellt nur einen Teil des Gesamtprojekts dar. Das vollständige Projekt ist Eigentum des Unternehmens und daher nicht öffentlich zugänglich. Es handelt sich um ein Projekt, bei dem lediglich ein Teil veröffentlicht wird.
+
 
 
 
