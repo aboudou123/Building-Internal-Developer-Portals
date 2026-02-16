@@ -254,7 +254,7 @@ So arbeiten alle Teile zusammen:
 10. **Catalog sync:** Benutzer und Gruppen erscheinen als Catalog-Entities
 
 ## Lab-Vorschau: Keycloak-Integration
-Im kommenden Lab werden Sie alles implementieren, was in dieser Lektion behandelt wurde:
+Im kommenden Lab werden wir alles implementieren, was in dieser Lektion behandelt wurde:
 
 *   Keycloak in Docker neben Backstage mit sicherer Credential-Verwaltung bereitstellen
 *   Einen Backstage-Realm mit korrekter OIDC-Client-Konfiguration erstellen
@@ -294,7 +294,7 @@ Dies etabliert die Authentifizierungsgrundlage, auf der Sie in der nächsten Lek
 
 Implementieren Sie produktionsreife Authentifizierung mit Keycloak als OIDC-Provider. Konfigurieren Sie Realms und Clients, richten Sie Benutzerverwaltung ein, integrieren Sie diese mit der Backstage-Authentifizierung und testen Sie komplette Authentifizierungs-Workflows.
 
-**Sie werden lernen:**
+**Wir werden lernen:**
 
 *   Keycloak mit Docker und korrekter Konfiguration bereitzustellen
 *   Realms, Clients und OIDC-Einstellungen für die Backstage-Integration zu konfigurieren
@@ -342,7 +342,7 @@ Importieren Sie Keycloak-Benutzer und -Gruppen als Entities in den Backstage-Cat
 ==========================================================
 
 
-Nachdem Sie nun verstehen, wie Sie Benutzer mit Keycloak authentifizieren und Gruppenmitgliedschaften erfassen, behandelt diese Lektion, wie Sie diese Informationen nutzen können, um über das Berechtigungs-Framework zu steuern, was Benutzer in Backstage tun dürfen.
+Nachdem wir nun verstehen, wie  Benutzer mit Keycloak authentifizieren und Gruppenmitgliedschaften erfassen, behandelt diese Lektion, wie wir diese Informationen nutzen können, um über das Berechtigungs-Framework zu steuern, was Benutzer in Backstage tun dürfen.
 
 ## Autorisierung: Aufbauend auf Authentifizierung
 In der vorherigen Lektion haben Sie gelernt, wie Authentifizierung Identität feststellt. Jetzt werden wir diese Identität (und Gruppenmitgliedschaft) für Autorisierungsentscheidungen nutzen.
@@ -556,7 +556,7 @@ if (result === AuthorizeResult.DENY) {
 ```
 
 ## Lab-Vorschau: Rollenbasierte Zugriffskontrolle
-Im kommenden Lab werden Sie alles implementieren, was in dieser Lektion behandelt wurde:
+Im kommenden Lab werden wir alles implementieren, was in dieser Lektion behandelt wurde:
 
 **Lab-Umgebung:**
 
@@ -567,7 +567,7 @@ Im kommenden Lab werden Sie alles implementieren, was in dieser Lektion behandel
     *   `carol.guest` (`guests`)
 *   Sign-in-Resolver extrahiert bereits Gruppen in den `ent`-Claim
 
-**Ihre Aufgaben:**
+**Aufgaben:**
 
 1.  Berechtigungs-Framework in `app-config.yaml` aktivieren
 2.  Berechtigungsrichtlinien-Modul erstellen, das Keycloak-Gruppenmitgliedschaft prüft
