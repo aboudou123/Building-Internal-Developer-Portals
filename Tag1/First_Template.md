@@ -1107,6 +1107,397 @@ http://95.217.214.89:3000
 
 
 
+
+
+nstructions
+Project Structure Tour
+With Backstage running, explore the project structure to understand how a Backstage application is organized. This knowledge is essential for customizing and extending your portal.
+
+
+Step 1: Explore the Root Project Structure
+Start by examining the main project directories:
+
+
+ls -la /root/labs/developer-portal/
+
+<img width="1051" height="867" alt="image" src="https://github.com/user-attachments/assets/f79100ba-324b-45c9-9066-e66a097fadaf" />
+
+
+app-config.yaml - Central configuration file
+packages/ - Contains the application code (frontend and backend)
+catalog-info.yaml - Metadata about this Backstage instance itself
+package.json - Node.js dependencies and scripts
+This follows Backstage's standard project layout, making it familiar to other Backstage developers.
+
+
+Step 2: Discover the Monorepo Architecture
+List the packages directory to understand the code organization:
+
+
+ls -la /root/labs/developer-portal/packages/
+
+<img width="1039" height="803" alt="image" src="https://github.com/user-attachments/assets/d0856b86-05a3-4edc-b9eb-604ff500f902" />
+
+The packages directory contains:
+
+app: The frontend React application users interact with
+backend: The Node.js API service that powers the portal
+This monorepo structure allows teams to develop frontend and backend independently while keeping them in sync.
+
+
+Step 3: Examine Frontend Application Structure
+Explore what makes up the user interface:
+
+
+ls -la /root/labs/developer-portal/packages/app/src/
+<img width="1005" height="878" alt="image" src="https://github.com/user-attachments/assets/e398d683-e87b-4363-986b-f0a16b51dab1" />
+
+
+The frontend includes:
+
+App.tsx: Main React component that renders the entire portal
+components/: Custom UI components for your specific needs
+App.test.tsx: Automated tests to ensure quality
+Understanding this structure helps you know where to add custom pages and components.
+
+
+
+Step 4: Investigate Backend Service Organization
+See how the API service is structured:
+
+
+ls -la /root/labs/developer-portal/packages/backend/src/
+
+<img width="981" height="468" alt="image" src="https://github.com/user-attachments/assets/f90399c5-1ad8-4565-bb70-62147de2dcf6" />
+
+
+The backend contains:
+
+index.ts: Entry point that starts the server and loads plugins
+plugins/: Configuration for different Backstage plugins
+types.ts: TypeScript definitions for custom data structures
+This organization makes it clear where to add new API endpoints and integrations.
+
+
+Step 5: Examine Core Configuration Files
+Look at the main configuration file to understand how Backstage is configured:
+
+
+cat /root/labs/developer-portal/app-config.yaml
+This file controls all aspects of your Backstage instance including database, authentication, and integrations.
+
+
+root@patrickaboudou-backstage-setup-cet:~# cat /root/labs/developer-portal/app-config.yaml
+app:
+  title: Scaffolded Backstage App
+  baseUrl: http://95.217.214.89:3000
+
+organization:
+  name: My Company
+
+backend:
+  # Used for enabling authentication, secret is shared by all backend plugins
+  # See https://backstage.io/docs/auth/service-to-service-auth for
+  # information on the format
+  # auth:
+  #   keys:
+  #     - secret: ${BACKEND_SECRET}
+  baseUrl: http://95.217.214.89:7007
+  listen:
+    port: 7007
+    # Uncomment the following host directive to bind to specific interfaces
+    # host: 127.0.0.1
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+    # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
+    # Default Helmet Content-Security-Policy values can be removed by setting the key to false
+  cors:
+    origin: http://95.217.214.89:3000
+    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+    credentials: true
+  # This is for local development only, it is not recommended to use this in production
+  # The production database configuration is stored in app-config.production.yaml
+  database:
+    client: better-sqlite3
+    connection: ':memory:'
+  # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
+
+integrations:
+  github:
+    - host: github.com
+      # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
+      # about setting up the GitHub integration here: https://backstage.io/docs/integrations/github/locations#configuration
+      token: ${GITHUB_TOKEN}
+    ### Example for how to add your GitHub Enterprise instance using the API:
+    # - host: ghe.example.net
+    #   apiBaseUrl: https://ghe.example.net/api/v3
+    #   token: ${GHE_TOKEN}
+
+proxy:
+  ### Example for how to add a proxy endpoint for the frontend.
+  ### A typical reason to do this is to handle HTTPS and CORS for internal services.
+  # endpoints:
+  #   '/test':
+  #     target: 'https://example.com'
+  #     changeOrigin: true
+
+# Reference documentation http://backstage.io/docs/features/techdocs/configuration
+# Note: After experimenting with basic setup, use CI/CD to generate docs
+# and an external cloud storage when deploying TechDocs for production use-case.
+# https://backstage.io/docs/features/techdocs/how-to-guides#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach
+techdocs:
+  builder: 'local' # Alternatives - 'external'
+  generator:
+    runIn: 'docker' # Alternatives - 'local'
+  publisher:
+    type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
+
+auth:
+  # see https://backstage.io/docs/auth/ to learn about auth providers
+  providers:
+    # See https://backstage.io/docs/auth/guest/provider
+    guest: {}
+
+scaffolder:
+  # see https://backstage.io/docs/features/software-templates/configuration for software template options
+
+catalog:
+  import:
+    entityFilename: catalog-info.yaml
+    pullRequestBranchName: backstage-integration
+  rules:
+    - allow: [Component, System, API, Resource, Location]
+  locations:
+    # Local example data, file locations are relative to the backend process, typically `packages/backend`
+    - type: file
+      target: ../../examples/entities.yaml
+
+    # Local example template
+    - type: file
+      target: ../../examples/template/template.yaml
+      rules:
+        - allow: [Template]
+
+    # Local example organizational data
+    - type: file
+      target: ../../examples/org.yaml
+      rules:
+        - allow: [User, Group]
+
+    ## Uncomment these lines to add more example data
+    # - type: url
+    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
+
+    ## Uncomment these lines to add an example org
+    # - type: url
+    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
+    #   rules:
+    #     - allow: [User, Group]
+
+kubernetes:
+  # see https://backstage.io/docs/features/kubernetes/configuration for kubernetes configuration options
+
+# see https://backstage.io/docs/permissions/getting-started for more on the permission framework
+permission:
+  # setting this to `false` will disable permissions
+  enabled: true
+root@patrickaboudou-backstage-setup-cet:~# 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Also examine the catalog metadata for the Backstage app itself:
+
+
+cat /root/labs/developer-portal/catalog-info.yaml
+This file describes your Backstage instance as an entity in its own catalog.
+
+
+-rw-r--r-- 1 root root 2213 Feb 16 19:01 index.ts
+root@patrickaboudou-backstage-setup-cet:~# cat /root/labs/developer-portal/app-config.yaml
+app:
+  title: Scaffolded Backstage App
+  baseUrl: http://95.217.214.89:3000
+
+organization:
+  name: My Company
+
+backend:
+  # Used for enabling authentication, secret is shared by all backend plugins
+  # See https://backstage.io/docs/auth/service-to-service-auth for
+  # information on the format
+  # auth:
+  #   keys:
+  #     - secret: ${BACKEND_SECRET}
+  baseUrl: http://95.217.214.89:7007
+  listen:
+    port: 7007
+    # Uncomment the following host directive to bind to specific interfaces
+    # host: 127.0.0.1
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+    # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
+    # Default Helmet Content-Security-Policy values can be removed by setting the key to false
+  cors:
+    origin: http://95.217.214.89:3000
+    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+    credentials: true
+  # This is for local development only, it is not recommended to use this in production
+  # The production database configuration is stored in app-config.production.yaml
+  database:
+    client: better-sqlite3
+    connection: ':memory:'
+  # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
+
+integrations:
+  github:
+    - host: github.com
+      # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
+      # about setting up the GitHub integration here: https://backstage.io/docs/integrations/github/locations#configuration
+      token: ${GITHUB_TOKEN}
+    ### Example for how to add your GitHub Enterprise instance using the API:
+    # - host: ghe.example.net
+    #   apiBaseUrl: https://ghe.example.net/api/v3
+    #   token: ${GHE_TOKEN}
+
+proxy:
+  ### Example for how to add a proxy endpoint for the frontend.
+  ### A typical reason to do this is to handle HTTPS and CORS for internal services.
+  # endpoints:
+  #   '/test':
+  #     target: 'https://example.com'
+  #     changeOrigin: true
+
+# Reference documentation http://backstage.io/docs/features/techdocs/configuration
+# Note: After experimenting with basic setup, use CI/CD to generate docs
+# and an external cloud storage when deploying TechDocs for production use-case.
+# https://backstage.io/docs/features/techdocs/how-to-guides#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach
+techdocs:
+  builder: 'local' # Alternatives - 'external'
+  generator:
+    runIn: 'docker' # Alternatives - 'local'
+  publisher:
+    type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
+
+auth:
+  # see https://backstage.io/docs/auth/ to learn about auth providers
+  providers:
+    # See https://backstage.io/docs/auth/guest/provider
+    guest: {}
+
+scaffolder:
+  # see https://backstage.io/docs/features/software-templates/configuration for software template options
+
+catalog:
+  import:
+    entityFilename: catalog-info.yaml
+    pullRequestBranchName: backstage-integration
+  rules:
+    - allow: [Component, System, API, Resource, Location]
+  locations:
+    # Local example data, file locations are relative to the backend process, typically `packages/backend`
+    - type: file
+      target: ../../examples/entities.yaml
+
+    # Local example template
+    - type: file
+      target: ../../examples/template/template.yaml
+      rules:
+        - allow: [Template]
+
+    # Local example organizational data
+    - type: file
+      target: ../../examples/org.yaml
+      rules:
+        - allow: [User, Group]
+
+    ## Uncomment these lines to add more example data
+    # - type: url
+    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
+
+    ## Uncomment these lines to add an example org
+    # - type: url
+    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
+    #   rules:
+    #     - allow: [User, Group]
+
+kubernetes:
+  # see https://backstage.io/docs/features/kubernetes/configuration for kubernetes configuration options
+
+# see https://backstage.io/docs/permissions/getting-started for more on the permission framework
+permission:
+  # setting this to `false` will disable permissions
+  enabled: true
+root@patrickaboudou-backstage-setup-cet:~# cat /root/labs/developer-portal/catalog-info.yaml
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: developer-portal
+  description: An example of a Backstage application.
+  # Example for optional annotations
+  # annotations:
+  #   github.com/project-slug: backstage/backstage
+  #   backstage.io/techdocs-ref: dir:.
+spec:
+  type: website
+  owner: john@example.com
+  lifecycle: experimental
+root@patrickaboudou-backstage-setup-cet:~# 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+You now understand how Backstage projects are organized and why this structure supports both customization and maintainability!
+
+
+
+
+
+
+
 ### **© ALLE RECHTE VORBEHALTEN**
 
 Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Studiums an der **Technischen Hochschule Deggendorf (THD)** im Auftrag der **KUKA GmbH**  realisiert.
@@ -1118,4 +1509,238 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Studiums an der **Te
 
 
 **Hinweis**: Dieser Abschnitt der Arbeit stellt nur einen Teil des Gesamtprojekts dar. Das vollständige Projekt ist Eigentum des Unternehmens und daher nicht öffentlich zugänglich. Es handelt sich um ein Projekt, bei dem lediglich ein Teil veröffentlicht wird.
+
+
+
+
+
+
+
+============================================
+
+SSH connection established.
+Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-90-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Mon Feb 16 07:52:36 PM UTC 2026
+
+  System load:  0.0               Processes:             168
+  Usage of /:   6.8% of 74.79GB   Users logged in:       1
+  Memory usage: 49%               IPv4 address for eth0: 95.217.214.89
+  Swap usage:   0%                IPv6 address for eth0: 2a01:4f9:c014:4b29::1
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+51 updates can be applied immediately.
+32 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+*** System restart required ***
+Last login: Mon Feb 16 19:32:55 2026 from 46.62.185.214
+Note: Your bash history is configured to save automatically after each command for easy task verification.
+Note: Your bash history is configured to save automatically after each command for easy task verification.
+root@patrickaboudou-backstage-setup-cet:~# ls -la /root/labs/developer-portal/
+total 1376
+drwx------    9 root root    4096 Feb 16 19:14 .
+drwxr-xr-x    3 root root    4096 Feb 16 19:01 ..
+-rw-r--r--    1 root root      74 Feb 16 19:01 app-config.local.yaml
+-rw-r--r--    1 root root    2232 Feb 16 19:01 app-config.production.yaml
+-rw-r--r--    1 root root    4228 Feb 16 19:14 app-config.yaml
+-rw-r--r--    1 root root      26 Feb 16 19:01 backstage.json
+-rw-r--r--    1 root root     357 Feb 16 19:01 catalog-info.yaml
+drwxr-xr-x    3 root root    4096 Feb 16 19:02 dist-types
+-rw-r--r--    1 root root     113 Feb 16 19:01 .dockerignore
+-rw-r--r--    1 root root      21 Feb 16 19:01 .eslintignore
+-rw-r--r--    1 root root      36 Feb 16 19:01 .eslintrc.js
+drwxr-xr-x    3 root root    4096 Feb 16 19:01 examples
+drwxr-xr-x    8 root root    4096 Feb 16 19:01 .git
+-rw-r--r--    1 root root     685 Feb 16 19:01 .gitignore
+drwxr-xr-x 1705 root root   69632 Feb 16 19:02 node_modules
+-rw-r--r--    1 root root    1552 Feb 16 19:02 package.json
+drwxr-xr-x    4 root root    4096 Feb 16 19:01 packages
+-rw-r--r--    1 root root    1789 Feb 16 19:01 playwright.config.ts
+drwxr-xr-x    2 root root    4096 Feb 16 19:01 plugins
+-rw-r--r--    1 root root      33 Feb 16 19:01 .prettierignore
+-rw-r--r--    1 root root     152 Feb 16 19:01 README.md
+-rw-r--r--    1 root root     355 Feb 16 19:01 tsconfig.json
+drwxr-xr-x    3 root root    4096 Feb 16 19:02 .yarn
+-rw-r--r--    1 root root 1233415 Feb 16 19:38 yarn.lock
+-rw-r--r--    1 root root      66 Feb 16 19:01 .yarnrc.yml
+root@patrickaboudou-backstage-setup-cet:~# ls -la /root/labs/developer-portal/packages/
+total 20
+drwxr-xr-x 4 root root 4096 Feb 16 19:01 .
+drwx------ 9 root root 4096 Feb 16 19:14 ..
+drwxr-xr-x 5 root root 4096 Feb 16 19:01 app
+drwxr-xr-x 4 root root 4096 Feb 16 19:02 backend
+-rw-r--r-- 1 root root  405 Feb 16 19:01 README.md
+root@patrickaboudou-backstage-setup-cet:~# ls -la /root/labs/developer-portal/packages/app/src/
+total 32
+drwxr-xr-x 3 root root 4096 Feb 16 19:01 .
+drwxr-xr-x 5 root root 4096 Feb 16 19:01 ..
+-rw-r--r-- 1 root root  457 Feb 16 19:01 apis.ts
+-rw-r--r-- 1 root root  660 Feb 16 19:01 App.test.tsx
+-rw-r--r-- 1 root root 3696 Feb 16 19:01 App.tsx
+drwxr-xr-x 5 root root 4096 Feb 16 19:01 components
+-rw-r--r-- 1 root root  214 Feb 16 19:01 index.tsx
+-rw-r--r-- 1 root root   36 Feb 16 19:01 setupTests.ts
+root@patrickaboudou-backstage-setup-cet:~# ls -la /root/labs/developer-portal/packages/backend/src/
+total 12
+drwxr-xr-x 2 root root 4096 Feb 16 19:01 .
+drwxr-xr-x 4 root root 4096 Feb 16 19:02 ..
+-rw-r--r-- 1 root root 2213 Feb 16 19:01 index.ts
+root@patrickaboudou-backstage-setup-cet:~# cat /root/labs/developer-portal/app-config.yaml
+app:
+  title: Scaffolded Backstage App
+  baseUrl: http://95.217.214.89:3000
+
+organization:
+  name: My Company
+
+backend:
+  # Used for enabling authentication, secret is shared by all backend plugins
+  # See https://backstage.io/docs/auth/service-to-service-auth for
+  # information on the format
+  # auth:
+  #   keys:
+  #     - secret: ${BACKEND_SECRET}
+  baseUrl: http://95.217.214.89:7007
+  listen:
+    port: 7007
+    # Uncomment the following host directive to bind to specific interfaces
+    # host: 127.0.0.1
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+    # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
+    # Default Helmet Content-Security-Policy values can be removed by setting the key to false
+  cors:
+    origin: http://95.217.214.89:3000
+    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+    credentials: true
+  # This is for local development only, it is not recommended to use this in production
+  # The production database configuration is stored in app-config.production.yaml
+  database:
+    client: better-sqlite3
+    connection: ':memory:'
+  # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
+
+integrations:
+  github:
+    - host: github.com
+      # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
+      # about setting up the GitHub integration here: https://backstage.io/docs/integrations/github/locations#configuration
+      token: ${GITHUB_TOKEN}
+    ### Example for how to add your GitHub Enterprise instance using the API:
+    # - host: ghe.example.net
+    #   apiBaseUrl: https://ghe.example.net/api/v3
+    #   token: ${GHE_TOKEN}
+
+proxy:
+  ### Example for how to add a proxy endpoint for the frontend.
+  ### A typical reason to do this is to handle HTTPS and CORS for internal services.
+  # endpoints:
+  #   '/test':
+  #     target: 'https://example.com'
+  #     changeOrigin: true
+
+# Reference documentation http://backstage.io/docs/features/techdocs/configuration
+# Note: After experimenting with basic setup, use CI/CD to generate docs
+# and an external cloud storage when deploying TechDocs for production use-case.
+# https://backstage.io/docs/features/techdocs/how-to-guides#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach
+techdocs:
+  builder: 'local' # Alternatives - 'external'
+  generator:
+    runIn: 'docker' # Alternatives - 'local'
+  publisher:
+    type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
+
+auth:
+  # see https://backstage.io/docs/auth/ to learn about auth providers
+  providers:
+    # See https://backstage.io/docs/auth/guest/provider
+    guest: {}
+
+scaffolder:
+  # see https://backstage.io/docs/features/software-templates/configuration for software template options
+
+catalog:
+  import:
+    entityFilename: catalog-info.yaml
+    pullRequestBranchName: backstage-integration
+  rules:
+    - allow: [Component, System, API, Resource, Location]
+  locations:
+    # Local example data, file locations are relative to the backend process, typically `packages/backend`
+    - type: file
+      target: ../../examples/entities.yaml
+
+    # Local example template
+    - type: file
+      target: ../../examples/template/template.yaml
+      rules:
+        - allow: [Template]
+
+    # Local example organizational data
+    - type: file
+      target: ../../examples/org.yaml
+      rules:
+        - allow: [User, Group]
+
+    ## Uncomment these lines to add more example data
+    # - type: url
+    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
+
+    ## Uncomment these lines to add an example org
+    # - type: url
+    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
+    #   rules:
+    #     - allow: [User, Group]
+
+kubernetes:
+  # see https://backstage.io/docs/features/kubernetes/configuration for kubernetes configuration options
+
+# see https://backstage.io/docs/permissions/getting-started for more on the permission framework
+permission:
+  # setting this to `false` will disable permissions
+  enabled: true
+root@patrickaboudou-backstage-setup-cet:~# cat /root/labs/developer-portal/catalog-info.yaml
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: developer-portal
+  description: An example of a Backstage application.
+  # Example for optional annotations
+  # annotations:
+  #   github.com/project-slug: backstage/backstage
+  #   backstage.io/techdocs-ref: dir:.
+spec:
+  type: website
+  owner: john@example.com
+  lifecycle: experimental
+root@patrickaboudou-backstage-setup-cet:~# 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
