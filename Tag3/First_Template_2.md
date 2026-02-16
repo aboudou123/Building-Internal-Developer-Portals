@@ -1188,6 +1188,7 @@ This file controls all aspects of your Backstage instance including database, au
 
 
 root@patrickaboudou-backstage-setup-cet:~# cat /root/labs/developer-portal/app-config.yaml
+```
 app:
   title: Scaffolded Backstage App
   baseUrl: http://95.217.214.89:3000
@@ -1303,7 +1304,7 @@ permission:
   enabled: true
 root@patrickaboudou-backstage-setup-cet:~# 
 
-
+```
 
 
 
@@ -2334,6 +2335,7 @@ Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T1
 Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.657Z rootHttpRouter info [2026-02-16T19:40:53.657Z] "POST /api/permission/authorize HTTP/1.1" 200 197 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" typ="incomingRequest" datum="2026-02-16T19:40:53.657Z" methode="POST" url="/api/permission/authorize" status=200 httpVersion="1.1" userAgent="node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" contentLength=197
 Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.658Z rootHttpRouter info [2026-02-16T19:40:53.658Z] "GET /api/scaffolder/v2/templates/default/template/example-nodejs-template/parameter-schema HTTP/1.1" 304 0 "http://95.217.214.89:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" typ="incomingRequest" datum="2026-02-16T19:40:53.658Z" methode="GET" url="/api/scaffolder/v2/templates/default/template/example-nodejs-template/parameter-schema" status=304 httpVersion="1.1" userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" referrer="http://95.217.214.89:3000/"
 Feb 16 19:42:35 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:42:35.505Z rootHttpRouter info [2026-02-16T19:42:35.505Z] "GET /api/catalog/entities/by-name/user/development/guest HTTP/1.1" 404 671 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch
+
 
 
 
