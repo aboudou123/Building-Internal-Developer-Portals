@@ -2002,12 +2002,338 @@ cat /root/labs/developer-portal/catalog-info.yaml
 
 
 
+SSH-Verbindung hergestellt.
+Willkommen zu Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-90-generic x86_64)
+
+ * Dokumentation:  https://help.ubuntu.com
+ * Verwaltung:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ Systeminformationen Stand Montag, 16. Februar 2026, 18:57:19 UTC
+
+  Systemlast:  0.0               Prozesse:             158
+  Belegung von /:   2.7% von 74.79GB   Angemeldete Benutzer:       1
+  Arbeitsspeichernutzung: 9%            IPv4-Adresse für eth0: 95.217.214.89
+  Swap-Nutzung:   0%                    IPv6-Adresse für eth0: 2a01:4f9:c014:4b29::1
+
+
+Erweiterte Sicherheitswartung (ESM) für Anwendungen ist nicht aktiviert.
+
+51 Updates können sofort angewendet werden.
+32 dieser Updates sind normale Sicherheitsupdates.
+Um diese zusätzlichen Updates zu sehen, führen Sie aus: apt list --upgradable
+
+Aktivieren Sie ESM Apps, um zukünftige Sicherheitsupdates zu erhalten.
+Siehe https://ubuntu.com/esm oder führen Sie aus: sudo pro status
+
+
+*** System-Neustart erforderlich ***
+Letzte Anmeldung: Montag, 16. Februar 2026, 18:41:28 von 46.62.185.214
+Hinweis: Ihr Bash-Verlauf ist so konfiguriert, dass er nach jedem Befehl automatisch gespeichert wird, um die Aufgabenüberprüfung zu erleichtern.
+Hinweis: Ihr Bash-Verlauf ist so konfiguriert, dass er nach jedem Befehl automatisch gespeichert wird, um die Aufgabenüberprüfung zu erleichtern.
+root@patrickaboudou-backstage-setup-cet:~# cd /root/labs
+root@patrickaboudou-backstage-setup-cet:~/labs# echo 'developer-portal' | npx @backstage/create-app@0.7.7
+npm warn exec Das folgende Paket wurde nicht gefunden und wird installiert: @backstage/create-app@0.7.7
+npm warn deprecated boolean@3.2.0: Paket wird nicht mehr unterstützt. Kontaktieren Sie den Support unter https://www.npmjs.com/support für weitere Informationen.
+? Geben Sie einen Namen für die App ein [erforderlich] developer-portal
+
+Erstelle die App...
+
+ Prüfe, ob das Verzeichnis verfügbar ist:
+  prüfe      developer-portal ✔ 
+
+ Erstelle ein temporäres App-Verzeichnis:
+
+ Bereite Dateien vor:
+  kopiere       .dockerignore ✔ 
+  kopiere       .eslintignore ✔ 
+  templating    .eslintrc.js.hbs ✔ 
+  templating    .gitignore.hbs ✔ 
+  kopiere       .prettierignore ✔ 
+  templating    .yarnrc.yml.hbs ✔ 
+  kopiere       README.md ✔ 
+  kopiere       app-config.local.yaml ✔ 
+  kopiere       app-config.production.yaml ✔ 
+  templating    app-config.yaml.hbs ✔ 
+  templating    backstage.json.hbs ✔ 
+  templating    catalog-info.yaml.hbs ✔ 
+  templating    package.json.hbs ✔ 
+  kopiere       playwright.config.ts ✔ 
+  kopiere       tsconfig.json ✔ 
+  kopiere       yarn.lock ✔ 
+  kopiere       README.md ✔ 
+  kopiere       yarn-4.4.1.cjs ✔ 
+  kopiere       entities.yaml ✔ 
+  kopiere       org.yaml ✔ 
+  kopiere       template.yaml ✔ 
+  kopiere       catalog-info.yaml ✔ 
+  kopiere       index.js ✔ 
+  kopiere       package.json ✔ 
+  kopiere       README.md ✔ 
+  templating    .eslintrc.js.hbs ✔ 
+  kopiere       Dockerfile ✔ 
+  kopiere       README.md ✔ 
+  templating    package.json.hbs ✔ 
+  kopiere       index.ts ✔ 
+  kopiere       .eslintignore ✔ 
+  templating    .eslintrc.js.hbs ✔ 
+  templating    package.json.hbs ✔ 
+  kopiere       app.test.ts ✔ 
+  kopiere       android-chrome-192x192.png ✔ 
+  kopiere       apple-touch-icon.png ✔ 
+  kopiere       favicon-16x16.png ✔ 
+  kopiere       favicon-32x32.png ✔ 
+  kopiere       favicon.ico ✔ 
+  kopiere       index.html ✔ 
+  kopiere       manifest.json ✔ 
+  kopiere       robots.txt ✔ 
+  kopiere       safari-pinned-tab.svg ✔ 
+  kopiere       App.test.tsx ✔ 
+  kopiere       App.tsx ✔ 
+  kopiere       apis.ts ✔ 
+  kopiere       index.tsx ✔ 
+  kopiere       setupTests.ts ✔ 
+  kopiere       LogoFull.tsx ✔ 
+  kopiere       LogoIcon.tsx ✔ 
+  kopiere       Root.tsx ✔ 
+  kopiere       index.ts ✔ 
+  kopiere       EntityPage.tsx ✔ 
+  kopiere       SearchPage.tsx ✔ 
+
+ Verschieben an den endgültigen Speicherort:
+  verschieben   developer-portal ✔ 
+  abrufen       yarn.lock seed ✔ 
+  init          git repository ◜ 
+ Installiere Abhängigkeiten:
+  init          git repository ✔ 
+  ausführen     yarn install ✔ 
+  ausführen     yarn tsc ✔ 
+
+🥇  developer-portal erfolgreich erstellt
+
+
+ Alles erledigt! Nun können Sie:
+  Die App ausführen: cd developer-portal && yarn start
+  Den Softwarekatalog einrichten: https://backstage.io/docs/features/software-catalog/configuration
+  Authentifizierung hinzufügen: https://backstage.io/docs/auth/
+
+root@patrickaboudou-backstage-setup-cet:~/labs# cd developer-portal
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# ls -la
+insgesamt 1376
+drwx------    9 root root    4096 16. Feb 19:02 .
+drwxr-xr-x    3 root root    4096 16. Feb 19:01 ..
+-rw-r--r--    1 root root      74 16. Feb 19:01 app-config.local.yaml
+-rw-r--r--    1 root root    2232 16. Feb 19:01 app-config.production.yaml
+-rw-r--r--    1 root root    4216 16. Feb 19:01 app-config.yaml
+-rw-r--r--    1 root root      26 16. Feb 19:01 backstage.json
+-rw-r--r--    1 root root     357 16. Feb 19:01 catalog-info.yaml
+drwxr-xr-x    3 root root    4096 16. Feb 19:02 dist-types
+-rw-r--r--    1 root root     113 16. Feb 19:01 .dockerignore
+-rw-r--r--    1 root root      21 16. Feb 19:01 .eslintignore
+-rw-r--r--    1 root root      36 16. Feb 19:01 .eslintrc.js
+drwxr-xr-x    3 root root    4096 16. Feb 19:01 examples
+drwxr-xr-x    8 root root    4096 16. Feb 19:01 .git
+-rw-r--r--    1 root root     685 16. Feb 19:01 .gitignore
+drwxr-xr-x 1705 root root   69632 16. Feb 19:02 node_modules
+-rw-r--r--    1 root root    1552 16. Feb 19:02 package.json
+drwxr-xr-x    4 root root    4096 16. Feb 19:01 packages
+-rw-r--r--    1 root root    1789 16. Feb 19:01 playwright.config.ts
+drwxr-xr-x    2 root root    4096 16. Feb 19:01 plugins
+-rw-r--r--    1 root root      33 16. Feb 19:01 .prettierignore
+-rw-r--r--    1 root root     152 16. Feb 19:01 README.md
+-rw-r--r--    1 root root     355 16. Feb 19:01 tsconfig.json
+drwxr-xr-x    3 root root    4096 16. Feb 19:02 .yarn
+-rw-r--r--    1 root root 1233417 16. Feb 19:02 yarn.lock
+-rw-r--r--    1 root root      66 16. Feb 19:01 .yarnrc.yml
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# hostname -I | awk '{print $1}'
+95.217.214.89
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# ^C
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# ^C
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# /root/labs/developer-portal/app-config.yaml
+-bash: /root/labs/developer-portal/app-config.yaml: Keine Berechtigung
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# nano /root/labs/developer-portal/app-config.yaml
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# yarn start
+Starte App, Backend
+Geladene Konfiguration von app-config.yaml
+<i> [webpack-dev-server] Projekt läuft unter:
+<i> [webpack-dev-server] In Ihrem Netzwerk (IPv4): http://95.217.214.89:3000/
+<i> [webpack-dev-server] Inhalte, die nicht von webpack stammen, werden aus dem Verzeichnis '/root/labs/developer-portal/packages/app/public' bereitgestellt
+<i> [webpack-dev-server] 404s werden auf '/index.html' zurückgreifen
+Rspack erfolgreich kompiliert
+Lade Konfiguration von MergedConfigSource{FileConfigSource{Pfad="/root/labs/developer-portal/app-config.yaml"}, FileConfigSource{Pfad="/root/labs/developer-portal/app-config.local.yaml"}, EnvConfigSource{Anzahl=0}}
+2026-02-16T19:14:39.276Z backstage info 1 neue Geheimnisse in der Konfiguration gefunden, die geschwärzt werden 
+2026-02-16T19:14:39.284Z rootHttpRouter info Lauscht auf :7007 
+2026-02-16T19:14:39.285Z backstage info Plugin-Initialisierung gestartet: 'app', 'auth', 'catalog', 'kubernetes', 'notifications', 'permission', 'proxy', 'scaffolder', 'search', 'signals', 'techdocs' typ="initialization"
+2026-02-16T19:14:39.381Z search warn Postgres-Suchmaschine wird nicht unterstützt, überspringe Registrierung von search-backend-module-pg 
+2026-02-16T19:14:39.812Z auth info Konfiguriere "database" als KeyStore-Anbieter 
+2026-02-16T19:14:39.812Z kubernetes warn Initialisierung des Kubernetes-Backends fehlgeschlagen: gültige Kubernetes-Konfiguration fehlt 
+2026-02-16T19:14:39.815Z signals info Signals-Manager abonniert Signals-Ereignisse subscriberId="signals-8f50c07f83a03491"
+2026-02-16T19:14:39.818Z techdocs info Erstelle lokalen Publisher für TechDocs 
+2026-02-16T19:14:39.832Z search info DefaultCatalogCollatorFactory Collator-Factory für Typ software-catalog hinzugefügt 
+2026-02-16T19:14:39.833Z search info DefaultTechDocsCollatorFactory Collator-Factory für Typ techdocs hinzugefügt 
+2026-02-16T19:14:39.999Z scaffolder info Starte Scaffolder mit den folgenden aktivierten Aktionen notification:send, github:actions:dispatch, github:autolinks:create, github:deployKey:create, github:environment:create, github:issues:label, github:issues:create, github:repo:create, github:repo:push, github:webhook, publish:github, publish:github:pull-request, github:pages:enable, github:branch-protection:create, fetch:plain, fetch:plain:file, fetch:template, fetch:templa...................
 
 
 
 
 
+==========================================
 
+
+SSH-Verbindung hergestellt.
+Willkommen zu Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-90-generic x86_64)
+
+ * Dokumentation:  https://help.ubuntu.com
+ * Verwaltung:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ Systeminformationen Stand Montag, 16. Februar 2026, 19:32:49 UTC
+
+  Systemlast:  0.0               Prozesse:             164
+  Belegung von /:   6.8% von 74.79GB   Angemeldete Benutzer:       1
+  Arbeitsspeichernutzung: 50%            IPv4-Adresse für eth0: 95.217.214.89
+  Swap-Nutzung:   0%                    IPv6-Adresse für eth0: 2a01:4f9:c014:4b29::1
+
+
+Erweiterte Sicherheitswartung (ESM) für Anwendungen ist nicht aktiviert.
+
+51 Updates können sofort angewendet werden.
+32 dieser Updates sind normale Sicherheitsupdates.
+Um diese zusätzlichen Updates zu sehen, führen Sie aus: apt list --upgradable
+
+Aktivieren Sie ESM Apps, um zukünftige Sicherheitsupdates zu erhalten.
+Siehe https://ubuntu.com/esm oder führen Sie aus: sudo pro status
+
+
+*** System-Neustart erforderlich ***
+Letzte Anmeldung: Montag, 16. Februar 2026, 18:57:26 von 46.62.185.214
+Hinweis: Ihr Bash-Verlauf ist so konfiguriert, dass er nach jedem Befehl automatisch gespeichert wird, um die Aufgabenüberprüfung zu erleichtern.
+Hinweis: Ihr Bash-Verlauf ist so konfiguriert, dass er nach jedem Befehl automatisch gespeichert wird, um die Aufgabenüberprüfung zu erleichtern.
+root@patrickaboudou-backstage-setup-cet:~# cd /root/labs/developer-portal
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# yarn install
+➤ YN0000: · Yarn 4.4.1
+➤ YN0000: ┌ Auflösungsschritt
+➤ YN0000: └ Abgeschlossen in 0s 550ms
+➤ YN0000: ┌ Überprüfung nach der Auflösung
+➤ YN0060: │ @testing-library/react wird von Ihrem Projekt mit Version 14.3.1 (pc9eb9) aufgeführt, was nicht den Anforderungen von @backstage/test-utils (^16.0.0) entspricht.
+➤ YN0060: │ react wird von Ihrem Projekt mit Version 18.3.1 (pd98da) aufgeführt, was nicht den Anforderungen von @material-ui/core und anderen Abhängigkeiten entspricht (aber sie haben sich nicht überschneidende Bereiche!).
+➤ YN0060: │ react-dom wird von Ihrem Projekt mit Version 18.3.1 (pfa800) aufgeführt, was nicht den Anforderungen von @material-ui/core und anderen Abhängigkeiten entspricht (aber sie haben sich nicht überschneidende Bereiche!).
+➤ YN0002: │ app@workspace:packages/app bietet @types/react nicht an (pceee1), angefordert von @backstage/app-defaults und anderen Abhängigkeiten.
+➤ YN0002: │ app@workspace:packages/app bietet jest nicht an (p99cdc), angefordert von @backstage/cli.
+➤ YN0002: │ app@workspace:packages/app bietet webpack nicht an (p299d9), angefordert von @backstage/cli.
+➤ YN0002: │ backend@workspace:packages/backend bietet jest nicht an (p35ee3), angefordert von @backstage/cli.
+➤ YN0002: │ backend@workspace:packages/backend bietet webpack nicht an (p00f29), angefordert von @backstage/cli.
+➤ YN0002: │ root@workspace:. bietet webpack nicht an (p40c38), angefordert von @backstage/cli.
+➤ YN0086: │ Einige Peer-Abhängigkeiten werden von Ihrem Projekt nicht korrekt erfüllt; führen Sie yarn explain peer-requirements <hash> für Details aus, wobei <hash> der sechsbuchstabige p-präfixierte Code ist.
+➤ YN0086: │ Einige Peer-Abhängigkeiten werden von Abhängigkeiten nicht korrekt erfüllt; führen Sie yarn explain peer-requirements für Details aus.
+➤ YN0000: └ Abgeschlossen
+➤ YN0000: ┌ Abrufschritt
+➤ YN0000: └ Abgeschlossen in 2s 208ms
+➤ YN0000: ┌ Verknüpfungsschritt
+➤ YN0000: └ Abgeschlossen in 0s 916ms
+➤ YN0000: · Fertig mit Warnungen in 4s 96ms
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# yarn up @backstage/backend-defaults@0.14.0
+➤ YN0000: · Yarn 4.4.1
+➤ YN0000: ┌ Auflösungsschritt
+➤ YN0085: │ + @backstage/backend-defaults@npm:0.14.0
+➤ YN0085: │ - @backstage/backend-defaults@npm:0.14.1
+➤ YN0000: └ Abgeschlossen in 1s 104ms
+➤ YN0000: ┌ Überprüfung nach der Auflösung
+➤ YN0060: │ @testing-library/react wird von Ihrem Projekt mit Version 14.3.1 (pc9eb9) aufgeführt, was nicht den Anforderungen von @backstage/test-utils (^16.0.0) entspricht.
+➤ YN0060: │ react wird von Ihrem Projekt mit Version 18.3.1 (pd98da) aufgeführt, was nicht den Anforderungen von @material-ui/core und anderen Abhängigkeiten entspricht (aber sie haben sich nicht überschneidende Bereiche!).
+➤ YN0060: │ react-dom wird von Ihrem Projekt mit Version 18.3.1 (pfa800) aufgeführt, was nicht den Anforderungen von @material-ui/core und anderen Abhängigkeiten entspricht (aber sie haben sich nicht überschneidende Bereiche!).
+➤ YN0002: │ app@workspace:packages/app bietet @types/react nicht an (pceee1), angefordert von @backstage/app-defaults und anderen Abhängigkeiten.
+➤ YN0002: │ app@workspace:packages/app bietet jest nicht an (p99cdc), angefordert von @backstage/cli.
+➤ YN0002: │ app@workspace:packages/app bietet webpack nicht an (p299d9), angefordert von @backstage/cli.
+➤ YN0002: │ backend@workspace:packages/backend bietet jest nicht an (p35ee3), angefordert von @backstage/cli.
+➤ YN0002: │ backend@workspace:packages/backend bietet webpack nicht an (p00f29), angefordert von @backstage/cli.
+➤ YN0002: │ root@workspace:. bietet webpack nicht an (p40c38), angefordert von @backstage/cli.
+➤ YN0086: │ Einige Peer-Abhängigkeiten werden von Ihrem Projekt nicht korrekt erfüllt; führen Sie yarn explain peer-requirements <hash> für Details aus, wobei <hash> der sechsbuchstabige p-präfixierte Code ist.
+➤ YN0086: │ Einige Peer-Abhängigkeiten werden von Abhängigkeiten nicht korrekt erfüllt; führen Sie yarn explain peer-requirements für Details aus.
+➤ YN0000: └ Abgeschlossen
+➤ YN0000: ┌ Abrufschritt
+➤ YN0013: │ Ein Paket wurde zum Projekt hinzugefügt (+ 1.53 MiB).
+➤ YN0000: └ Abgeschlossen in 2s 187ms
+➤ YN0000: ┌ Verknüpfungsschritt
+➤ YN0000: └ Abgeschlossen in 1s 59ms
+➤ YN0000: · Fertig mit Warnungen in 4s 742ms
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# tee /etc/systemd/system/backstage.service << 'EOF'
+[Unit]
+Description=Backstage Developer Portal
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/labs/developer-portal
+ExecStart=/usr/bin/yarn start
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=backstage
+
+[Install]
+WantedBy=multi-user.target
+EOF
+[Unit]
+Description=Backstage Developer Portal
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/labs/developer-portal
+ExecStart=/usr/bin/yarn start
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=backstage
+
+[Install]
+WantedBy=multi-user.target
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# systemctl daemon-reload
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# systemctl enable backstage
+Erstellt symbolischen Link /etc/systemd/system/multi-user.target.wants/backstage.service → /etc/systemd/system/backstage.service.
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# systemctl start backstage
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# systemctl status backstage
+● backstage.service - Backstage Developer Portal
+     Geladen: geladen (/etc/systemd/system/backstage.service; aktiviert; voreingestellt: aktiviert)
+     Aktiv: aktiv (läuft) seit Montag 2026-02-16 19:40:01 UTC; vor 1min 17s
+   Haupt-PID: 8691 (node)
+      Aufgaben: 47 (Limit: 4531)
+     Speicher: 1.2G (Spitze: 1.4G)
+        CPU: 19.724s
+     CGroup: /system.slice/backstage.service
+             ├─8691 node /usr/bin/yarn start
+             ├─8698 /usr/local/bin/node /root/labs/developer-portal/.yarn/releases/yarn-4.4.1.cjs start
+             ├─8709 /usr/local/bin/node /root/labs/developer-portal/node_modules/@backstage/cli/bin/backstage->
+             └─8722 /usr/local/bin/node --enable-source-maps --require /root/labs/developer-portal/node_module>
+
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.593Z rootHttpRouter info>
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.625Z rootHttpRouter info>
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.627Z rootHttpRouter info>
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.628Z rootHttpRouter info>
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.648Z rootHttpRouter info>
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.649Z rootHttpRouter info>
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.651Z rootHttpRouter info>
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.656Z rootHttpRouter info>
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.657Z rootHttpRouter info>
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.658Z rootHttpRouter info>
+
+root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# journalctl -u backstage -f
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.593Z rootHttpRouter info [2026-02-16T19:40:53.593Z] "GET /api/scaffolder/v2/templates/default/template/example-nodejs-template/parameter-schema HTTP/1.1" 304 0 "http://95.217.214.89:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" typ="incomingRequest" datum="2026-02-16T19:40:53.593Z" methode="GET" url="/api/scaffolder/v2/templates/default/template/example-nodejs-template/parameter-schema" status=304 httpVersion="1.1" userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" referrer="http://95.217.214.89:3000/"
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.625Z rootHttpRouter info [2026-02-16T19:40:53.625Z] "GET /api/auth/v1/userinfo HTTP/1.1" 200 108 "-" "node" typ="incomingRequest" datum="2026-02-16T19:40:53.625Z" methode="GET" url="/api/auth/v1/userinfo" status=200 httpVersion="1.1" userAgent="node" contentLength=108
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.627Z rootHttpRouter info [2026-02-16T19:40:53.627Z] "POST /api/permission/authorize HTTP/1.1" 200 108 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" typ="incomingRequest" datum="2026-02-16T19:40:53.627Z" methode="POST" url="/api/permission/authorize" status=200 httpVersion="1.1" userAgent="node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" contentLength=108
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.628Z rootHttpRouter info [2026-02-16T19:40:53.628Z] "GET /api/catalog/entities/by-name/template/default/example-nodejs-template HTTP/1.1" 200 0 "http://95.217.214.89:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" typ="incomingRequest" datum="2026-02-16T19:40:53.628Z" methode="GET" url="/api/catalog/entities/by-name/template/default/example-nodejs-template" status=200 httpVersion="1.1" userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" referrer="http://95.217.214.89:3000/"
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.648Z rootHttpRouter info [2026-02-16T19:40:53.648Z] "GET /api/auth/v1/userinfo HTTP/1.1" 200 108 "-" "node" typ="incomingRequest" datum="2026-02-16T19:40:53.648Z" methode="GET" url="/api/auth/v1/userinfo" status=200 httpVersion="1.1" userAgent="node" contentLength=108
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.649Z rootHttpRouter info [2026-02-16T19:40:53.649Z] "POST /api/permission/authorize HTTP/1.1" 200 108 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" typ="incomingRequest" datum="2026-02-16T19:40:53.649Z" methode="POST" url="/api/permission/authorize" status=200 httpVersion="1.1" userAgent="node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" contentLength=108
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.651Z rootHttpRouter info [2026-02-16T19:40:53.651Z] "GET /api/catalog/entities/by-name/template/default/example-nodejs-template HTTP/1.1" 200 0 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" typ="incomingRequest" datum="2026-02-16T19:40:53.651Z" methode="GET" url="/api/catalog/entities/by-name/template/default/example-nodejs-template" status=200 httpVersion="1.1" userAgent="node-fetch/1.0 (+https://github.com/bitinn/node-fetch)"
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.656Z rootHttpRouter info [2026-02-16T19:40:53.656Z] "GET /api/auth/v1/userinfo HTTP/1.1" 200 108 "-" "node" typ="incomingRequest" datum="2026-02-16T19:40:53.656Z" methode="GET" url="/api/auth/v1/userinfo" status=200 httpVersion="1.1" userAgent="node" contentLength=108
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.657Z rootHttpRouter info [2026-02-16T19:40:53.657Z] "POST /api/permission/authorize HTTP/1.1" 200 197 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" typ="incomingRequest" datum="2026-02-16T19:40:53.657Z" methode="POST" url="/api/permission/authorize" status=200 httpVersion="1.1" userAgent="node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" contentLength=197
+Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.658Z rootHttpRouter info [2026-02-16T19:40:53.658Z] "GET /api/scaffolder/v2/templates/default/template/example-nodejs-template/parameter-schema HTTP/1.1" 304 0 "http://95.217.214.89:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" typ="incomingRequest" datum="2026-02-16T19:40:53.658Z" methode="GET" url="/api/scaffolder/v2/templates/default/template/example-nodejs-template/parameter-schema" status=304 httpVersion="1.1" userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" referrer="http://95.217.214.89:3000/"
+Feb 16 19:42:35 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:42:35.505Z rootHttpRouter info [2026-02-16T19:42:35.505Z] "GET /api/catalog/entities/by-name/user/development/guest HTTP/1.1" 404 671 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch
 
 
 
