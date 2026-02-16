@@ -1,5 +1,6 @@
 # Plan: Building Internal Developer Portals mit Backstage
 
+
 ## Inhaltsverzeichnis
 
 - [Aufgabe 1 – Grundlagen: Ziel und Nutzen eines Internal Developer Portals](#aufgabe-1--grundlagen-ziel-und-nutzen-eines-internal-developer-portals)
