@@ -1357,7 +1357,7 @@ spec:
 
 ### **© ALLE RECHTE VORBEHALTEN**
 
-Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Studiums an der **Technischen Hochschule Deggendorf (THD)** im Auftrag der **KUKA GmbH**  realisiert.
+Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Masterarbeit an der **Technischen Hochschule Deggendorf (THD)** im Auftrag der **KUKA GmbH**  realisiert.
 
 **Nutzungshinweise:**
 
@@ -1366,6 +1366,7 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Studiums an der **Te
 
 
 **Hinweis**: Dieser Abschnitt der Arbeit stellt nur einen Teil des Gesamtprojekts dar. Das vollständige Projekt ist Eigentum des Unternehmens und daher nicht öffentlich zugänglich. Es handelt sich um ein Projekt, bei dem lediglich ein Teil veröffentlicht wird.
+
 
 
 
