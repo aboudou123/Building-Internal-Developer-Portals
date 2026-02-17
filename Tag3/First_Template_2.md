@@ -1015,7 +1015,7 @@ PY
 
 ---
 
-# ✅ **Datei aussehen**
+**Datei aussehen**
 
 ---
 
@@ -1023,8 +1023,7 @@ PY
 ```yaml
 # host: 127.0.0.1
 ```
-
-### ✅ ändern zu
+**ändern zu**
 
 ```yaml
 host: 0.0.0.0
@@ -1035,23 +1034,20 @@ host: 0.0.0.0
 
 ---
 
-
-
 ```yaml
 origin: http://localhost:3000
 ```
 
-### ✅ ändern zu
+**ändern zu**
 
 ```yaml
 origin: http://95.217.214.89:3000
 ```
-
 ---
 
-# 🟢 **Finale korrekte Version **
+**Finale korrekte Version**
 
-So sollte es am Ende aussehen:
+aussehen am Ende :
 
 ```yaml
 backend:
@@ -1073,10 +1069,9 @@ backend:
 Im Projektordner:
 
 ```bash
-CTRL + C   # falls läuft stoppen
+CTRL + C  
 yarn dev
 ```
-
 oder
 
 ```bash
@@ -1103,13 +1098,11 @@ http://95.217.214.89:3000
 
 ---
 
-Hier ist der Text als saubere, professionelle **Markdown-Datei (.md)** auf Deutsch, mit korrekter Formatierung aller Code-Blöcke und Bildreferenzen.
-
 ---
 
 # **Anleitung: Rundgang durch die Projektstruktur**
 
-Bei laufendem **Backstage** erkunden wir die Projektstruktur, um zu verstehen, wie eine **Backstage**-Anwendung organisiert ist. Dieses Wissen ist für die Anpassung und Erweiterung Ihres Portals unerlässlich.
+Bei laufendem **Backstage** erkunden wir die Projektstruktur, um zu verstehen, wie eine **Backstage**-Anwendung organisiert ist
 
 ## **Schritt 1: Root-Projektstruktur erkunden**
 Beginnen Sie mit der Untersuchung der Hauptprojektverzeichnisse:
@@ -1130,6 +1123,7 @@ Die wichtigsten Komponenten sind:
 Dies folgt dem standardmäßigen **Backstage**-Projektaufbau, was es für andere **Backstage**-Entwickler vertraut macht.
 
 ## **Schritt 2: Die Monorepo-Architektur entdecken**
+
 Listen Sie das `packages`-Verzeichnis auf, um die Code-Organisation zu verstehen:
 
 ```bash
@@ -1143,9 +1137,10 @@ Das Verzeichnis `packages` enthält:
 - **`app`**: Die React-Frontend-Anwendung, mit der Benutzer interagieren
 - **`backend`**: Der **Node.js**-**API**-Dienst, der das Portal betreibt
 
-Diese Monorepo-Struktur ermöglicht es Teams, Frontend und Backend unabhängig voneinander zu entwickeln und dennoch synchron zu halten.
+Diese **Monorepo-Struktur** ermöglicht es Teams, Frontend und Backend unabhängig voneinander zu entwickeln und dennoch synchron zu halten.
 
 ## **Schritt 3: Struktur der Frontend-Anwendung untersuchen**
+
 Erkunden Sie, aus welchen Teilen die Benutzeroberfläche besteht:
 
 ```bash
@@ -1163,7 +1158,7 @@ Das Frontend umfasst:
 Das Verständnis dieser Struktur hilft Ihnen zu wissen, wo Sie benutzerdefinierte Seiten und Komponenten hinzufügen können.
 
 ## **Schritt 4: Aufbau des Backend-Dienstes untersuchen**
-Sehen Sie, wie der **API**-Dienst strukturiert ist:
+Um zu sehen , wie der **API**-Dienst strukturiert ist:
 
 ```bash
 ls -la /root/labs/developer-portal/packages/backend/src/
@@ -1180,7 +1175,7 @@ Das Backend enthält:
 Diese Organisation macht deutlich, wo neue **API**-Endpunkte und Integrationen hinzugefügt werden können.
 
 ## **Schritt 5: Kernkonfigurationsdateien prüfen**
-Betrachten Sie die Hauptkonfigurationsdatei, um zu verstehen, wie **Backstage** konfiguriert ist:
+Betrachtung der Hauptkonfigurationsdatei, um zu verstehen, wie **Backstage** konfiguriert ist:
 
 ```bash
 cat /root/labs/developer-portal/app-config.yaml
@@ -1194,8 +1189,7 @@ root@patrickaboudou-backstage-setup-cet:~# cat /root/labs/developer-portal/app-c
 
 ---
 
-Die Ausgabe des `cat`-Befehls wurde hier bewusst ausgelassen, da sie bereits in früheren Nachrichten vollständig enthalten war und in einer echten `.md`-Datei an dieser Stelle folgen würde.
-
+Die Ausgabe des *`cat`*-Befehls wurde hier bewusst ausgelassen, da sie bereits in früheren Nachrichten vollständig enthalten war und in einer echten `.md`-Datei an dieser Stelle folgen würde.
 
 ```
 app:
@@ -1203,6 +1197,7 @@ app:
   baseUrl: http://95.217.214.89:3000
 
 organization:
+# Hier name: wäre KUKA Ausburg
   name: My Company
 
 backend:
@@ -1316,14 +1311,16 @@ root@patrickaboudou-backstage-setup-cet:~#
 ```
 
 
-Also examine the catalog metadata for the Backstage app itself:
 
+Examinieren wir auch die Katalog-Metadaten für die Backstage-App selbst:
 
 cat /root/labs/developer-portal/catalog-info.yaml
 This file describes your Backstage instance as an entity in its own catalog.
 
-
+```
 -rw-r--r-- 1 root root 2213 Feb 16 19:01 index.ts
+```
+
 
 ```yaml
 root@patrickaboudou-backstage-setup-cet:~# cat /root/labs/developer-portal/app-config.yaml
@@ -1458,9 +1455,8 @@ root@patrickaboudou-backstage-setup-cet:~#
 
 ```
 
+Nun wissen wir, wie Backstage-Projekte organisiert sind und warum diese Struktur sowohl die Anpassung als auch die Wartbarkeit unterstützt!
 
-
-You now understand how Backstage projects are organized and why this structure supports both customization and maintainability!
 
 ### **© ALLE RECHTE VORBEHALTEN**
 
@@ -2301,6 +2297,7 @@ Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T1
 Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.657Z rootHttpRouter info [2026-02-16T19:40:53.657Z] "POST /api/permission/authorize HTTP/1.1" 200 197 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" typ="incomingRequest" datum="2026-02-16T19:40:53.657Z" methode="POST" url="/api/permission/authorize" status=200 httpVersion="1.1" userAgent="node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" contentLength=197
 Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.658Z rootHttpRouter info [2026-02-16T19:40:53.658Z] "GET /api/scaffolder/v2/templates/default/template/example-nodejs-template/parameter-schema HTTP/1.1" 304 0 "http://95.217.214.89:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" typ="incomingRequest" datum="2026-02-16T19:40:53.658Z" methode="GET" url="/api/scaffolder/v2/templates/default/template/example-nodejs-template/parameter-schema" status=304 httpVersion="1.1" userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" referrer="http://95.217.214.89:3000/"
 Feb 16 19:42:35 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:42:35.505Z rootHttpRouter info [2026-02-16T19:42:35.505Z] "GET /api/catalog/entities/by-name/user/development/guest HTTP/1.1" 404 671 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch
+
 
 
 
