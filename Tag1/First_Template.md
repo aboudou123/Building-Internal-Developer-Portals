@@ -1015,7 +1015,7 @@ PY
 
 ---
 
-# ✅ **Datei aussehen**
+**Datei aussehen**
 
 ---
 
@@ -1023,8 +1023,7 @@ PY
 ```yaml
 # host: 127.0.0.1
 ```
-
-### ✅ ändern zu
+###  ändern zu
 
 ```yaml
 host: 0.0.0.0
@@ -1041,15 +1040,14 @@ host: 0.0.0.0
 origin: http://localhost:3000
 ```
 
-### ✅ ändern zu
+###  ändern zu
 
 ```yaml
 origin: http://95.217.214.89:3000
 ```
-
 ---
 
-# 🟢 **Finale korrekte Version **
+**Finale korrekte Version**
 
 So sollte es am Ende aussehen:
 
@@ -1151,7 +1149,6 @@ ls -la /root/labs/developer-portal/packages/
 
 
 <img width="981" height="468" alt="image" src="https://github.com/user-attachments/assets/2a084b98-0a7a-47f7-b1af-13bca0126943" />
-
 
 
 
@@ -1369,6 +1366,7 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Studiums an der **Te
 
 
 **Hinweis**: Dieser Abschnitt der Arbeit stellt nur einen Teil des Gesamtprojekts dar. Das vollständige Projekt ist Eigentum des Unternehmens und daher nicht öffentlich zugänglich. Es handelt sich um ein Projekt, bei dem lediglich ein Teil veröffentlicht wird.
+
 
 
 
