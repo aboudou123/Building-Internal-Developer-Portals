@@ -1520,6 +1520,8 @@ Hinweis: Ihr Bash-Verlauf ist so konfiguriert, dass er nach jedem Befehl automat
 ```
 root@patrickaboudou-backstage-setup-cet:~# ls -la /root/labs/developer-portal/
 ```
+
+
 ```
 insgesamt 1376
 drwx------    9 root root    4096 16. Feb 19:14 .
@@ -1547,6 +1549,7 @@ drwxr-xr-x    2 root root    4096 16. Feb 19:01 plugins
 drwxr-xr-x    3 root root    4096 16. Feb 19:02 .yarn
 -rw-r--r--    1 root root 1233415 16. Feb 19:38 yarn.lock
 -rw-r--r--    1 root root      66 16. Feb 19:01 .yarnrc.yml
+
 root@patrickaboudou-backstage-setup-cet:~# ls -la /root/labs/developer-portal/packages/
 insgesamt 20
 drwxr-xr-x 4 root root 4096 16. Feb 19:01 .
@@ -1554,6 +1557,8 @@ drwx------ 9 root root 4096 16. Feb 19:14 ..
 drwxr-xr-x 5 root root 4096 16. Feb 19:01 app
 drwxr-xr-x 4 root root 4096 16. Feb 19:02 backend
 -rw-r--r-- 1 root root  405 16. Feb 19:01 README.md
+
+
 root@patrickaboudou-backstage-setup-cet:~# ls -la /root/labs/developer-portal/packages/app/src/
 insgesamt 32
 drwxr-xr-x 3 root root 4096 16. Feb 19:01 .
@@ -1564,6 +1569,8 @@ drwxr-xr-x 5 root root 4096 16. Feb 19:01 ..
 drwxr-xr-x 5 root root 4096 16. Feb 19:01 components
 -rw-r--r-- 1 root root  214 16. Feb 19:01 index.tsx
 -rw-r--r-- 1 root root   36 16. Feb 19:01 setupTests.ts
+
+
 root@patrickaboudou-backstage-setup-cet:~# ls -la /root/labs/developer-portal/packages/backend/src/
 insgesamt 12
 drwxr-xr-x 2 root root 4096 16. Feb 19:01 .
@@ -1572,6 +1579,9 @@ drwxr-xr-x 4 root root 4096 16. Feb 19:02 ..
 
 root@patrickaboudou-backstage-setup-cet:~# cat /root/labs/developer-portal/app-config.yaml
 ```
+
+*************************************
+*************************************
 
 ```
 app:
@@ -2329,6 +2339,7 @@ Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T1
 Feb 16 19:42:35 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:42:35.505Z rootHttpRouter info [2026-02-16T19:42:35.505Z] "GET /api/catalog/entities/by-name/user/development/guest HTTP/1.1" 404 671 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch
 
 ```
+
 
 
 
