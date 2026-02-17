@@ -1517,7 +1517,10 @@ Siehe https://ubuntu.com/esm oder führen Sie aus: sudo pro status
 Letzte Anmeldung: Montag, 16. Februar 2026, 19:32:55 von 46.62.185.214
 Hinweis: Ihr Bash-Verlauf ist so konfiguriert, dass er nach jedem Befehl automatisch gespeichert wird, um die Aufgabenüberprüfung zu erleichtern.
 Hinweis: Ihr Bash-Verlauf ist so konfiguriert, dass er nach jedem Befehl automatisch gespeichert wird, um die Aufgabenüberprüfung zu erleichtern.
+```
 root@patrickaboudou-backstage-setup-cet:~# ls -la /root/labs/developer-portal/
+```
+```
 insgesamt 1376
 drwx------    9 root root    4096 16. Feb 19:14 .
 drwxr-xr-x    3 root root    4096 16. Feb 19:01 ..
@@ -2326,6 +2329,7 @@ Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T1
 Feb 16 19:42:35 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:42:35.505Z rootHttpRouter info [2026-02-16T19:42:35.505Z] "GET /api/catalog/entities/by-name/user/development/guest HTTP/1.1" 404 671 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch
 
 ```
+
 
 
 
