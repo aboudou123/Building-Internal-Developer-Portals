@@ -1574,7 +1574,6 @@ app:
   title: Scaffolded Backstage App
   baseUrl: http://95.217.214.89:3000
 
-
 organization:
   name: My Company
 
@@ -1676,16 +1675,15 @@ catalog:
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
     #   rules:
     #     - allow: [User, Group]
-
-kubernetes:
-
 ```
+kubernetes:
   # siehe https://backstage.io/docs/features/kubernetes/configuration für Kubernetes-Konfigurationsoptionen
 
 # siehe https://backstage.io/docs/permissions/getting-started für mehr Informationen über das Berechtigungsframework
 permission:
   # wenn dies auf `false` gesetzt wird, werden Berechtigungen deaktiviert
   enabled: true
+
 ```
   
 root@patrickaboudou-backstage-setup-cet:~# cat /root/labs/developer-portal/catalog-info.yaml
@@ -1982,7 +1980,7 @@ cat /root/labs/developer-portal/catalog-info.yaml
 
 
 
-
+```
 SSH-Verbindung hergestellt.
 Willkommen zu Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-90-generic x86_64)
 
@@ -2097,8 +2095,11 @@ Erstelle die App...
   Die App ausführen: cd developer-portal && yarn start
   Den Softwarekatalog einrichten: https://backstage.io/docs/features/software-catalog/configuration
   Authentifizierung hinzufügen: https://backstage.io/docs/auth/
-
+```
+```
 root@patrickaboudou-backstage-setup-cet:~/labs# cd developer-portal
+```
+```
 root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# ls -la
 insgesamt 1376
 drwx------    9 root root    4096 16. Feb 19:02 .
@@ -2154,13 +2155,14 @@ Lade Konfiguration von MergedConfigSource{FileConfigSource{Pfad="/root/labs/deve
 2026-02-16T19:14:39.833Z search info DefaultTechDocsCollatorFactory Collator-Factory für Typ techdocs hinzugefügt 
 2026-02-16T19:14:39.999Z scaffolder info Starte Scaffolder mit den folgenden aktivierten Aktionen notification:send, github:actions:dispatch, github:autolinks:create, github:deployKey:create, github:environment:create, github:issues:label, github:issues:create, github:repo:create, github:repo:push, github:webhook, publish:github, publish:github:pull-request, github:pages:enable, github:branch-protection:create, fetch:plain, fetch:plain:file, fetch:template, fetch:templa...................
 
+```
 
 
 
 
 ==========================================
 
-
+```
 SSH-Verbindung hergestellt.
 Willkommen zu Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-90-generic x86_64)
 
@@ -2239,6 +2241,8 @@ root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# yarn up @backst
 ➤ YN0000: └ Abgeschlossen in 1s 59ms
 ➤ YN0000: · Fertig mit Warnungen in 4s 742ms
 root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# tee /etc/systemd/system/backstage.service << 'EOF'
+```
+```
 [Unit]
 Description=Backstage Developer Portal
 After=network.target
@@ -2302,8 +2306,12 @@ Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T1
 Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.656Z rootHttpRouter info>
 Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.657Z rootHttpRouter info>
 Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.658Z rootHttpRouter info>
+```
+
 
 root@patrickaboudou-backstage-setup-cet:~/labs/developer-portal# journalctl -u backstage -f
+
+```
 Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.593Z rootHttpRouter info [2026-02-16T19:40:53.593Z] "GET /api/scaffolder/v2/templates/default/template/example-nodejs-template/parameter-schema HTTP/1.1" 304 0 "http://95.217.214.89:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" typ="incomingRequest" datum="2026-02-16T19:40:53.593Z" methode="GET" url="/api/scaffolder/v2/templates/default/template/example-nodejs-template/parameter-schema" status=304 httpVersion="1.1" userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" referrer="http://95.217.214.89:3000/"
 Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.625Z rootHttpRouter info [2026-02-16T19:40:53.625Z] "GET /api/auth/v1/userinfo HTTP/1.1" 200 108 "-" "node" typ="incomingRequest" datum="2026-02-16T19:40:53.625Z" methode="GET" url="/api/auth/v1/userinfo" status=200 httpVersion="1.1" userAgent="node" contentLength=108
 Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.627Z rootHttpRouter info [2026-02-16T19:40:53.627Z] "POST /api/permission/authorize HTTP/1.1" 200 108 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" typ="incomingRequest" datum="2026-02-16T19:40:53.627Z" methode="POST" url="/api/permission/authorize" status=200 httpVersion="1.1" userAgent="node-fetch/1.0 (+https://github.com/bitinn/node-fetch)" contentLength=108
@@ -2316,6 +2324,7 @@ Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T1
 Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:40:53.658Z rootHttpRouter info [2026-02-16T19:40:53.658Z] "GET /api/scaffolder/v2/templates/default/template/example-nodejs-template/parameter-schema HTTP/1.1" 304 0 "http://95.217.214.89:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" typ="incomingRequest" datum="2026-02-16T19:40:53.658Z" methode="GET" url="/api/scaffolder/v2/templates/default/template/example-nodejs-template/parameter-schema" status=304 httpVersion="1.1" userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" referrer="http://95.217.214.89:3000/"
 Feb 16 19:42:35 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:42:35.505Z rootHttpRouter info [2026-02-16T19:42:35.505Z] "GET /api/catalog/entities/by-name/user/development/guest HTTP/1.1" 404 671 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch
 
+```
 
 
 
