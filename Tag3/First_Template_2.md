@@ -1484,7 +1484,7 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Studiums an der **Te
 
 ---
 
-```text
+```
 SSH-Verbindung hergestellt.
 Willkommen zu Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-90-generic x86_64)
 
@@ -1499,7 +1499,8 @@ Willkommen zu Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-90-generic x86_64)
   Arbeitsspeichernutzung: 49%           IPv4-Adresse für eth0: 95.217.214.89
   Swap-Nutzung:   0%                    IPv6-Adresse für eth0: 2a01:4f9:c014:4b29::1
 
-
+```
+```
 Erweiterte Sicherheitswartung (ESM) für Anwendungen ist nicht aktiviert.
 
 51 Updates können sofort angewendet werden.
@@ -1508,7 +1509,7 @@ Um diese zusätzlichen Updates zu sehen, führen Sie aus: apt list --upgradable
 
 Aktivieren Sie ESM Apps, um zukünftige Sicherheitsupdates zu erhalten.
 Siehe https://ubuntu.com/esm oder führen Sie aus: sudo pro status
-
+```
 
 *** System-Neustart erforderlich ***
 
@@ -2325,6 +2326,7 @@ Feb 16 19:40:53 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T1
 Feb 16 19:42:35 patrickaboudou-backstage-setup-cet backstage[8722]: 2026-02-16T19:42:35.505Z rootHttpRouter info [2026-02-16T19:42:35.505Z] "GET /api/catalog/entities/by-name/user/development/guest HTTP/1.1" 404 671 "-" "node-fetch/1.0 (+https://github.com/bitinn/node-fetch
 
 ```
+
 
 
 
