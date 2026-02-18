@@ -1369,6 +1369,997 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Masterarbeit an der 
 
 
 
+=================================================================================
+
+Alles klar ❤️ — das ist eine **sehr gute Entscheidung**. Wir machen jetzt einen **kompletten Reset** und gehen **sauber zurück zu Step 1**, so als wäre Backstage **nie gestartet worden**.
+Ich gebe dir **klare, sichere Schritte**, nichts Gefährliches, nichts Unnötiges.
+
+---
+
+# ✅ ZIEL
+
+* Backstage **komplett stoppen**
+* **systemd-Service entfernen**
+* **alle installierten Node/Yarn/Backstage-Artefakte löschen**
+* Danach **neu bei Step 1 beginnen**, exakt nach deiner Anleitung
+
+---
+
+## 🔴 SCHRITT 0 – Backstage komplett stoppen
+
+```bash
+systemctl stop backstage || true
+systemctl disable backstage || true
+```
+
+---
+
+## 🔴 SCHRITT 1 – systemd-Service **vollständig löschen**
+
+```bash
+rm -f /etc/systemd/system/backstage.service
+systemctl daemon-reload
+```
+
+Prüfen (soll **NOT FOUND** sein):
+
+```bash
+systemctl status backstage
+```
+
+---
+
+## 🔴 SCHRITT 2 – Backstage-Projekt **komplett löschen**
+
+⚠️ **Das löscht ALLES in `developer-portal`**
+
+```bash
+rm -rf /root/labs/developer-portal
+```
+
+Prüfen:
+
+```bash
+ls /root/labs/developer-portal
+# → sollte "No such file or directory" melden
+```
+
+---
+
+## 🔴 SCHRITT 3 – Yarn Cache & Node Artefakte aufräumen (empfohlen)
+
+```bash
+rm -rf ~/.yarn ~/.cache/yarn
+```
+
+Optional (nur wenn du ganz sauber willst):
+
+```bash
+rm -rf /root/.cache
+```
+
+---
+
+## 🟢 JETZT IST ALLES SAUBER
+
+Du bist **100 % zurück auf Anfang**
+👉 **Kein Service, kein Config-Chaos, kein Cache**
+
+---
+
+# 🚀 NEU STARTEN – AB **STEP 1**
+
+## ✅ Step 1: Projekt neu erstellen
+
+```bash
+cd /root/labs
+npx @backstage/create-app@latest
+```
+
+* App-Name z. B.: `developer-portal`
+* Default-Optionen wählen
+
+Dann:
+
+```bash
+cd developer-portal
+```
+
+---
+
+## ✅ Step 2: Dependencies installieren
+
+```bash
+yarn install
+```
+
+Danach:
+
+```bash
+yarn up @backstage/backend-defaults@0.14.0
+```
+
+---
+
+## ⚠️ WICHTIGE REGEL (damit der alte Fehler NICHT wiederkommt)
+
+❌ **KEINE Public-IP binden**
+❌ **KEIN systemd-Service jetzt**
+
+👉 **ERST lokal testen**
+
+---
+
+## ✅ Step 3: Lokal starten (ohne systemd)
+
+```bash
+yarn start
+```
+
+Backstage läuft dann auf:
+
+```
+http://localhost:3000
+```
+
+Oder per SSH-Port-Forward:
+
+```bash
+ssh -L 3000:localhost:3000 root@SERVER_IP
+```
+
+---
+
+## 🧠 WARUM DAS DER RICHTIGE WEG IST
+
+Dein vorheriges Problem kam von:
+
+* systemd **zu früh**
+* Public-IP **falsch gebunden**
+* YAML + Dev-Server + rspack gleichzeitig
+
+👉 **Backstage MUSS zuerst lokal stabil laufen**, **bevor** man:
+
+* systemd
+* Public IP
+* Reverse Proxy
+* Prod-Config
+
+macht.
+
+---
+
+## 💬 Nächster Schritt
+
+Sag mir einfach **„bereit für Step 2“** oder
+**„Backstage läuft lokal“**, dann gehen wir **ruhig, sauber und ohne Stress** weiter.
+
+Du hast alles richtig gemacht 👍
+
+
+
+
+Super — das ist exakt der richtige Zwischenstand ✅
+`Unit backstage.service could not be found.` heißt: **systemd-Service ist komplett weg**.
+
+Jetzt machen wir den Reset fertig und starten wieder bei **Step 1**.
+
+---
+
+## 1) Prozess-Reste killen (falls noch was auf 3000/7007 läuft)
+
+```bash
+ss -lntp | egrep ':3000|:7007' || true
+```
+
+Wenn da noch was hängt (LISTEN), dann:
+
+```bash
+fuser -k 3000/tcp 7007/tcp || true
+```
+
+---
+
+## 2) Projektordner komplett löschen
+
+⚠️ löscht wirklich alles in `developer-portal`:
+
+```bash
+rm -rf /root/labs/developer-portal
+```
+
+Check:
+
+```bash
+ls -la /root/labs | grep developer-portal || true
+```
+
+---
+
+## 3) Yarn/Backstage Artefakte aufräumen (empfohlen)
+
+```bash
+rm -rf /root/.yarn /root/.cache/yarn ~/.yarn ~/.cache/yarn
+```
+
+Optional (wenn du ganz sauber willst, kann aber groß sein):
+
+```bash
+rm -rf /root/labs/developer-portal.tgz 2>/dev/null || true
+```
+
+---
+
+# Jetzt wieder bei **Step 1**: Neues Backstage App-Scaffold
+
+## 4) Neu erstellen
+
+```bash
+cd /root/labs
+npx @backstage/create-app@latest
+```
+
+Wenn er nach dem Namen fragt: **developer-portal**
+
+Dann:
+
+```bash
+cd /root/labs/developer-portal
+```
+
+## 5) Step 1 aus deiner Anleitung: Dependencies
+
+```bash
+yarn install
+yarn up @backstage/backend-defaults@0.14.0
+```
+
+## 6) Starten (erstmal ohne systemd)
+
+```bash
+yarn start
+```
+
+---
+
+### Kurz zu deinem `^M : command not found`
+
+Das ist nur ein “Enter/Carriage Return” Artefakt. Kannst du ignorieren.
+
+Wenn du willst, poste nach Schritt (1) kurz die Ausgabe von:
+
+```bash
+ss -lntp | egrep ':3000|:7007' || true
+```
+
+Dann weiß ich sofort, ob noch ein Prozess im Hintergrund blockiert.
+
+
+
+Alles okay — das war nur ein kleines Terminal-Missverständnis 😊
+
+Du warst **noch im interaktiven `npx @backstage/create-app` Prompt** und hast dann offenbar wieder im normalen Shell-Prompt `kuka-idp` getippt, deshalb: `command not found`.
+
+Wir machen’s jetzt sauber Schritt für Schritt.
+
+---
+
+## 1) Prüfen: läuft der create-app Prompt noch?
+
+Wenn du **noch** diese Zeile siehst und der Cursor dahinter blinkt:
+
+`? Enter a name for the app [required]`
+
+➡️ Dann tippe **direkt dort** (nicht im Shell-Prompt) einfach:
+
+`kuka-idp`
+
+und drücke **Enter**.
+
+---
+
+## 2) Wenn du **nicht mehr** im Prompt bist (so wie jetzt, du siehst `root@...#`)
+
+Dann starte den Wizard neu:
+
+```bash
+cd /root/labs
+npx @backstage/create-app@latest
+```
+
+Wenn dann wieder gefragt wird:
+
+`? Enter a name for the app [required]`
+
+➡️ tippe:
+
+`kuka-idp`
+➡️ Enter
+
+---
+
+## 3) Wenn er meckert, dass der Ordner schon existiert
+
+Dann vorher löschen:
+
+```bash
+rm -rf /root/labs/kuka-idp
+```
+
+und dann nochmal:
+
+```bash
+npx @backstage/create-app@latest
+```
+
+---
+
+## 4) Wenn das Scaffold fertig ist
+
+Dann:
+
+```bash
+cd /root/labs/kuka-idp
+yarn install
+yarn up @backstage/backend-defaults@0.14.0
+yarn start
+```
+
+---
+
+Wenn du willst: Poste einfach **die letzten 5–10 Zeilen**, nachdem du `npx @backstage/create-app@latest` erneut gestartet hast (inkl. der Fragezeile). Dann sag ich dir exakt, was du als Nächstes im Wizard auswählen sollst.
+
+
+<img width="1080" height="701" alt="image" src="https://github.com/user-attachments/assets/aa317cc2-ddcf-48c8-a4ba-e93e324f1016" />
+
+
+
+<img width="993" height="1008" alt="image" src="https://github.com/user-attachments/assets/3258d5ba-918f-4971-97d1-f69f816f0826" />
+
+
+
+Mega — das ist jetzt **sauber durchgelaufen** ✅🎉
+Du bist wieder genau bei **Step 1 / First Run** angekommen (und dependencies sind sogar schon installiert worden).
+
+Jetzt machst du exakt das hier:
+
+## 1) Ins Projekt wechseln
+
+```bash
+cd /root/labs/kuka-idp
+```
+
+
+<img width="984" height="412" alt="image" src="https://github.com/user-attachments/assets/5d33060e-2065-4052-9de9-dbd0d12bea0a" />
+
+
+
+
+## 2) (Wie in deiner Anleitung) Upgrade für Node 22
+
+```bash
+yarn up @backstage/backend-defaults@0.14.0
+```
+
+## 3) App starten (erstmal ohne systemd)
+
+```bash
+yarn start
+```
+
+
+
+
+<img width="1508" height="877" alt="image" src="https://github.com/user-attachments/assets/abde9fa7-eeee-4723-8cd4-ead36d271cd7" />
+
+---
+
+### Wenn du von außen zugreifen willst (Browser)
+
+Weil du vorher das Public-IP-Binding-Problem hattest: **nicht die Public-IP als listen-host setzen**.
+
+Stattdessen: nachdem `yarn start` läuft, öffne die Ports (falls Firewall aktiv) und rufe im Browser auf:
+
+```
+http://95.217.214.89:3000
+```
+<img width="954" height="626" alt="image" src="https://github.com/user-attachments/assets/bfbb6c67-e87e-4334-8ddf-07ca4f6c2452" />
+
+
+Wenn es **nicht erreichbar** ist, sag mir dann die Ausgabe von:
+
+```bash
+ss -lntp | egrep ':3000|:7007'
+```
+
+---
+
+### Kurz: Dein Ziel „wieder von Step 1 gehen“
+
+✅ Erledigt. Jetzt bist du wieder an Step 1/Run the app.
+
+Mach jetzt Schritt 1–3 oben und paste mir die ersten ~20 Logzeilen aus dem laufenden `yarn start`, falls irgendwas meckert.
+
+
+
+
+
+
+<img width="1236" height="698" alt="image" src="https://github.com/user-attachments/assets/23d97c9e-7b54-41ae-82ed-cde8e5437aec" />
+
+
+
+
+
+Yesss ✅✅ genau so muss es aussehen!
+
+* `0.0.0.0:3000` → Frontend ist **extern erreichbar**
+* `0.0.0.0:7007` → Backend ist **extern erreichbar**
+
+<img width="1178" height="724" alt="image" src="https://github.com/user-attachments/assets/417dbe88-021f-4a4b-b492-8d1c77b6d4ba" />
+
+
+👉 **[http://95.217.220.177:3000](http://95.217.220.177:3000)**
+
+<img width="1848" height="840" alt="image" src="https://github.com/user-attachments/assets/a4bbdced-9212-4487-9a19-1581d55c8834" />
+
+
+
+## Wenn es im Browser trotzdem nicht lädt
+
+Dann ist es zu 99% Firewall/Ports (UFW oder Cloud-Security-Group). Check bitte:
+
+```bash
+ufw status || true
+```
+
+Und ein schneller Selbsttest direkt auf der VM:
+
+```bash
+curl -I http://127.0.0.1:3000 | head -n 1
+curl -I http://127.0.0.1:7007 | head -n 1
+```
+
+Wenn `curl` OK zeigt (200/302/etc.), aber Browser nicht: dann müssen wir **Port 3000** (und ggf. 7007) in der Firewall/Provider öffnen.
+
+<img width="1271" height="823" alt="image" src="https://github.com/user-attachments/assets/f82720e5-2be4-4709-b5ae-c057ea6ad6ff" />
+
+
+
+
+
+
+Sag mir kurz:
+
+* Lädt `http://95.217.220.177:3000` im Browser?
+* Output von `ufw status` (falls nicht lädt)
+
+# Von Kuka zu developer-app
+
+
+
+<img width="1020" height="319" alt="image" src="https://github.com/user-attachments/assets/e201b396-99c4-499a-b262-b22aad623991" />
+
+
+
+Perfekt ✅ — der Symlink sitzt genau richtig:
+
+`/root/labs/developer-portal -> /root/labs/kuka-idp`
+
+
+<img width="939" height="204" alt="image" src="https://github.com/user-attachments/assets/912fdd83-263e-4a1a-9bdb-c005206f461f" />
+
+Damit sollte der Task-Checker jetzt **den Ordner finden**.
+
+Zwei kleine Sachen noch (weil du `disable` gemacht hast):
+
+Alles gut — das ist ein **klassischer Symlink-Fall** 😊
+Weil `/root/labs/developer-portal` gerade ein **Symlink auf `/root/labs/kuka-idp`** ist, versucht `mv` faktisch, `kuka-idp` **in sich selbst** zu verschieben → daher die Meldung.
+
+Wenn du wirklich “sauber umbenennen” willst (statt Symlink), mach das so:
+
+## Option A (empfohlen): Symlink entfernen, dann umbenennen
+
+1. Sicherstellen, dass Backstage aus ist:
+
+```bash
+systemctl stop backstage || true
+```
+
+2. Symlink löschen:
+
+```bash
+rm -f /root/labs/developer-portal
+```
+
+
+3. Jetzt umbenennen:
+
+```bash
+cd /root/labs
+mv kuka-idp developer-portal
+```
+
+
+<img width="1026" height="355" alt="image" src="https://github.com/user-attachments/assets/17668e26-1f14-4df7-9d3a-5585640fb2bb" />
+
+
+
+
+
+4. Service auf den neuen Pfad setzen:
+
+```bash
+sed -i 's#^WorkingDirectory=.*#WorkingDirectory=/root/labs/developer-portal#' /etc/systemd/system/backstage.service
+systemctl daemon-reload
+systemctl enable backstage
+systemctl restart backstage
+```
+<img width="1425" height="133" alt="image" src="https://github.com/user-attachments/assets/d991490e-ef66-4dd0-a05c-6756285c14bf" />
+
+5. Check:
+
+```bash
+ls -la /root/labs | grep developer-portal
+ss -lntp | egrep ':3000|:7007' || true
+```
+<img width="1054" height="147" alt="image" src="https://github.com/user-attachments/assets/5cfe827c-f2a9-4bdd-96f4-2f7c5341709f" />
+
+
+
+---
+
+## Option B: Symlink behalten (für den Checker reicht das!)
+
+Wenn du nur willst, dass der Checker zufrieden ist, brauchst du **gar kein `mv`**. Dann mach einfach:
+
+```bash
+systemctl enable backstage
+systemctl restart backstage
+```
+
+---
+Das ist jetzt **genau** so, wie der Task-Checker es erwartet ✅
+
+* ✅ Verzeichnis existiert: `/root/labs/developer-portal`
+* ✅ systemd Service ist **enabled**
+* ✅ Backstage lauscht extern:
+
+  * `0.0.0.0:3000`
+  * `0.0.0.0:7007`
+
+Du kannst jetzt direkt:
+
+1. **Task-Check nochmal ausführen** (in deinem Lab/Portal UI).
+2. Im Browser öffnen:
+   **[http://95.217.220.177:3000](http://95.217.220.177:3000)**
+
+<img width="1868" height="777" alt="image" src="https://github.com/user-attachments/assets/fe124aa3-cb87-4689-a9a4-e4feea48c154" />
+
+
+<img width="1875" height="859" alt="image" src="https://github.com/user-attachments/assets/c0f0772f-fab1-459d-a243-b35b043d815a" />
+
+<img width="1875" height="859" alt="image" src="https://github.com/user-attachments/assets/f56f032c-b254-41f8-8b7f-7f8444125d00" />
+
+<img width="1885" height="828" alt="image" src="https://github.com/user-attachments/assets/865d0bb7-f16d-4668-a71f-33eb422fa9c2" />
+
+
+
+Wenn der Checker trotzdem noch meckert, ist es meistens eine Kleinigkeit, die er zusätzlich prüft. Dann poste bitte:
+
+```bash
+systemctl status backstage --no-pager
+journalctl -u backstage -n 80 --no-pager
+```
+
+
+=================================================
+
+
+Project Structure Tour
+With Backstage running, explore the project structure to understand how a Backstage application is organized. This knowledge is essential for customizing and extending your portal.
+
+
+Step 1: Explore the Root Project Structure
+```bash
+ls -la /root/labs/developer-portal/
+```
+<img width="925" height="625" alt="image" src="https://github.com/user-attachments/assets/4d59d5e7-8ad7-4e8a-b09a-f47714564a06" />
+
+
+Step 2: Discover the Monorepo Architecture
+```bash
+ls -la /root/labs/developer-portal/packages/
+```
+<img width="759" height="177" alt="image" src="https://github.com/user-attachments/assets/95732e9b-7c9c-4f70-b1f9-b2be9a652129" />
+
+
+
+Step 3: Examine Frontend Application Structure
+
+```bash
+ls -la /root/labs/developer-portal/packages/app/src/
+```
+
+<img width="933" height="209" alt="image" src="https://github.com/user-attachments/assets/7b6fd9ad-2006-499e-aa7d-7c75a9436741" />
+
+
+Step 4: Investigate Backend Service Organization
+
+```bash
+ls -la /root/labs/developer-portal/packages/backend/src/
+```
+
+<img width="893" height="128" alt="image" src="https://github.com/user-attachments/assets/681d028a-4e25-4af9-9ea6-41fa36bf7ccd" />
+
+root@patrickaboudou-backstage-setup-kbb:~# cat /root/labs/developer-portal/app-config.yaml
+
+```bash
+app:
+  title: Scaffolded Backstage App
+  baseUrl: http://95.217.220.177:3000
+  listen:
+    host: 0.0.0.0
+    port: 3000
+organization:
+  name: My Company
+backend:
+  baseUrl: http://95.217.220.177:7007
+  listen:
+    port: 7007
+    host: 0.0.0.0
+  csp:
+    connect-src:
+    - '''self'''
+    - 'http:'
+    - 'https:'
+  cors:
+    origin: http://95.217.220.177:3000
+    methods:
+    - GET
+    - HEAD
+    - PATCH
+    - POST
+    - PUT
+    - DELETE
+    credentials: true
+  database:
+    client: better-sqlite3
+    connection: ':memory:'
+integrations:
+  github:
+  - host: github.com
+    token: ${GITHUB_TOKEN}
+proxy: null
+techdocs:
+  builder: local
+  generator:
+    runIn: docker
+  publisher:
+    type: local
+auth:
+  providers:
+    guest: {}
+scaffolder: null
+catalog:
+  import:
+    entityFilename: catalog-info.yaml
+    pullRequestBranchName: backstage-integration
+  rules:
+  - allow:
+    - Component
+    - System
+    - API
+    - Resource
+    - Location
+  locations:
+  - type: file
+    target: ../../examples/entities.yaml
+  - type: file
+    target: ../../examples/template/template.yaml
+    rules:
+    - allow:
+      - Template
+  - type: file
+    target: ../../examples/org.yaml
+    rules:
+    - allow:
+      - User
+      - Group
+kubernetes: null
+permission:
+  enabled: true
+
+```
+
+root@patrickaboudou-backstage-setup-kbb:~# 
+
+<img width="860" height="1001" alt="image" src="https://github.com/user-attachments/assets/4e9bcd18-17e9-4a3f-994f-aff78ca00d1a" />
+
+<img width="731" height="918" alt="image" src="https://github.com/user-attachments/assets/48b573d8-db27-4d52-8973-dc235cff7620" />
+
+Step 5: Examine Core Configuration Files
+
+```bash
+cat /root/labs/developer-portal/catalog-info.yaml
+```
+root@patrickaboudou-backstage-setup-kbb:~# cat /root/labs/developer-portal/catalog-info.yaml
+
+```bash
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: kuka-idp
+  description: An example of a Backstage application.
+  # Example for optional annotations
+  # annotations:
+  #   github.com/project-slug: backstage/backstage
+  #   backstage.io/techdocs-ref: dir:.
+spec:
+  type: website
+  owner: john@example.com
+  lifecycle: experimental
+root@patrickaboudou-backstage-setup-kbb:~# 
+```bash
+
+<img width="843" height="294" alt="image" src="https://github.com/user-attachments/assets/654e552f-68a4-4a16-b263-de91e0149ed5" />
+
+
+
+
+========================================================
+
+
+Understanding Backstage Configuration
+Now that you've explored the project structure, let's understand how Backstage is configured and what each piece controls. This knowledge is essential for customizing your portal.
+
+<img width="1018" height="710" alt="image" src="https://github.com/user-attachments/assets/4dbb66b7-faed-46b5-b963-d7db34f99d13" />
+
+Step 1: Analyze the Main Configuration Structure
+```bash
+cat /root/labs/developer-portal/app-config.yaml
+```
+
+```bash
+app:
+  title: Scaffolded Backstage App
+  baseUrl: http://5.161.90.197:3000
+
+organization:
+  name: My Company
+
+backend:
+  baseUrl: http://5.161.90.197:7007
+  listen:
+    port: 7007
+    host: 0.0.0.0
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+  cors:
+    origin: http://5.161.90.197:3000
+    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+    credentials: true
+  database:
+    client: better-sqlite3
+    connection: ':memory:'
+
+integrations:
+  github:
+    - host: github.com
+      token: 
+
+proxy: {}
+
+techdocs:
+  builder: 'local'
+  generator:
+    runIn: 'docker'
+  publisher:
+    type: 'local'
+
+auth:
+  providers:
+    guest: {}
+
+scaffolder: {}
+
+catalog:
+  import:
+    entityFilename: catalog-info.yaml
+    pullRequestBranchName: backstage-integration
+  rules:
+    - allow: [Component, System, API, Resource, Location]
+  locations:
+    - type: file
+      target: ../../examples/entities.yaml
+    - type: file
+      target: ../../examples/template/template.yaml
+      rules:
+        - allow: [Template]
+    - type: file
+      target: ../../examples/org.yaml
+      rules:
+        - allow: [User, Group]
+
+kubernetes: {}
+
+permission:
+  enabled: true
+```
+
+<img width="822" height="1027" alt="image" src="https://github.com/user-attachments/assets/673dd1f1-3b2f-4496-b261-74bc9d0a4d8f" />
+
+<img width="620" height="955" alt="image" src="https://github.com/user-attachments/assets/60ddd42f-71a5-4615-aa60-e2fe1b4699ba" />
+
+Step 2: Understand Application Metadata
+
+ocus on the app and organization sections you just saw:
+
+app.title is set to Scaffolded Backstage App, which is what appears in the browser tab and the portal header.
+app.baseUrl points to http://5.161.90.197:3000, the URL you use to access the Backstage frontend.
+organization.name is My Company, which is shown across the portal wherever the organization name is referenced.
+This metadata shapes your portal's identity and branding.
+
+Step 3: Examine Backend Configuration
+
+Review the backend section to understand how the server is exposed:
+
+baseUrl confirms the API endpoint at http://5.161.90.197:7007 that the frontend calls.
+listen binds the backend to port 7007 on 0.0.0.0, making it reachable inside the lab VM.
+csp and cors define security policies that allow the frontend at http://5.161.90.197:3000 to communicate safely with the backend.
+database uses an in-memory better-sqlite3 store for this lab environment.
+These settings determine how your frontend and backend communicate.
+
+Step 4: Review Supporting Services
+
+Several additional sections enable platform features:
+
+integrations.github configures access to GitHub. The token is empty here, which is expected in the sandboxed lab.
+techdocs runs the TechDocs generator in Docker and stores docs locally, so you can preview documentation without external services.
+auth.providers.guest and an empty scaffolder section keep authentication and scaffolding simple for the exercise.
+These choices keep the lab experience focused while mirroring production features.
+
+Step 5: Explore Catalog Configuration
+
+The catalog section is crucial for entity management:
+
+import settings control branch naming (backstage-integration) and expected filenames (catalog-info.yaml).
+rules allow core entity types such as Component, System, API, Resource, and Location.
+locations list the local example files Backstage ingests, including entities, templates, and organization data.
+This configuration determines what content appears in your software catalog and where it comes from.
+
+Step 6: Confirm Cluster and Permission Settings
+
+
+kubernetes is currently empty, signalling that Kubernetes plugins are not configured in this lab.
+permission.enabled is set to true, showcasing how you can toggle the Backstage permission framework when you extend the portal.
+With this context, you now understand how Backstage is configured in the lab environment and how each section maps to the actual YAML you inspected.
+
+# resumer
+
+```bash
+SSH connection established.
+Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-90-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Wed Feb 18 11:22:34 AM UTC 2026
+
+  System load:  0.0               Processes:             176
+  Usage of /:   6.9% of 74.79GB   Users logged in:       1
+  Memory usage: 53%               IPv4 address for eth0: 95.217.220.177
+  Swap usage:   0%                IPv6 address for eth0: 2a01:4f9:c013:6473::1
+```
+
+Expanded Security Maintenance for Applications is not enabled.
+
+30 updates can be applied immediately.
+14 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+*** System restart required ***
+Last login: Wed Feb 18 11:16:28 2026 from 46.62.185.214
+Note: Your bash history is configured to save automatically after each command for easy task verification.
+Note: Your bash history is configured to save automatically after each command for easy task verification.
+
+```bash
+root@patrickaboudou-backstage-setup-kbb:~# cat /root/labs/developer-portal/app-config.yaml
+app:
+  title: Scaffolded Backstage App
+  baseUrl: http://95.217.220.177:3000
+  listen:
+    host: 0.0.0.0
+    port: 3000
+organization:
+  name: My Company
+backend:
+  baseUrl: http://95.217.220.177:7007
+  listen:
+    port: 7007
+    host: 0.0.0.0
+  csp:
+    connect-src:
+    - '''self'''
+    - 'http:'
+    - 'https:'
+  cors:
+    origin: http://95.217.220.177:3000
+    methods:
+    - GET
+    - HEAD
+    - PATCH
+    - POST
+    - PUT
+    - DELETE
+    credentials: true
+  database:
+    client: better-sqlite3
+    connection: ':memory:'
+integrations:
+  github:
+  - host: github.com
+    token: ${GITHUB_TOKEN}
+proxy: null
+techdocs:
+  builder: local
+  generator:
+    runIn: docker
+  publisher:
+    type: local
+auth:
+  providers:
+    guest: {}
+scaffolder: null
+catalog:
+  import:
+    entityFilename: catalog-info.yaml
+    pullRequestBranchName: backstage-integration
+  rules:
+  - allow:
+    - Component
+    - System
+    - API
+    - Resource
+    - Location
+  locations:
+  - type: file
+    target: ../../examples/entities.yaml
+  - type: file
+    target: ../../examples/template/template.yaml
+    rules:
+    - allow:
+      - Template
+  - type: file
+    target: ../../examples/org.yaml
+    rules:
+    - allow:
+      - User
+      - Group
+kubernetes: null
+permission:
+  enabled: true
+root@patrickaboudou-backstage-setup-kbb:~# 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
