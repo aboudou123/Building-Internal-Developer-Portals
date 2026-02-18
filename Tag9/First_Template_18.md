@@ -3235,7 +3235,242 @@ You've successfully created a production-ready Dockerfile following the official
 =================================================================
 
 
+
+---
+
+
+---
+
+## **1. GitHub Integration vorbereiten**
+
+
+<img width="767" height="638" alt="image" src="https://github.com/user-attachments/assets/5e42ece2-5111-4271-922c-e4d978b2088a" />
+
+<img width="840" height="633" alt="image" src="https://github.com/user-attachments/assets/5a00c3b9-c7e2-486e-91b9-5d76ba6553a5" />
+
+Backstage braucht ein **GitHub Token**, um auf die Organisation zuzugreifen.
+
+1. Erstelle ein **Personal Access Token** auf GitHub mit folgenden Berechtigungen:
+
+   * Für öffentliche Repos: `read:org`
+   * Für private Repos zusätzlich: `repo`
+
+2. Setze das Token als Environment Variable (im Server oder Docker):
+
+```bash
+export GITHUB_TOKEN=ghp_yourPersonalAccessTokenHere
+```
+
+3. Konfiguriere Backstage in `app-config.yaml` oder `app-config.production.yaml`:
+
+```yaml
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
+```
+
+---
+
+## **2. GitHub Catalog Backend Plugin installieren**
+
+Im Backend-Paket von Backstage:
+
+```bash
+cd /root/labs/developer-portal/packages/backend
+yarn add @backstage/plugin-catalog-backend-module-github@0.11.2
+```
+
+Überprüfe:
+
+```bash
+grep "@backstage/plugin-catalog-backend-module-github" package.json
+```
+
+Du solltest den Eintrag sehen, sonst lief die Installation nicht.
+
+---
+
+## **3. Discovery Provider konfigurieren**
+
+Backstage muss wissen, welche Organisation gecrawlt werden soll. In deinem Backend-Code (`packages/backend/src/plugins/catalog.ts`) fügst du hinzu:
+
+```ts
+import { GithubDiscoveryEntityProvider } from '@backstage/plugin-catalog-backend-module-github';
+
+const githubProvider = GithubDiscoveryEntityProvider.fromConfig(env.config, {
+  logger,
+  scheduler,
+});
+
+catalogBuilder.addEntityProvider(githubProvider);
+```
+
+* `env.config` liest die GitHub-Integration aus `app-config.yaml`.
+* `logger` und `scheduler` kommen aus dem Backend-Setup.
+* Jetzt kann Backstage automatisch alle Repos deiner Organisation nach `catalog-info.yaml` durchsuchen.
+
+---
+
+## **4. Testen**
+
+1. Starte den Backend-Container neu:
+
+```bash
+docker compose -f docker-compose.production.yml up -d backstage
+```
+
+2. Prüfe die Logs:
+
+```bash
+docker logs -f developer-portal-backstage-1
+```
+
+Du solltest Meldungen sehen wie:
+
+```
+Catalog discovery completed for github.com/<organization>
+Found N entities
+```
+
+---
+
+
+Perfekt! Du bist jetzt auf dem Punkt, an dem alles für die **automatische GitHub-Discovery** vorbereitet ist. Ich fasse es noch einmal klar zusammen und zeige, wie du es richtig einträgst:
+
+---
+
+## **1️⃣ GitHub Integration verstehen**
+
+In `app-config.yaml` hast du bereits:
+
+```yaml
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
+```
+
+**Bedeutung:**
+
+* `integrations.github`: Authentifizierung für GitHub-API.
+* `host: github.com`: Standard-GitHub. Bei GitHub Enterprise muss der Host angepasst werden.
+* `token: ${GITHUB_TOKEN}`: Platzhalter für dein Personal Access Token. Wird später in Task 4 gesetzt.
+
+---
+
+## **2️⃣ Discovery Provider konfigurieren**
+
+Automatisches Scannen der GitHub-Organisation:
+
+1. Öffne `app-config.yaml`.
+2. Gehe in den Block `catalog:` (nicht außerhalb!).
+3. Nach dem Abschnitt `locations:` füge **providers** hinzu – **gleiche Einrückung wie `locations:` (2 Leerzeichen)**:
+
+```yaml
+  providers:
+    github:
+      backstageProvider:
+        organization: 'backstage'
+        catalogPath: '/catalog-info.yaml'
+        filters:
+          branch: 'master'
+          repository: '.*'
+        schedule:
+          frequency:
+            minutes: 30
+          timeout:
+            minutes: 3
+```
+
+**Erklärung:**
+
+* `organization: 'backstage'` → scannt die gesamte Organisation **backstage**.
+* `catalogPath: '/catalog-info.yaml'` → Datei, die in jedem Repo gesucht wird.
+* `filters.branch: 'master'` → nur master-Branch scannen.
+* `filters.repository: '.*'` → Regex, alle Repos.
+* `schedule.frequency.minutes: 30` → alle 30 Minuten erneut scannen.
+* `schedule.timeout.minutes: 3` → maximal 3 Minuten pro Scan.
+
+---
+
+## **3️⃣ Vollständiger `catalog:`-Block nach der Änderung**
+
+```yaml
+catalog:
+  import:
+    entityFilename: catalog-info.yaml
+    pullRequestBranchName: backstage-integration
+  rules:
+  - allow:
+    - Component
+    - System
+    - API
+    - Resource
+    - Location
+  locations:
+  - type: file
+    target: ../../examples/entities.yaml
+  - type: file
+    target: ../../examples/template/template.yaml
+    rules:
+    - allow:
+      - Template
+  - type: file
+    target: ../../examples/org.yaml
+    rules:
+    - allow:
+      - User
+      - Group
+  providers:
+    github:
+      backstageProvider:
+        organization: 'backstage'
+        catalogPath: '/catalog-info.yaml'
+        filters:
+          branch: 'master'
+          repository: '.*'
+        schedule:
+          frequency:
+            minutes: 30
+          timeout:
+            minutes: 3
+```
+
+---
+
+## **4️⃣ Überprüfen**
+
+Im Terminal deines Projekt-Root:
+
+```bash
+cd /root/labs/developer-portal
+
+# GitHub Integration prüfen
+grep -A 3 "integrations:" app-config.yaml
+
+# Discovery Provider prüfen
+grep -A 12 "providers:" app-config.yaml
+```
+
+
+---
+
+
+
+---
+
+**fertigen `app-config.yaml` Ausschnitt** für die **Backstage Production-Version** erstellen,
+der **Integration + Discovery Provider + Secrets** sauber kombiniert.
+
+
+=======================================================================
+
 # Configuring for PostgreSQL
+
+=======================================================================
+
+
 
 <img width="959" height="673" alt="image" src="https://github.com/user-attachments/assets/f89ee58f-e8be-4ac6-b0b8-9ac57b2af34c" />
 
@@ -4883,6 +5118,7 @@ Du verstehst jetzt sowohl die Vorteile als auch die Einschränkungen dieses Ansa
 ---
 
 ---
+
 
 
 
