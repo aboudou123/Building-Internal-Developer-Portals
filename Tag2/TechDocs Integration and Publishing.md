@@ -192,4 +192,30 @@ jobs:
 * Versionierung durch Git
 
 ---
+# Zusätzliche Ressourcen für TechDocs
+
+## 1️⃣ MkDocs Benutzerhandbuch
+- **Link:** [MkDocs User Guide](https://www.mkdocs.org/user-guide/)
+- **Beschreibung:** Offizielles Handbuch für MkDocs.
+  - Installation & Einrichtung
+  - Projektstruktur (`mkdocs.yml`, `docs/` Ordner)
+  - Themes & Plugins
+  - Befehle: `mkdocs serve`, `mkdocs build`, `mkdocs gh-deploy`
+- **Tipp:** Verwenden, um Dokumentation lokal zu testen und Builds zu überprüfen.
+
+## 2️⃣ Material für MkDocs
+- **Link:** [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
+- **Beschreibung:** Material Design Theme für MkDocs.
+  - Modernes Styling für Backstage Docs
+  - Navigation, Sidebar, Tabellen, Buttons
+  - Erweiterungen: Suche, Tabs, Admonitions, Code-Highlighting
+- **Tipp:** Fast alle TechDocs-Beispiele nutzen dieses Theme. Sieht in Backstage am besten aus.
+
+## 3️⃣ Markdown Anleitung
+- **Link:** [Markdown Guide](https://www.markdownguide.org/basic-syntax/)
+- **Beschreibung:** Grundlagen von Markdown.
+  - Überschriften, Listen, Links, Tabellen, Code-Blöcke
+  - Erweiterungen wie Fußnoten oder Aufgabenlisten
+- **Tipp:** Markdown ist die Basis jeder MkDocs-Dokumentation. Saubere Formatierung sorgt für bessere TechDocs-Darstellung.
+
 
