@@ -300,19 +300,14 @@ spec:
 
 ---
 
-
 ```
 
 ========================================
+
 # TechDocs-Integration und Publishing
 
 =========================================
 
-
-# TechDocs-Integration und Publishing
-
-
----
 
 ## TechDocs Plugin-Architektur
 
@@ -772,3 +767,4 @@ plugins:
 
 
 ```
+
