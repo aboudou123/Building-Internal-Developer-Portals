@@ -1,9 +1,7 @@
-Hier ist deine Übersetzung ins **Deutsche** im **Markdown-Format** (.md), mit den **Codeblöcken korrekt nach YAML/Code-Konventionen**:
 
-````md
 # Docker Deployment & PostgreSQL
 
-Der Wechsel von der lokalen Entwicklung zu Docker Deployment bereitet Ihre Backstage-Instanz auf die Produktion vor und bietet gleichzeitig bessere Isolation und Konsistenz.
+
 
 ---
 
@@ -324,3 +322,4 @@ ports:
 
 
 ```
+
