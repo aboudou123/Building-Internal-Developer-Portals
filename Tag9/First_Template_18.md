@@ -1369,12 +1369,13 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Masterarbeit an der 
 
 
 
-=================================================================================
+===========================================================================
 
-Alles klar ❤️ — das ist eine **sehr gute Entscheidung**. Wir machen jetzt einen **kompletten Reset** und gehen **sauber zurück zu Step 1**, so als wäre Backstage **nie gestartet worden**.
-Ich gebe dir **klare, sichere Schritte**, nichts Gefährliches, nichts Unnötiges.
+ **Das Projekt kompletten Reset** und gehen **sauber zurück zu Step 1**.
 
----
+
+==========================================================================
+
 
 # ✅ ZIEL
 
@@ -1442,14 +1443,16 @@ rm -rf /root/.cache
 
 ## 🟢 JETZT IST ALLES SAUBER
 
-Du bist **100 % zurück auf Anfang**
+Ich bin **100 % zurück auf Anfang**
+
 👉 **Kein Service, kein Config-Chaos, kein Cache**
 
 ---
+===================================
+#  NEU STARTEN – AB **STEP 1**
+===================================
 
-# 🚀 NEU STARTEN – AB **STEP 1**
-
-## ✅ Step 1: Projekt neu erstellen
+##  Step 1: Projekt neu erstellen
 
 ```bash
 cd /root/labs
@@ -1481,7 +1484,7 @@ yarn up @backstage/backend-defaults@0.14.0
 
 ---
 
-## ⚠️ WICHTIGE REGEL (damit der alte Fehler NICHT wiederkommt)
+## ⚠️ WICHTIGE REGEL ()
 
 ❌ **KEINE Public-IP binden**
 ❌ **KEIN systemd-Service jetzt**
@@ -1529,20 +1532,7 @@ macht.
 
 ---
 
-## 💬 Nächster Schritt
-
-Sag mir einfach **„bereit für Step 2“** oder
-**„Backstage läuft lokal“**, dann gehen wir **ruhig, sauber und ohne Stress** weiter.
-
-Du hast alles richtig gemacht 👍
-
-
-
-
-Super — das ist exakt der richtige Zwischenstand ✅
-`Unit backstage.service could not be found.` heißt: **systemd-Service ist komplett weg**.
-
-Jetzt machen wir den Reset fertig und starten wieder bei **Step 1**.
+## Nächster Schritt
 
 ---
 
@@ -1622,35 +1612,14 @@ yarn start
 
 ---
 
-### Kurz zu deinem `^M : command not found`
-
-Das ist nur ein “Enter/Carriage Return” Artefakt. Kannst du ignorieren.
-
-Wenn du willst, poste nach Schritt (1) kurz die Ausgabe von:
 
 ```bash
 ss -lntp | egrep ':3000|:7007' || true
 ```
-
-Dann weiß ich sofort, ob noch ein Prozess im Hintergrund blockiert.
-
-
-
-Alles okay — das war nur ein kleines Terminal-Missverständnis 😊
-
-Du warst **noch im interaktiven `npx @backstage/create-app` Prompt** und hast dann offenbar wieder im normalen Shell-Prompt `kuka-idp` getippt, deshalb: `command not found`.
-
-Wir machen’s jetzt sauber Schritt für Schritt.
-
 ---
 
 ## 1) Prüfen: läuft der create-app Prompt noch?
 
-Wenn du **noch** diese Zeile siehst und der Cursor dahinter blinkt:
-
-`? Enter a name for the app [required]`
-
-➡️ Dann tippe **direkt dort** (nicht im Shell-Prompt) einfach:
 
 `kuka-idp`
 
@@ -1667,34 +1636,13 @@ cd /root/labs
 npx @backstage/create-app@latest
 ```
 
-Wenn dann wieder gefragt wird:
-
-`? Enter a name for the app [required]`
-
 ➡️ tippe:
 
 `kuka-idp`
 ➡️ Enter
-
 ---
 
-## 3) Wenn er meckert, dass der Ordner schon existiert
-
-Dann vorher löschen:
-
-```bash
-rm -rf /root/labs/kuka-idp
-```
-
-und dann nochmal:
-
-```bash
-npx @backstage/create-app@latest
-```
-
----
-
-## 4) Wenn das Scaffold fertig ist
+## 3) Wenn das Scaffold fertig ist
 
 Dann:
 
@@ -1707,7 +1655,7 @@ yarn start
 
 ---
 
-Wenn du willst: Poste einfach **die letzten 5–10 Zeilen**, nachdem du `npx @backstage/create-app@latest` erneut gestartet hast (inkl. der Fragezeile). Dann sag ich dir exakt, was du als Nächstes im Wizard auswählen sollst.
+ **Beweis**
 
 
 <img width="1080" height="701" alt="image" src="https://github.com/user-attachments/assets/aa317cc2-ddcf-48c8-a4ba-e93e324f1016" />
@@ -1717,11 +1665,6 @@ Wenn du willst: Poste einfach **die letzten 5–10 Zeilen**, nachdem du `npx @ba
 <img width="993" height="1008" alt="image" src="https://github.com/user-attachments/assets/3258d5ba-918f-4971-97d1-f69f816f0826" />
 
 
-
-Mega — das ist jetzt **sauber durchgelaufen** ✅🎉
-Du bist wieder genau bei **Step 1 / First Run** angekommen (und dependencies sind sogar schon installiert worden).
-
-Jetzt machst du exakt das hier:
 
 ## 1) Ins Projekt wechseln
 
@@ -1748,50 +1691,26 @@ yarn start
 ```
 
 
-
-
 <img width="1508" height="877" alt="image" src="https://github.com/user-attachments/assets/abde9fa7-eeee-4723-8cd4-ead36d271cd7" />
 
 ---
 
 ### Wenn du von außen zugreifen willst (Browser)
 
-Weil du vorher das Public-IP-Binding-Problem hattest: **nicht die Public-IP als listen-host setzen**.
 
-Stattdessen: nachdem `yarn start` läuft, öffne die Ports (falls Firewall aktiv) und rufe im Browser auf:
+nachdem `yarn start` läuft, öffne die Ports (falls Firewall aktiv) und rufe im Browser auf:
 
 ```
 http://95.217.214.89:3000
 ```
+
 <img width="954" height="626" alt="image" src="https://github.com/user-attachments/assets/bfbb6c67-e87e-4334-8ddf-07ca4f6c2452" />
 
-
-Wenn es **nicht erreichbar** ist, sag mir dann die Ausgabe von:
-
-```bash
-ss -lntp | egrep ':3000|:7007'
-```
-
 ---
-
-### Kurz: Dein Ziel „wieder von Step 1 gehen“
-
-✅ Erledigt. Jetzt bist du wieder an Step 1/Run the app.
-
-Mach jetzt Schritt 1–3 oben und paste mir die ersten ~20 Logzeilen aus dem laufenden `yarn start`, falls irgendwas meckert.
-
-
-
-
 
 
 <img width="1236" height="698" alt="image" src="https://github.com/user-attachments/assets/23d97c9e-7b54-41ae-82ed-cde8e5437aec" />
 
-
-
-
-
-Yesss ✅✅ genau so muss es aussehen!
 
 * `0.0.0.0:3000` → Frontend ist **extern erreichbar**
 * `0.0.0.0:7007` → Backend ist **extern erreichbar**
@@ -1837,26 +1756,16 @@ Sag mir kurz:
 # Von Kuka zu developer-app
 
 
-
 <img width="1020" height="319" alt="image" src="https://github.com/user-attachments/assets/e201b396-99c4-499a-b262-b22aad623991" />
 
 
 
-Perfekt ✅ — der Symlink sitzt genau richtig:
 
 `/root/labs/developer-portal -> /root/labs/kuka-idp`
 
 
 <img width="939" height="204" alt="image" src="https://github.com/user-attachments/assets/912fdd83-263e-4a1a-9bdb-c005206f461f" />
 
-Damit sollte der Task-Checker jetzt **den Ordner finden**.
-
-Zwei kleine Sachen noch (weil du `disable` gemacht hast):
-
-Alles gut — das ist ein **klassischer Symlink-Fall** 😊
-Weil `/root/labs/developer-portal` gerade ein **Symlink auf `/root/labs/kuka-idp`** ist, versucht `mv` faktisch, `kuka-idp` **in sich selbst** zu verschieben → daher die Meldung.
-
-Wenn du wirklich “sauber umbenennen” willst (statt Symlink), mach das so:
 
 ## Option A (empfohlen): Symlink entfernen, dann umbenennen
 
@@ -1911,15 +1820,12 @@ ss -lntp | egrep ':3000|:7007' || true
 
 ## Option B: Symlink behalten (für den Checker reicht das!)
 
-Wenn du nur willst, dass der Checker zufrieden ist, brauchst du **gar kein `mv`**. Dann mach einfach:
-
 ```bash
 systemctl enable backstage
 systemctl restart backstage
 ```
 
 ---
-Das ist jetzt **genau** so, wie der Task-Checker es erwartet ✅
 
 * ✅ Verzeichnis existiert: `/root/labs/developer-portal`
 * ✅ systemd Service ist **enabled**
@@ -1930,8 +1836,9 @@ Das ist jetzt **genau** so, wie der Task-Checker es erwartet ✅
 
 Du kannst jetzt direkt:
 
-1. **Task-Check nochmal ausführen** (in deinem Lab/Portal UI).
+1. **Task-Check nochmal ausführen** .
 2. Im Browser öffnen:
+   
    **[http://95.217.220.177:3000](http://95.217.220.177:3000)**
 
 <img width="1868" height="777" alt="image" src="https://github.com/user-attachments/assets/fe124aa3-cb87-4689-a9a4-e4feea48c154" />
@@ -1945,22 +1852,12 @@ Du kannst jetzt direkt:
 
 
 
-Wenn der Checker trotzdem noch meckert, ist es meistens eine Kleinigkeit, die er zusätzlich prüft. Dann poste bitte:
-
-```bash
-systemctl status backstage --no-pager
-journalctl -u backstage -n 80 --no-pager
-```
-
-
 =================================================
 
 
-Project Structure Tour
-With Backstage running, explore the project structure to understand how a Backstage application is organized. This knowledge is essential for customizing and extending your portal.
 
+# Step 1: Explore the Root Project Structure
 
-Step 1: Explore the Root Project Structure
 ```bash
 ls -la /root/labs/developer-portal/
 ```
@@ -2103,8 +2000,6 @@ root@patrickaboudou-backstage-setup-kbb:~#
 ```bash
 
 <img width="843" height="294" alt="image" src="https://github.com/user-attachments/assets/654e552f-68a4-4a16-b263-de91e0149ed5" />
-
-
 
 
 ========================================================
@@ -2603,14 +2498,8 @@ Du kannst das so in `README-deployment.md` packen:
 
 ## Nächster sinnvoller Schritt (damit’s “production-like” wird)
 
-Wenn du mir kurz sagst, was du bevorzugst:
-
 * **(A)** nur Compose + Postgres + Port 7007 direkt offen lassen (Lab-Style), oder
 * **(B)** “richtiger” Production-Flow mit **Reverse Proxy + TLS + Domain**
-
-…dann gebe ich dir **die passende Proxy-Konfiguration** (Caddy ist super easy) und wir setzen `baseUrl` korrekt, damit Backstage später keine kaputten Links / Mixed-Content / Callback-Probleme hat.
-
-Wenn du direkt weitermachen willst, poste bitte einmal:
 
 ```bash
 ls -la /root/labs/developer-portal/packages/backend | head
@@ -2620,7 +2509,9 @@ cat /root/labs/developer-portal/packages/backend/Dockerfile | sed -n '1,200p'
 
 
 # Writing the Dockerfile
+
 In this task, you'll create a Dockerfile that containerizes your Backstage application. A Dockerfile is a text file that contains instructions for building a Docker image, which can then be run as a container in any environment.
+
 <img width="1017" height="630" alt="image" src="https://github.com/user-attachments/assets/2faf5658-8c96-4507-8e27-871267b00b57" />
 
 
@@ -3233,8 +3124,6 @@ Start Backstage backend
 You've successfully created a production-ready Dockerfile following the official Backstage host build approach! In the next task, you'll configure Backstage to use PostgreSQL instead of SQLite, and build the application bundles that this Dockerfile expects.
 
 =================================================================
-
-
 
 ---
 
@@ -5118,6 +5007,7 @@ Du verstehst jetzt sowohl die Vorteile als auch die Einschränkungen dieses Ansa
 ---
 
 ---
+
 
 
 
