@@ -4,6 +4,7 @@
 **Projektname:** Internal Developer Platform (Platform Engineering Initiative)
 
 **Beschreibung:**
+
 Dieses Projekt implementiert eine vollständige **Internal Developer Platform (IDP)** auf Basis von **Backstage**, um Entwicklerteams Self-Service-Funktionen, Transparenz und standardisierte Entwicklungsprozesse bereitzustellen.
 
 Ziel des Projekts ist es, eine zentrale Plattform zu schaffen, die Services, Dokumentation, CI/CD, Kubernetes-Workloads und GitOps-Deployments an einem Ort vereint. Entwickler können neue Projekte über sogenannte *Golden Path Templates* erstellen, Deployments verfolgen und ihre Services inklusive Dokumentation eigenständig verwalten.
@@ -1480,6 +1481,7 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Masterarbeit an der 
 
 
 **Hinweis**: Dieser Abschnitt der Arbeit stellt nur einen Teil des Gesamtprojekts dar. Das vollständige Projekt ist Eigentum des Unternehmens und daher nicht öffentlich zugänglich. Es handelt sich um ein Projekt, bei dem lediglich ein Teil veröffentlicht wird.
+
 
 
 
