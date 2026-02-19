@@ -271,10 +271,300 @@ Sie ermöglicht:
 
 ---
 
+
+# **klar und spezifisch Architektur für ein Kubernetes-Cluster**
+
 ---
 
-# Schritt 1: Überprüfen, ob Backstage läuft
+# 🏗 Internal Developer Platform – Kubernetes-basierte Zielarchitektur
 
+![Image](https://miro.medium.com/v2/resize%3Afit%3A1200/1%2AHIshxnsx-mnOPjVqPDnB_w.png)
+
+![Image](https://miro.medium.com/v2/resize%3Afit%3A1400/1%2AUsoRh3pKIEzO-fmOZrKcZA.png)
+
+![Image](https://miro.medium.com/1%2AcTriV-5n67K_IVBvdn-dHg.png)
+
+![Image](https://miro.medium.com/v2/resize%3Afit%3A743/1%2AyWazZNylMUHEbwPt1pyzGw.webp)
+
+---
+
+## 🔷 1️⃣ Architektur Layer (Spezifisch für dein Projekt)
+
+### 👤 User Layer
+
+* Developer
+* Platform Engineer
+
+⬇
+
+### 🖥 Developer Portal Layer
+
+* Backstage
+
+  * Software Catalog
+  * Golden Path Templates
+  * TechDocs
+  * Kubernetes Plugin
+  * ArgoCD Plugin
+
+Backstage läuft als Deployment **im Kubernetes-Cluster**.
+
+⬇
+
+### 🔐 Identity Layer
+
+* Keycloak
+
+  * OIDC Authentication
+  * Group Mapping
+  * RBAC Mapping
+
+⬇
+
+### 🔁 CI/CD & GitOps Layer
+
+* GitHub
+* GitHub Actions
+* GitHub Container Registry
+* Argo CD
+
+⬇
+
+### ☸ Runtime Layer
+
+* Kubernetes Cluster
+
+  * Namespaces (dev / staging / prod)
+  * Deployments
+  * Services
+  * Ingress
+  * ConfigMaps / Secrets
+
+---
+
+# 🔄 End-to-End Workflow (Dein echtes Setup)
+
+### 1️⃣ Login
+
+Developer loggt sich via Keycloak (OIDC) in Backstage ein.
+
+### 2️⃣ Service Creation
+
+Golden Path Template erzeugt:
+
+* Neues GitHub Repo
+* Standardisiertes Dockerfile (Multi-Stage)
+* GitHub Actions Workflow
+* Kubernetes Manifeste
+* GitOps Repository Eintrag
+
+### 3️⃣ Build & Push
+
+GitHub Actions:
+
+* Build Docker Image
+* Push zu GHCR
+* Update GitOps Repo
+
+### 4️⃣ Deployment
+
+ArgoCD:
+
+* Erkennt Änderung im Git
+* Deployt automatisch ins Kubernetes Namespace
+
+### 5️⃣ Visibility
+
+Backstage zeigt:
+
+* Deployment Status
+* Pod Health
+* Service Ownership
+* Dokumentation (TechDocs)
+
+---
+
+# 🔐 Sicherheitsmodell (Dein Projekt-spezifisch)
+
+* OIDC via Keycloak
+* RBAC via Kubernetes Roles
+* Namespace Isolation
+* GitHub Actions mit minimalen Registry Permissions
+* Multi-Stage Docker Builds (kein Build-Tool im Final Image)
+
+---
+
+# 📦 Was diese Architektur NICHT enthält
+
+* ❌ Kein Crossplane
+* ❌ Kein Terraform
+* ❌ Kein Cloud Provisioning Layer
+* ❌ Kein Service Mesh
+
+Eine **reine Kubernetes-basierte Internal Developer Platform mit GitOps**.
+
+---
+
+
+* ✅ Kubernetes Cluster
+* ✅ Backstage läuft im Cluster
+* ✅ ArgoCD läuft im selben Cluster
+* ✅ GitHub Organisation (keine Einzel-Repos)
+* ✅ GitHub Actions + GHCR
+* ✅ Keycloak OIDC
+* ❌ Kein Crossplane
+* ❌ Kein Terraform
+
+---
+
+# 🏗 Final Architecture – Internal Developer Platform (Cluster-Scoped Setup)
+
+![Image](https://miro.medium.com/1%2Apvo0SXZfqVEl_J-60-g4cg.gif)
+
+![Image](https://miro.medium.com/v2/resize%3Afit%3A1200/1%2AHIshxnsx-mnOPjVqPDnB_w.png)
+
+![Image](https://raw.githubusercontent.com/StarpTech/k8s-gitops/main/workflow-v11.png)
+
+![Image](https://miro.medium.com/v2/resize%3Afit%3A1400/1%2AcoMYqPTL2LKeit2tgwndRg.png)
+
+---
+
+# 🔷 1️⃣ High-Level Architecture (Cluster-intern)
+
+## 👤 Users
+
+Developers & Platform Engineers
+
+⬇
+
+## 🖥 Developer Portal (im selben Cluster)
+
+* Backstage (Deployment im Namespace `platform`)
+* Argo CD (Namespace `argocd`)
+
+Beide laufen **im gleichen Kubernetes-Cluster**, logisch getrennt über Namespaces.
+
+---
+
+## 🔐 Identity Layer
+
+* Keycloak
+
+  * OIDC
+  * Gruppen-Mapping
+  * RBAC-Zuweisung
+
+Backstage nutzt Keycloak für Login und Gruppen-Synchronisierung.
+
+---
+
+## 🔁 Source of Truth Layer
+
+* GitHub Organisation
+
+  * Service Repositories
+  * GitOps Repository
+  * Template Repositories
+
+* GitHub Actions
+
+* GitHub Container Registry
+
+GitHub Org = zentrales Ownership- & Governance-Modell.
+
+---
+
+## ☸ Runtime Layer – Kubernetes Cluster
+
+Namespaces z. B.:
+
+* `platform` → Backstage
+* `argocd` → ArgoCD
+* `dev-*` → Entwicklungsservices
+* `prod-*` → Produktionsservices
+
+ArgoCD synchronisiert Git → Cluster.
+
+---
+
+# 🔄 Dein echter End-to-End Flow
+
+### 1️⃣ Login
+
+Developer → Keycloak → Backstage
+
+### 2️⃣ Service Creation (Golden Path)
+
+Backstage Template erstellt:
+
+* Neues Repo in GitHub Org
+* CI Workflow
+* Dockerfile (Multi-Stage)
+* Kubernetes Manifeste
+* ArgoCD Application
+
+### 3️⃣ Build Phase
+
+GitHub Actions:
+
+* Docker Build
+* Push zu GHCR
+* Commit ins GitOps Repo
+
+### 4️⃣ GitOps Deployment
+
+ArgoCD:
+
+* erkennt Commit
+* synced ins Ziel-Namespace
+* überwacht Drift
+
+### 5️⃣ Visibility
+
+Backstage:
+
+* Kubernetes Plugin zeigt Pods
+* ArgoCD Plugin zeigt Sync Status
+* Catalog zeigt Ownership
+
+---
+
+# 🔒 Sicherheits- & Governance-Modell
+
+* Namespace Isolation
+* OIDC Auth via Keycloak
+* GitHub Org Team Mapping
+* Least-Privilege GitHub Actions Permissions
+* Multi-Stage Docker Builds
+* Git = Single Source of Truth
+
+---
+
+# 🧠 Warum diese Architektur sauber ist
+
+* Plattform-Komponenten laufen getrennt von Business-Workloads
+* GitOps sorgt für deterministische Deployments
+* Kein zusätzlicher Infra-Provisioning Layer → reduziert Komplexität
+* Skalierbar durch Namespace-Strategie
+* Voll kompatibel mit CBA-Prüfungsinhalten
+
+---
+
+ Jetzt eine dieser 3 professionellen Varianten erstellen:
+
+### 🔹 Option A – C4 Architecture (für Architektur-Review geeignet)
+
+### 🔹 Option B – Management Executive Slide (1 Seite, sehr clean)
+
+### 🔹 Option C – Technisches Deep-Dive Diagramm mit Netzwerk-Ports & RBAC
+
+
+
+---
+
+===========================================
+# Schritt 1: Überprüfen, ob Backstage läuft
+===========================================
 
 
 ```bash
@@ -1627,6 +1917,7 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Masterarbeit an der 
 
 
 **Hinweis**: Dieser Abschnitt der Arbeit stellt nur einen Teil des Gesamtprojekts dar. Das vollständige Projekt ist Eigentum des Unternehmens und daher nicht öffentlich zugänglich. Es handelt sich um ein Projekt, bei dem lediglich ein Teil veröffentlicht wird.
+
 
 
 
