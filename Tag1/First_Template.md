@@ -122,9 +122,9 @@ Die folgenden Technologien und Tools wurden im Projekt eingesetzt:
 
 ---
 
-### Schritt 1: Überprüfen, ob Backstage läuft
+# Schritt 1: Überprüfen, ob Backstage läuft
 
-Überprüfen Sie den Status des Dienstes:
+
 
 ```bash
 systemctl status backstage
@@ -143,9 +143,9 @@ Drücken Sie **q**, um die Statusansicht zu verlassen. Klicken Sie im Backstage-
 
 
 
-### Schritt 2: Template-Struktur untersuchen
+# Schritt 2: Template-Struktur untersuchen
 
-Untersuchen Sie die Standard-Templates, um deren Struktur zu verstehen. Suchen Sie nach `template.yaml`-Dateien:
+Untersuchung der Standard-Templates, um deren Struktur zu verstehen. Suche nach `template.yaml`-Dateien:
 
 ```bash
 find /root/labs/developer-portal -name "template.yaml" -o -name "*.yaml" | grep -i template
@@ -154,9 +154,9 @@ find /root/labs/developer-portal -name "template.yaml" -o -name "*.yaml" | grep 
 
 
 
-### Schritt 3: Template-Komponenten analysieren
+# Schritt 3: Template-Komponenten analysieren
 
-Erstellen Sie eine Verzeichnisstruktur zum Studium der Templates:
+Erstellung einer Verzeichnisstruktur zum Studium der Templates:
 
 ```bash
 mkdir -p /root/labs/templates-study
@@ -1481,6 +1481,7 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Masterarbeit an der 
 
 
 **Hinweis**: Dieser Abschnitt der Arbeit stellt nur einen Teil des Gesamtprojekts dar. Das vollständige Projekt ist Eigentum des Unternehmens und daher nicht öffentlich zugänglich. Es handelt sich um ein Projekt, bei dem lediglich ein Teil veröffentlicht wird.
+
 
 
 
