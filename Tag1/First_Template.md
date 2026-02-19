@@ -1,9 +1,123 @@
 
-## Anweisungen
+# Projektbeschreibung
 
-### Verständnis von Backstage-Software-Templates
+**Projektname:** Internal Developer Platform (Platform Engineering Initiative)
 
-Bevor Sie Ihr eigenes Template erstellen, sollten Sie vorhandene Templates untersuchen, um zu verstehen, wie der Backstage Scaffolder funktioniert und aus welchen Komponenten ein Software-Template besteht.
+**Beschreibung:**
+Dieses Projekt implementiert eine vollständige **Internal Developer Platform (IDP)** auf Basis von **Backstage**, um Entwicklerteams Self-Service-Funktionen, Transparenz und standardisierte Entwicklungsprozesse bereitzustellen.
+
+Ziel des Projekts ist es, eine zentrale Plattform zu schaffen, die Services, Dokumentation, CI/CD, Kubernetes-Workloads und GitOps-Deployments an einem Ort vereint. Entwickler können neue Projekte über sogenannte *Golden Path Templates* erstellen, Deployments verfolgen und ihre Services inklusive Dokumentation eigenständig verwalten.
+
+Die Motivation hinter diesem Projekt ist die Reduzierung von kognitiver Last, die Standardisierung von Entwicklungsprozessen sowie die Beschleunigung von Onboarding und Delivery-Zyklen.
+
+**Was Benutzer erwarten können:**
+
+* Zentrales Developer Portal mit Software-Katalog
+* Self-Service-Projekterstellung mit CI/CD
+* Kubernetes-Workload-Transparenz
+* GitOps-Integration
+* Dokumentation-as-Code
+* Single Sign-On mit rollenbasierter Zugriffskontrolle
+* Produktionsnahe Setup-Struktur (lokal, Docker, Kubernetes)
+
+---
+
+## Technologien und Werkzeuge
+
+Die folgenden Technologien und Tools wurden im Projekt eingesetzt:
+
+### Core Platform
+
+* **Backstage** – Developer Portal Framework
+* **TypeScript** – Plugin- und Backend-Entwicklung
+* **Node.js** – Backend Runtime
+* **React** – Frontend & Plugin-Entwicklung
+
+### Container & Deployment
+
+* **Docker** – Containerisierung (Multi-Stage Builds)
+* **Kubernetes** – Orchestrierung & Workload-Management
+* **GitHub Container Registry** – Image Storage
+* **Argo CD** – GitOps Deployment Visibility
+
+### CI/CD & SCM
+
+* **GitHub** – Source Control & Repository Discovery
+* **GitHub Actions** – CI/CD Pipelines
+
+### Authentifizierung & Sicherheit
+
+* **Keycloak** – OIDC Authentication & SSO
+
+### Dokumentation
+
+* **TechDocs** – Documentation-as-Code
+* **MkDocs** – Dokumentationsgenerierung
+
+---
+
+## Hauptmerkmale
+
+### 1️⃣ Vollständiger Software Catalog
+
+* Verwaltung von Services, APIs, Teams und Systemen
+* Automatische GitHub Repository Discovery
+* Katalog-Validierung & Troubleshooting
+
+### 2️⃣ Golden Path Software Templates
+
+* Vordefinierte Produktions-Templates
+* Automatische Erstellung von Repositories
+* CI/CD Pipeline inklusive Container-Build & Deployment
+* GitHub Actions Workflows mit sicheren Registry-Permissions
+
+### 3️⃣ Kubernetes & Workload Visibility
+
+* Kubernetes Plugin Konfiguration
+* Mapping von Catalog-Entities zu Kubernetes Ressourcen via Annotation
+* Namespace-Isolation für Multi-Tenant-Cluster
+
+### 4️⃣ GitOps Integration
+
+* ArgoCD Integration für Deployment-Transparenz
+* Git als Single Source of Truth
+* End-to-End Self-Service Workflow
+
+### 5️⃣ Dokumentation-as-Code
+
+* TechDocs Integration
+* Automatische Generierung mit MkDocs
+* Versionskontrollierte Entwicklerdokumentation
+
+### 6️⃣ Authentication & Authorization
+
+* OIDC Login via Keycloak
+* Automatische Benutzer- und Gruppensynchronisation
+* Grundlegende Permission-Modelle
+
+### 7️⃣ Erweiterbarkeit durch Plugins
+
+* Entwicklung eigener React-Plugins
+* Material-UI Theming & UI Customization
+* Anpassung an Unternehmensanforderungen
+
+### 8️⃣ Produktionsreife Architektur
+
+* Multi-Stage Docker Builds für Sicherheit
+* Deployment in dedizierte Kubernetes Namespaces
+* Replizierbare Produktionsumgebung (lokal, VM, Cloud)
+
+---
+
+## Business Value
+
+* Reduzierung der Developer Cognitive Load
+* Schnellere Projektinitialisierung
+* Standardisierte CI/CD & Deployment-Prozesse
+* Transparenz über Service Ownership
+* Verbesserte Developer Experience (DX)
+
+---
 
 ---
 
@@ -1366,6 +1480,7 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Masterarbeit an der 
 
 
 **Hinweis**: Dieser Abschnitt der Arbeit stellt nur einen Teil des Gesamtprojekts dar. Das vollständige Projekt ist Eigentum des Unternehmens und daher nicht öffentlich zugänglich. Es handelt sich um ein Projekt, bei dem lediglich ein Teil veröffentlicht wird.
+
 
 
 
