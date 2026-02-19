@@ -120,6 +120,157 @@ Die folgenden Technologien und Tools wurden im Projekt eingesetzt:
 
 ---
 
+
+ **Architektur-Roadmap-Darstellung** deiner *Internal Developer Platform (Platform Engineering Initiative)* :
+
+1. **Zielarchitektur (Production Architecture Overview)**
+2. **Technische Integrationsarchitektur**
+3. **Implementierungs-Roadmap (Phasenmodell)**
+
+---
+
+# 1️⃣ Zielarchitektur – Internal Developer Platform (Production View)
+
+![Image](https://miro.medium.com/v2/resize%3Afit%3A1400/1%2AUbMV4oMJmpArll4WJfltiQ.png)
+
+![Image](https://wso2.cachefly.net/wso2/sites/all/image_resources/choreo/internal-developer-platform-diagram.webp)
+
+![Image](https://d2908q01vomqb2.cloudfront.net/fe2ef495a1152561572949784c16bf23abb28057/2021/10/14/GitOpsEKS-1.jpg)
+
+![Image](https://www.infracloud.io/assets/img/uploads/2019/12/argocd_architecture.png)
+
+### Architektur-Überblick
+
+**User Layer**
+
+* Entwickler
+* Platform Team
+* DevOps
+
+⬇
+
+**Developer Portal Layer**
+
+* Backstage
+
+  * Software Catalog
+  * Software Templates (Golden Path)
+  * TechDocs
+  * Kubernetes Plugin
+  * ArgoCD Plugin
+  * Custom Plugins
+
+⬇
+
+**Integration Layer**
+
+* GitHub (Repos, Org, Discovery)
+* GitHub Actions (CI/CD)
+* GitHub Container Registry (Images)
+* Keycloak (OIDC SSO)
+* Argo CD (GitOps)
+
+⬇
+
+**Runtime Layer**
+
+* Kubernetes
+
+  * Namespaces (Prod / Dev / Staging)
+  * Workloads
+  * Services
+  * Ingress
+
+---
+
+# 2️⃣ Technische Integrationsarchitektur (Flow-Diagramm Erklärung)
+
+## End-to-End Self-Service Workflow
+
+1. Entwickler loggt sich via **Keycloak OIDC** ein
+2. Erstellt Service über Golden Path Template
+3. Backstage erzeugt:
+
+   * GitHub Repository
+   * CI/CD Workflow
+   * Dockerfile (Multi-Stage)
+4. GitHub Actions:
+
+   * Build
+   * Push zu GHCR
+   * Update GitOps Repo
+5. ArgoCD deployt automatisch nach Kubernetes
+6. Backstage zeigt:
+
+   * Service Ownership
+   * Kubernetes Status
+   * Deployment Status
+   * Dokumentation
+
+➡ **Git = Single Source of Truth**
+
+---
+
+# 3️⃣ Roadmap – Implementierungsphasen
+
+![Image](https://cdn.thenewstack.io/media/2024/11/344ba615-platform-journey-map-2.png)
+
+![Image](https://backstage.io/assets/images/package-architecture.drawio-15aac8979d89a6c2f7eb24f04d8d3b32.svg)
+
+![Image](https://media2.dev.to/dynamic/image/width%3D1280%2Cheight%3D720%2Cfit%3Dcover%2Cgravity%3Dauto%2Cformat%3Dauto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F4oxdwy8cxkrbi9hnuwm2.png)
+
+![Image](https://opencredo.com/assets/images/66bcbeed055d7275d5bf7c87_AD_4nXcUNpvE41OXGXClhW-MzDPMVnkgMBH8GZGKXgUvMqDEqJmGMFlMuncsyNTS4agn_yua9N96UysrIN64N9JaN4FHimtUNwduuVIAb8iwa5dmhvtnojEtV40STCbD9WXgwdPbainkOFD1wM3cztAmnp5BattO.png)
+
+## 🔹 Phase 1 – Foundation
+
+* Backstage lokal starten
+* Docker Setup
+* Software Catalog konfigurieren
+* GitHub Integration
+* Sample Organizations importieren
+
+## 🔹 Phase 2 – Standardisierung
+
+* Golden Path Templates
+* GitHub Actions Pipelines
+* Multi-Stage Docker Builds
+* GHCR Integration
+* Namespace-Strategie definieren
+
+## 🔹 Phase 3 – Production Enablement
+
+* Kubernetes Deployment
+* ArgoCD GitOps Integration
+* Workload Mapping via Annotations
+* OIDC mit Keycloak
+* Permission Model
+
+## 🔹 Phase 4 – Erweiterbarkeit & Skalierung
+
+* Custom Plugins entwickeln
+* UI Theming (Material UI)
+* Metriken zur Adoption
+* Self-Hosted Production Setup
+* CBA Exam Vorbereitung
+
+---
+
+# 4️⃣ Kompakte Architektur-Zusammenfassung (Executive View)
+
+**Die Plattform verbindet:**
+
+Developer Experience + Automation + Governance + GitOps + Kubernetes Visibility
+
+Sie ermöglicht:
+
+* Vollständige Self-Service Software-Erstellung
+* Standardisierte Produktionspipelines
+* Transparente Ownership-Struktur
+* Produktionsreife Container- und Deployment-Strategie
+* Zentrale Developer Experience Plattform
+
+---
+
 ---
 
 # Schritt 1: Überprüfen, ob Backstage läuft
@@ -1476,6 +1627,7 @@ Dieses Projekt wurde von **Koffitse Aboudou** im Rahmen des Masterarbeit an der 
 
 
 **Hinweis**: Dieser Abschnitt der Arbeit stellt nur einen Teil des Gesamtprojekts dar. Das vollständige Projekt ist Eigentum des Unternehmens und daher nicht öffentlich zugänglich. Es handelt sich um ein Projekt, bei dem lediglich ein Teil veröffentlicht wird.
+
 
 
 
